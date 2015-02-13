@@ -1,0 +1,422 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1061F4411A8E1719005C3DDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1061F4401A8E1719005C3DDA /* AppDelegate.swift */; };
+		1061F4431A8E1719005C3DDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1061F4421A8E1719005C3DDA /* ViewController.swift */; };
+		1061F4461A8E1719005C3DDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1061F4441A8E1719005C3DDA /* Main.storyboard */; };
+		1061F4481A8E1719005C3DDA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1061F4471A8E1719005C3DDA /* Images.xcassets */; };
+		1061F44B1A8E1719005C3DDA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1061F4491A8E1719005C3DDA /* LaunchScreen.xib */; };
+		1061F4571A8E1719005C3DDA /* LickItTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1061F4561A8E1719005C3DDA /* LickItTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1061F4511A8E1719005C3DDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1061F4331A8E1719005C3DDA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1061F43A1A8E1719005C3DDA;
+			remoteInfo = LickIt;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1061F43B1A8E1719005C3DDA /* LickIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LickIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1061F43F1A8E1719005C3DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1061F4401A8E1719005C3DDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1061F4421A8E1719005C3DDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1061F4451A8E1719005C3DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1061F4471A8E1719005C3DDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1061F44A1A8E1719005C3DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		1061F4501A8E1719005C3DDA /* LickItTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LickItTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1061F4551A8E1719005C3DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1061F4561A8E1719005C3DDA /* LickItTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LickItTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1061F4381A8E1719005C3DDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1061F44D1A8E1719005C3DDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1061F4321A8E1719005C3DDA = {
+			isa = PBXGroup;
+			children = (
+				1061F43D1A8E1719005C3DDA /* LickIt */,
+				1061F4531A8E1719005C3DDA /* LickItTests */,
+				1061F43C1A8E1719005C3DDA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1061F43C1A8E1719005C3DDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1061F43B1A8E1719005C3DDA /* LickIt.app */,
+				1061F4501A8E1719005C3DDA /* LickItTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1061F43D1A8E1719005C3DDA /* LickIt */ = {
+			isa = PBXGroup;
+			children = (
+				1061F4401A8E1719005C3DDA /* AppDelegate.swift */,
+				1061F4421A8E1719005C3DDA /* ViewController.swift */,
+				1061F4441A8E1719005C3DDA /* Main.storyboard */,
+				1061F4471A8E1719005C3DDA /* Images.xcassets */,
+				1061F4491A8E1719005C3DDA /* LaunchScreen.xib */,
+				1061F43E1A8E1719005C3DDA /* Supporting Files */,
+			);
+			path = LickIt;
+			sourceTree = "<group>";
+		};
+		1061F43E1A8E1719005C3DDA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1061F43F1A8E1719005C3DDA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1061F4531A8E1719005C3DDA /* LickItTests */ = {
+			isa = PBXGroup;
+			children = (
+				1061F4561A8E1719005C3DDA /* LickItTests.swift */,
+				1061F4541A8E1719005C3DDA /* Supporting Files */,
+			);
+			path = LickItTests;
+			sourceTree = "<group>";
+		};
+		1061F4541A8E1719005C3DDA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1061F4551A8E1719005C3DDA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1061F43A1A8E1719005C3DDA /* LickIt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1061F45A1A8E1719005C3DDA /* Build configuration list for PBXNativeTarget "LickIt" */;
+			buildPhases = (
+				1061F4371A8E1719005C3DDA /* Sources */,
+				1061F4381A8E1719005C3DDA /* Frameworks */,
+				1061F4391A8E1719005C3DDA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LickIt;
+			productName = LickIt;
+			productReference = 1061F43B1A8E1719005C3DDA /* LickIt.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1061F44F1A8E1719005C3DDA /* LickItTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1061F45D1A8E1719005C3DDA /* Build configuration list for PBXNativeTarget "LickItTests" */;
+			buildPhases = (
+				1061F44C1A8E1719005C3DDA /* Sources */,
+				1061F44D1A8E1719005C3DDA /* Frameworks */,
+				1061F44E1A8E1719005C3DDA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1061F4521A8E1719005C3DDA /* PBXTargetDependency */,
+			);
+			name = LickItTests;
+			productName = LickItTests;
+			productReference = 1061F4501A8E1719005C3DDA /* LickItTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1061F4331A8E1719005C3DDA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = MBP;
+				TargetAttributes = {
+					1061F43A1A8E1719005C3DDA = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					1061F44F1A8E1719005C3DDA = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 1061F43A1A8E1719005C3DDA;
+					};
+				};
+			};
+			buildConfigurationList = 1061F4361A8E1719005C3DDA /* Build configuration list for PBXProject "LickIt" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1061F4321A8E1719005C3DDA;
+			productRefGroup = 1061F43C1A8E1719005C3DDA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1061F43A1A8E1719005C3DDA /* LickIt */,
+				1061F44F1A8E1719005C3DDA /* LickItTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1061F4391A8E1719005C3DDA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061F4461A8E1719005C3DDA /* Main.storyboard in Resources */,
+				1061F44B1A8E1719005C3DDA /* LaunchScreen.xib in Resources */,
+				1061F4481A8E1719005C3DDA /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1061F44E1A8E1719005C3DDA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1061F4371A8E1719005C3DDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061F4431A8E1719005C3DDA /* ViewController.swift in Sources */,
+				1061F4411A8E1719005C3DDA /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1061F44C1A8E1719005C3DDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061F4571A8E1719005C3DDA /* LickItTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1061F4521A8E1719005C3DDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1061F43A1A8E1719005C3DDA /* LickIt */;
+			targetProxy = 1061F4511A8E1719005C3DDA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1061F4441A8E1719005C3DDA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1061F4451A8E1719005C3DDA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1061F4491A8E1719005C3DDA /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1061F44A1A8E1719005C3DDA /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1061F4581A8E1719005C3DDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1061F4591A8E1719005C3DDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1061F45B1A8E1719005C3DDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LickIt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1061F45C1A8E1719005C3DDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LickIt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1061F45E1A8E1719005C3DDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LickItTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LickIt.app/LickIt";
+			};
+			name = Debug;
+		};
+		1061F45F1A8E1719005C3DDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LickItTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LickIt.app/LickIt";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1061F4361A8E1719005C3DDA /* Build configuration list for PBXProject "LickIt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1061F4581A8E1719005C3DDA /* Debug */,
+				1061F4591A8E1719005C3DDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1061F45A1A8E1719005C3DDA /* Build configuration list for PBXNativeTarget "LickIt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1061F45B1A8E1719005C3DDA /* Debug */,
+				1061F45C1A8E1719005C3DDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1061F45D1A8E1719005C3DDA /* Build configuration list for PBXNativeTarget "LickItTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1061F45E1A8E1719005C3DDA /* Debug */,
+				1061F45F1A8E1719005C3DDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1061F4331A8E1719005C3DDA /* Project object */;
+}
