@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol InfoRecipeCellDelegate {
+    func infoRecipeCellSaveButtonPressed(cell : InfoRecipeCell)
+}
+
 class InfoRecipeCell: UITableViewCell {
 
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var licks: UILabel!
     
     @IBOutlet weak var saveButton: UIButton!
+    
+    var delegate : InfoRecipeCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,5 +33,6 @@ class InfoRecipeCell: UITableViewCell {
     }
 
     @IBAction func saveButtonPressed(sender: UIButton) {
+        delegate?.infoRecipeCellSaveButtonPressed(self)
     }
 }

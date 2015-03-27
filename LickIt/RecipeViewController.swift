@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeViewController: BaseTableViewController {
+class RecipeViewController: BaseTableViewController, InfoRecipeCellDelegate {
 
     var recipe: Recipe!
     
@@ -28,6 +28,7 @@ class RecipeViewController: BaseTableViewController {
         
         if(indexPath.row==0) {
         var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as ImageRecipeCell
+            
             cell.imagine.image = recipe.image
             self.tableView.rowHeight = 140.0
             
@@ -36,6 +37,7 @@ class RecipeViewController: BaseTableViewController {
         else{
 
         var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as InfoRecipeCell
+            cell.delegate = self
             cell.time.text = "\(recipe.time!)"
             cell.licks.text = "\(recipe.numberOfLicks!)"
 
@@ -43,19 +45,28 @@ class RecipeViewController: BaseTableViewController {
             return cell
            
         }
-        
-            
-        
-        
-        
-        
     }
+    
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
 
+    func infoRecipeCellSaveButtonPressed(cell: InfoRecipeCell) {
+        var savedRecipesIDs = NSUserDefaults.standardUserDefaults().arrayForKey("savedRecipes") as [String]?
+        if(savedRecipesIDs==nil){
+            savedRecipesIDs = [String]()
+        }
+        
+        savedRecipesIDs!.append(self.recipe.ID)
+        NSUserDefaults.standardUserDefaults().setObject(savedRecipesIDs, forKey: "savedRecipes")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     /*
     // MARK: - Navigation
 

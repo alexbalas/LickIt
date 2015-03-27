@@ -433,7 +433,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkedRecipeCell" rowHeight="111" id="4Eu-QF-wP4" customClass="BookmarkedRecipeCell" customModule="LickIt" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="BookmarkeRecipeCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkedRecipeCell" rowHeight="111" id="4Eu-QF-wP4" customClass="BookmarkedRecipeCell" customModule="LickIt" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Eu-QF-wP4" id="xDe-gg-0e1">
@@ -468,11 +468,16 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="xEg-JG-GKx" id="7Os-Sl-D0e"/>
+                                    <outlet property="delegate" destination="xEg-JG-GKx" id="zHL-cB-E8A"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="tableView" destination="4yn-Jy-Y1x" id="exA-XB-euz"/>
                         <outlet property="topImage" destination="LMA-hK-ZNc" id="X1R-gs-WMT"/>
                     </connections>
                 </viewController>

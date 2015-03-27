@@ -22,33 +22,8 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var recipeOne = Recipe()
-        recipeOne.name = "Prima Reteta"
-        recipeOne.numberOfLicks = 22
-        recipeOne.image = UIImage(named: "1")
-        recipeOne.time = 23
-        recipeOne.recipeDescription = "lot of work"
-        
-        var recipeTwo : Recipe = Recipe()
-        recipeTwo.name = "A doua reteta"
-        recipeTwo.numberOfLicks = 44
-        recipeTwo.image = UIImage(named: "2")
-        recipeTwo.time = 55
-        recipeTwo.recipeDescription = "just cook it"
-        
-        
-        var anotherRecipe : Recipe = Recipe()
-        anotherRecipe.numberOfLicks = 33
-        anotherRecipe.name = "A treia reteta"
-        anotherRecipe.image = UIImage(named: "3")
-        anotherRecipe.time = 11
-        anotherRecipe.recipeDescription = "nothing"
-                
-        recipes.append(recipeOne)
-        recipes.append(recipeTwo)
-        recipes.append(anotherRecipe)
-
-        
+        var recipeData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
+        self.recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipeData) as [Recipe]
                 
         var gesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTapped")
         self.whatCanICookImage.addGestureRecognizer(gesture)

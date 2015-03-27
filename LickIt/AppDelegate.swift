@@ -24,6 +24,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.leftViewController = storyboard.instantiateViewControllerWithIdentifier("SideMenuViewController") as SideMenuViewController
         self.sideMenu = RESideMenu(contentViewController: mainViewController, leftMenuViewController: leftViewController, rightMenuViewController: nil)
         self.window!.rootViewController = sideMenu
+        
+        var recipes = [Recipe]()
+        
+        var recipeOne = Recipe(ID : "123")
+        recipeOne.name = "Prima Reteta"
+        recipeOne.numberOfLicks = 22
+        recipeOne.image = UIImage(named: "1")
+        recipeOne.time = 23
+        recipeOne.recipeDescription = "lot of work"
+        
+        var recipeTwo : Recipe = Recipe(ID : "124")
+        recipeTwo.name = "A doua reteta"
+        recipeTwo.numberOfLicks = 44
+        recipeTwo.image = UIImage(named: "2")
+        recipeTwo.time = 55
+        recipeTwo.recipeDescription = "just cook it"
+        
+        
+        var anotherRecipe : Recipe = Recipe(ID : "125")
+        anotherRecipe.numberOfLicks = 33
+        anotherRecipe.name = "A treia reteta"
+        anotherRecipe.image = UIImage(named: "3")
+        anotherRecipe.time = 11
+        anotherRecipe.recipeDescription = "nothing"
+        
+        recipes.append(recipeOne)
+        recipes.append(recipeTwo)
+        recipes.append(anotherRecipe)
+        
+        var recipeData = NSKeyedArchiver.archivedDataWithRootObject(recipes)
+        NSUserDefaults.standardUserDefaults().setObject(recipeData, forKey: "recipes")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
         return true
     }
 
