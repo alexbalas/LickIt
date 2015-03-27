@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.rootViewController = sideMenu
         
         var recipes = [Recipe]()
+        var topRecipes = [Recipe]()
         
         var recipeOne = Recipe(ID : "123")
         recipeOne.name = "Prima Reteta"
@@ -52,9 +53,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         recipes.append(recipeOne)
         recipes.append(recipeTwo)
         recipes.append(anotherRecipe)
+        topRecipes.append(recipeOne)
+        topRecipes.append(recipeTwo)
         
         var recipeData = NSKeyedArchiver.archivedDataWithRootObject(recipes)
         NSUserDefaults.standardUserDefaults().setObject(recipeData, forKey: "recipes")
+        
+        recipeData = NSKeyedArchiver.archivedDataWithRootObject(topRecipes)
+        NSUserDefaults.standardUserDefaults().setObject(recipeData, forKey: "topRecipes")
+        
         NSUserDefaults.standardUserDefaults().synchronize()
         
         return true

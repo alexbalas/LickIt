@@ -10,14 +10,14 @@ import UIKit
 
 class TopWantedViewController: BaseTableViewController {
 
+    var topRecipes = [Recipe]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        var topRecipesData = NSUserDefaults.standardUserDefaults().objectForKey("topRecipes") as NSData
+        self.topRecipes = NSKeyedUnarchiver.unarchiveObjectWithData(topRecipesData) as [Recipe]
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,16 +36,31 @@ class TopWantedViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 1
+        return topRecipes.count+1
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
+        if(indexPath.row==0){
         var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedTopImageCell", forIndexPath: indexPath) as TopWantedTopImageCell
-        // Configure the cell...
-        self.tableView.rowHeight = 280.0
-        return cell
+            
+            self.tableView.rowHeight = 80.0
+            return cell
+
+        }
+        else{
+            var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as TopWantedRecipeCell
+            cell.nrOfLicks.text = "22"
+            cell.lickImage.image = UIImage(contentsOfFile: "food")
+            cell.recipeImage.image = topRecipes[indexPath.row-1].image
+            cell.recipeName.text = topRecipes[indexPath.row-1].name
+            cell.userImage.image = UIImage(contentsOfFile: "MenuButton")
+            cell.userName.text = "ALEX"
+            
+            return cell
+
+        }
+     //   return cell
     }
 
 

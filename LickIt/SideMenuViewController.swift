@@ -15,7 +15,7 @@ class SideMenuViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var firstMenuItem = MenuItem(image: UIImage(named: "1")!) { () -> (Void) in
+        var firstMenuItem = MenuItem(image: UIImage(named: "2")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
             var viewController = storyboard.instantiateViewControllerWithIdentifier("TopWantedViewContoller") as TopWantedViewController
@@ -24,7 +24,7 @@ class SideMenuViewController: UITableViewController {
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
-        var secondMenuItem = MenuItem(image: UIImage(named: "2")!) { () -> (Void) in
+        var secondMenuItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
             var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipes") as BookmarkedRecipeViewController
