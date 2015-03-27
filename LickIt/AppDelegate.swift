@@ -12,10 +12,18 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var mainViewController : UINavigationController?
+    var leftViewController : UIViewController?
+    var sideMenu : UIViewController?
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        
+        self.mainViewController = storyboard.instantiateViewControllerWithIdentifier("NavigationController") as? UINavigationController
+        self.leftViewController = storyboard.instantiateViewControllerWithIdentifier("SideMenuViewController") as SideMenuViewController
+        self.sideMenu = RESideMenu(contentViewController: mainViewController, leftMenuViewController: leftViewController, rightMenuViewController: nil)
+        self.window!.rootViewController = sideMenu
         return true
     }
 
