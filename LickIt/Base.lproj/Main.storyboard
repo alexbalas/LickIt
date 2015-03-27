@@ -19,7 +19,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="vYh-st-wt2" userLabel="Image View">
-                                            <rect key="frame" x="-42" y="0.0" width="116" height="112"/>
+                                            <rect key="frame" x="24" y="0.0" width="116" height="112"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -535,7 +535,7 @@
         <!--Meniu Principal-->
         <scene sceneID="wOk-5V-JNx">
             <objects>
-                <viewController title="Meniu Principal" id="pUA-Gr-NzZ" customClass="FirstMenuViewController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainMenuViewController" title="Meniu Principal" id="pUA-Gr-NzZ" customClass="FirstMenuViewController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kSZ-Bq-xAG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

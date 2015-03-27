@@ -34,6 +34,16 @@ class SideMenuViewController: UITableViewController {
 
         }
         
+        var mainMenuItem = MenuItem(image: UIImage(named: "1")!) { () -> (Void) in
+            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            
+            var viewController = storyboard.instantiateViewControllerWithIdentifier("MainMenuViewController") as FirstMenuViewController
+            self.sideMenuViewController.hideMenuViewController()
+            var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+        }
+
+        self.dataSource.append(mainMenuItem)
         self.dataSource.append(firstMenuItem)
         self.dataSource.append(secondMenuItem)
         // Uncomment the following line to preserve selection between presentations
