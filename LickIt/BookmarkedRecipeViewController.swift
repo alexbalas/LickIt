@@ -32,6 +32,7 @@ class BookmarkedRecipeViewController: BaseViewController, UITableViewDelegate, U
                 self.recipes.append(recipe)
             }
         }
+        
         // Do any additional setup after loading the view.
     }
 

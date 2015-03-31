@@ -15,7 +15,18 @@ class SideMenuViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var firstMenuItem = MenuItem(image: UIImage(named: "2")!) { () -> (Void) in
+        
+        
+        var mainMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
+            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            
+            var viewController = storyboard.instantiateViewControllerWithIdentifier("MainMenuViewController") as FirstMenuViewController
+            self.sideMenuViewController.hideMenuViewController()
+            var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+        }
+        
+        var topWantedMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
             var viewController = storyboard.instantiateViewControllerWithIdentifier("TopWantedViewContoller") as TopWantedViewController
@@ -24,7 +35,7 @@ class SideMenuViewController: UITableViewController {
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
-        var secondMenuItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
+        var bookmarkedMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
             var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipes") as BookmarkedRecipeViewController
@@ -34,18 +45,20 @@ class SideMenuViewController: UITableViewController {
 
         }
         
-        var mainMenuItem = MenuItem(image: UIImage(named: "1")!) { () -> (Void) in
+        var searchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("MainMenuViewController") as FirstMenuViewController
+            var viewController = storyboard.instantiateViewControllerWithIdentifier("SearchMenuViewController") as SearchingTableViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            
         }
-
+        
         self.dataSource.append(mainMenuItem)
-        self.dataSource.append(firstMenuItem)
-        self.dataSource.append(secondMenuItem)
+        self.dataSource.append(topWantedMenuItem)
+        self.dataSource.append(bookmarkedMenuItem)
+        self.dataSource.append(searchMenuItem)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -76,7 +89,9 @@ class SideMenuViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : SideMenuCell = tableView.dequeueReusableCellWithIdentifier("SideMenuCell", forIndexPath: indexPath) as SideMenuCell
         var currentMenuItem = self.dataSource[indexPath.row]
+        cell.imagine.frame = CGRect(x: 0, y: 0, width: 320, height: 81)
         cell.imagine.image = currentMenuItem.image
+        
         
 
     return cell

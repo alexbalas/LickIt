@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C5EE52F6-FDFD-4D22-BE52-C2C21D0525D3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LickIt</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>6B542A2D7163E80B3C2575F7336E0B36D9A4755B</key>
+		<string>https://github.com/alexbalas/LickIt.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>LickIt.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>6B542A2D7163E80B3C2575F7336E0B36D9A4755B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/alexbalas/LickIt.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>6B542A2D7163E80B3C2575F7336E0B36D9A4755B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6B542A2D7163E80B3C2575F7336E0B36D9A4755B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LickIt</string>
+		</dict>
+	</array>
+</dict>
+</plist>

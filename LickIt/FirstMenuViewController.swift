@@ -24,7 +24,9 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         var recipeData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
         self.recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipeData) as [Recipe]
-                
+        
+        recipes[0].image = UIImage(named: "cookingWith")
+        
         var gesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTapped")
         self.whatCanICookImage.addGestureRecognizer(gesture)
         

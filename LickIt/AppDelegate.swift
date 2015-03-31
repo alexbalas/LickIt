@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var recipeOne = Recipe(ID : "123")
         recipeOne.name = "Prima Reteta"
         recipeOne.numberOfLicks = 22
-        recipeOne.image = UIImage(named: "1")
+        recipeOne.image = UIImage(named: "cookingWith")
         recipeOne.time = 23
         recipeOne.recipeDescription = "lot of work"
         

@@ -10,9 +10,17 @@ import UIKit
 
 class SearchingTableViewController: BaseTableViewController {
 
+    var recipes=[Recipe]()
+    var foundRecipes = [Recipe]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var recipeData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
+        self.recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipeData) as [Recipe]
 
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -30,24 +38,44 @@ class SearchingTableViewController: BaseTableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return foundRecipes.count+1
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
+        
+        if(indexPath.row==0){
+            var cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as SearchingInputCell
+            if(cell.textLabel != nil){
+                cautare(cell.input.text)
+            }
+        
+        }
+        else{
+            var cell = tableView.dequeueReusableCellWithIdentifier("SearchingResultCell", forIndexPath: indexPath) as SearchingResultCell
+        }
         // Configure the cell...
-
+var cell=UITableViewCell()
         return cell
     }
-    */
+    
+    func cautare(userInput: String){
+
+    
+        for(var i=0;i<recipes.count;i++){
+            if((recipes[i].name?.hasPrefix(userInput)) != nil){
+                foundRecipes.append(recipes[i])
+            }
+            
+        }
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.
