@@ -14,6 +14,10 @@ class WeRecommandCell: UICollectionViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var image: UIImageView!
     
+    override func awakeFromNib() {
+    
+    }
+    
         
         // Configure the view for the selected state
     }

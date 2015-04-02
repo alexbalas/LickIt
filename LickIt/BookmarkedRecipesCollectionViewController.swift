@@ -74,10 +74,15 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
         
         cell.image.image = recipes[indexPath.row].image
         cell.name = "Spaghetti"
+        
+  //      var up = UISwipeGestureRecognizer(target: self, action: "showName")
+  //      cell.image.addGestureRecognizer(up)
         // Configure the cell
     
         return cell
     }
+    
+    
 
     // MARK: UICollectionViewDelegate
 

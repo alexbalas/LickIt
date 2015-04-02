@@ -22,7 +22,7 @@ class BookmarkedRecipeViewController: BaseViewController, UITableViewDelegate, U
         super.viewDidLoad()
         
         
-        
+   
         var recipesData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
         var recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipesData) as [Recipe]
         
