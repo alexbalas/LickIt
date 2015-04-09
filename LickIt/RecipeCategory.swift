@@ -13,3 +13,18 @@ class RecipeCategory: NSObject {
     var recipes : [Recipe]?
     
 }
+
+extension RecipeCategory{
+    func toPFObject() -> PFObject{
+        var object = PFObject(className: "RecipeCategory")
+        
+        if let name = self.name{
+            object["name"] = name
+        }
+        if let recipes = self.recipes{
+            object["recipes"] = recipes
+        }
+        return object
+    }
+
+}

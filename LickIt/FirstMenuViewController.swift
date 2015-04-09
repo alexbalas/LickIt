@@ -15,6 +15,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     var numberOfControllerToShow = -1
     
     
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var whatCanICookImage: UIImageView!
     
     
@@ -22,11 +23,12 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var recipeData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
-        self.recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipeData) as [Recipe]
-        
-  //      recipes[0].image = UIImage(named: "cookingWith")
-        
+   
+        var manager = RecipeManager()
+        manager.getAllRecipes { (recipes: [Recipe]) -> Void in
+            self.recipes = recipes
+            self.collectionView.reloadData()
+        }
         var gesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTapped")
         self.whatCanICookImage.addGestureRecognizer(gesture)
         
@@ -35,7 +37,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     func imageViewTapped() {
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipes") as BookmarkedRecipeViewController
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipesCollection") as BookmarkedRecipesCollectionViewController
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -48,7 +50,9 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         var cell : WeRecommandCell = collectionView.dequeueReusableCellWithReuseIdentifier("WeRecommandCell", forIndexPath: indexPath) as WeRecommandCell
         var recipe = recipes[indexPath.item]
         cell.licks.text = "\(recipe.numberOfLicks!)"
+        cell.licks.font = UIFont(name: "AmericanTypewriter", size: 14)
         cell.name.text = recipe.name
+        cell.name.font = UIFont(name: "Zapfino", size: 18)
         cell.image.image = recipe.image
         
         return cell

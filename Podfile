@@ -3,6 +3,7 @@
 
 target 'LickIt' do
 pod 'RESideMenu', '~> 4.0'
+pod 'Parse', '~> 1.7'
 end
 
 target 'LickItTests' do

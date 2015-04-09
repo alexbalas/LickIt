@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum Gender{
+enum Gender: Int{
     case Male
     case Female
 }
@@ -22,6 +22,48 @@ class User: NSObject {
     var password : String?
     var savedRecipes : [Recipe]?
     var myRecipes : [Recipe]?
+}
+
+extension User{
+    func toPFObject() -> PFObject{
+        var object = PFObject(className: "User")
+        if let name = self.name{
+            object["name"] = name
+        }
+        if let age = self.age{
+            object["age"] = age
+        }
+        if let gender = self.gender{
+            object["gender"] = gender.rawValue
+        }
+
+        if let image = self.image{
+            object["image"] = image
+        }
+        if let username = self.username{
+            object["username"] = username
+        }
+        if let password = self.password{
+            object["password"] = password
+        }
+        if let savedRecipes = self.savedRecipes{
+            object["savedRecipes"] = savedRecipes
+        }
+        if let myRecipe = self.myRecipes{
+            object["myRecipe"] = myRecipe
+        }
+    return object
+    }
     
-    
+    convenience init(object: PFObject) {
+        self.init()
+        self.name = object["name"] as? String
+        self.age = object["age"] as? Int
+        self.gender = Gender(rawValue: object["gender"] as Int)
+        self.image = object["image"] as? UIImage
+        self.username = object["username"] as? String
+        self.password = object["password"] as? String
+        self.savedRecipes = object["savedRecipes"] as? [Recipe]
+        self.myRecipes = object["savedRecipes"] as? [Recipe]
+    }
 }

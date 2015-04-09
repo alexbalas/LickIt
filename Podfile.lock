@@ -1,10 +1,16 @@
 PODS:
+  - Bolts (1.1.4)
+  - Parse (1.7.1):
+    - Bolts (~> 1.1)
   - RESideMenu (4.0.7)
 
 DEPENDENCIES:
+  - Parse (~> 1.7)
   - RESideMenu (~> 4.0)
 
 SPEC CHECKSUMS:
-  RESideMenu: a9c1cd2e64e60e1d3166ddac01a83e215a0e4d30
+  Bolts: f8e2f94edbf9fec7bb8de5ecaaa3aa6b7de6f64e
+  Parse: fa8ec29de6d82035635986c11946299fb1b38316
+  RESideMenu: f24c508404b49c667344c54aba7e590883533958
 
 COCOAPODS: 0.35.0

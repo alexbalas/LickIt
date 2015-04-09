@@ -29,7 +29,7 @@ class Recipe: NSObject, NSCoding {
         self.name = aDecoder.decodeObjectForKey("name") as? String
         self.numberOfLicks = Int(aDecoder.decodeIntForKey("numberOfLicks"))
         self.time = Int(aDecoder.decodeIntForKey("time"))
-        self.image = UIImage(data: aDecoder.decodeObjectForKey("image") as NSData)
+        self.image = UIImage(contentsOfFile: "self.image") as UIImage!
         self.recipeDescription = aDecoder.decodeObjectForKey("recipeDescription") as? String
         
     }
@@ -44,4 +44,67 @@ class Recipe: NSObject, NSCoding {
     }
     
    
+}
+
+extension Recipe{
+    func toPFObject() -> PFObject{
+    
+        var object = PFObject(className: "Recipe")
+        object["ID"] = self.ID
+        if let name = self.name {
+            object["name"] = name
+        }
+        if let numberOfLicks = self.numberOfLicks {
+            object["numberOfLicks"] = numberOfLicks
+        }
+        if let ingredients = self.ingredients{
+            object["ingredients"] = ingredients
+        }
+        if let time = self.time{
+            object["time"] = time
+        }
+        if let categories = self.categories{
+            object["categories"] = categories
+        }
+        if let image = self.image{
+            object["image"] = image
+        }
+        if let description = self.recipeDescription{
+            object["recipeDescription"] = description
+        }
+        if let comms = self.comments{
+            object["comments"] = comms
+        }
+        return object
+    }
+    
+    convenience init(object: PFObject){
+        self.init(ID: object["ID"] as String)
+        if let name = object["name"] as? String{
+            self.name = name
+        }
+        if let nrLicks = object["numberOfLicks"] as? Int{
+            self.numberOfLicks = nrLicks+1
+        }
+        if let ingredients = object["ingredients"] as? [Ingredient]{
+            self.ingredients = ingredients
+        }
+        if let time = object["time"] as? Int{
+            self.time = time
+        }
+        if let categories = object["categories"] as? [RecipeCategory]{
+            self.categories = categories
+        }
+        if let image = object["image"] as? UIImage{
+            self.image = UIImage(contentsOfFile: <#String#>)
+        }
+        if let descr = object["recipeDescription"] as? String{
+            self.recipeDescription = descr
+        }
+        if let comms = object["comments"] as? [Comment]{
+            self.comments = comms
+        }
+        
+        
+    }
 }

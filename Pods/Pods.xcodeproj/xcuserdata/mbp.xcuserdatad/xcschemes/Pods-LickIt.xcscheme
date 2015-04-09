@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3D9D54475D11CDD005D46C92"
+               BlueprintIdentifier = "EFA10530973FED16393CE2D4"
                BuildableName = "libPods-LickIt.a"
                BlueprintName = "Pods-LickIt"
                ReferencedContainer = "container:Pods.xcodeproj">

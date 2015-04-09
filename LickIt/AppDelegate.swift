@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.leftViewController = storyboard.instantiateViewControllerWithIdentifier("SideMenuViewController") as SideMenuViewController
         self.sideMenu = RESideMenu(contentViewController: mainViewController, leftMenuViewController: leftViewController, rightMenuViewController: nil)
         self.window!.rootViewController = sideMenu
-        
+ /*
         var recipes = [Recipe]()
         var topRecipes = [Recipe]()
         
@@ -63,6 +63,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSUserDefaults.standardUserDefaults().setObject(recipeData, forKey: "topRecipes")
         
         NSUserDefaults.standardUserDefaults().synchronize()
+        */
+        Parse.enableLocalDatastore()
+        Parse.setApplicationId("LwxamL5Rx5AOtWuSDhwuVeYPLW7XXwKKBBhvx75g", clientKey: "rNxWpsRBxMuctjLoZ4PcLFa0izmwPl6FxzZuto3W")
+        
         
         return true
     }

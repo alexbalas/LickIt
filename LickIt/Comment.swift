@@ -14,3 +14,24 @@ class Comment: NSObject {
     var time : Int?
     var content : String?
 }
+
+extension Comment{
+    func toPFObject() -> PFObject{
+        var object = PFObject(className: "Comment")
+        
+        if let user = self.user{
+            object["user"] = user
+        }
+        if let date = self.date{
+            object["date"] = date
+        }
+        if let time = self.time{
+            object["time"] = time
+        }
+        if let content = self.content{
+            object["content"] = content
+        }
+        
+        return object
+    }
+}

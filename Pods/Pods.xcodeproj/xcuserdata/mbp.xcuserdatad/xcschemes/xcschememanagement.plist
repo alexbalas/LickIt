@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-LickIt-Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-LickIt-Parse.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-LickIt-RESideMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3D9D54475D11CDD005D46C92</key>
+		<key>0A182199BA709A4C36280FCD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C0F42C531531DBDE479A6D86</key>
+		<key>4F7BCE88202CB0D16E4DC0CD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6F50DE273E49564F78D1D084</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFA10530973FED16393CE2D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

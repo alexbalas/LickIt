@@ -17,7 +17,7 @@ class SideMenuViewController: UITableViewController {
         super.viewDidLoad()
         
         
-        var mainMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
+        var mainMenuItem = MenuItem(image: UIImage(named: "home")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
             var viewController = storyboard.instantiateViewControllerWithIdentifier("MainMenuViewController") as FirstMenuViewController
@@ -26,7 +26,7 @@ class SideMenuViewController: UITableViewController {
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
-        var topWantedMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
+        var topWantedMenuItem = MenuItem(image: UIImage(named: "top wanted")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
             var viewController = storyboard.instantiateViewControllerWithIdentifier("TopWantedViewContoller") as TopWantedViewController
@@ -55,7 +55,7 @@ class SideMenuViewController: UITableViewController {
             
         }
         
-        var bookmarkedRecipesMenuItem = MenuItem(image: UIImage(named: "1")!) { () -> (Void) in
+        var bookmarkedRecipesMenuItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipesCollection") as BookmarkedRecipesCollectionViewController
             self.sideMenuViewController.hideMenuViewController()

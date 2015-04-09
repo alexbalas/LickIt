@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeViewController: BaseTableViewController, InfoRecipeCellDelegate {
+class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
 
     var recipe: Recipe!
     
