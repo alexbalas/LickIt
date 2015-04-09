@@ -16,7 +16,7 @@ class Recipe: NSObject, NSCoding {
     var ingredients : [Ingredient]?
     var time : Int!
     var categories : [RecipeCategory]?
-    var image : UIImage?
+    var image : PFFile?
     var recipeDescription : String?
     var comments : [Comment]?
     
@@ -29,7 +29,7 @@ class Recipe: NSObject, NSCoding {
         self.name = aDecoder.decodeObjectForKey("name") as? String
         self.numberOfLicks = Int(aDecoder.decodeIntForKey("numberOfLicks"))
         self.time = Int(aDecoder.decodeIntForKey("time"))
-        self.image = UIImage(contentsOfFile: "self.image") as UIImage!
+//        self.image = UIImage(contentsOfFile: "self.image") as UIImage!
         self.recipeDescription = aDecoder.decodeObjectForKey("recipeDescription") as? String
         
     }
@@ -38,7 +38,7 @@ class Recipe: NSObject, NSCoding {
         aCoder.encodeObject(self.name, forKey: "name")
         aCoder.encodeInteger(self.numberOfLicks!, forKey: "numberOfLicks")
         aCoder.encodeInteger(self.time, forKey: "time")
-        aCoder.encodeObject(UIImagePNGRepresentation(self.image), forKey: "image")
+//        aCoder.encodeObject(UIImagePNGRepresentation(self.image), forKey: "image")
         aCoder.encodeObject(self.recipeDescription, forKey: "recipeDescription")
         
     }
@@ -48,7 +48,7 @@ class Recipe: NSObject, NSCoding {
 
 extension Recipe{
     func toPFObject() -> PFObject{
-    
+        
         var object = PFObject(className: "Recipe")
         object["ID"] = self.ID
         if let name = self.name {
@@ -68,6 +68,8 @@ extension Recipe{
         }
         if let image = self.image{
             object["image"] = image
+            println("vjvj")
+
         }
         if let description = self.recipeDescription{
             object["recipeDescription"] = description
@@ -84,7 +86,7 @@ extension Recipe{
             self.name = name
         }
         if let nrLicks = object["numberOfLicks"] as? Int{
-            self.numberOfLicks = nrLicks+1
+            self.numberOfLicks = nrLicks
         }
         if let ingredients = object["ingredients"] as? [Ingredient]{
             self.ingredients = ingredients
@@ -95,8 +97,9 @@ extension Recipe{
         if let categories = object["categories"] as? [RecipeCategory]{
             self.categories = categories
         }
-        if let image = object["image"] as? UIImage{
-            self.image = UIImage(contentsOfFile: <#String#>)
+        if let image = object["image"] as? PFFile{
+            self.image = image
+            println("daa")
         }
         if let descr = object["recipeDescription"] as? String{
             self.recipeDescription = descr

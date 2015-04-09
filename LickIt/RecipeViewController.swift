@@ -29,7 +29,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
         if(indexPath.row==0) {
         var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as ImageRecipeCell
             
-            cell.imagine.image = recipe.image
+            cell.imagine.image = UIImage(contentsOfFile: "recipe.image")
             self.tableView.rowHeight = 140.0
             
             return cell

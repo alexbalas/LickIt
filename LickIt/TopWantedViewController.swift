@@ -52,7 +52,7 @@ class TopWantedViewController: BaseTableViewController {
             var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as TopWantedRecipeCell
             cell.nrOfLicks.text = "22"
             cell.lickImage.image = UIImage(contentsOfFile: "food")
-            cell.recipeImage.image = topRecipes[indexPath.row-1].image
+   //         cell.recipeImage.image = topRecipes[indexPath.row-1].image
             cell.recipeName.text = topRecipes[indexPath.row-1].name
             cell.userImage.image = UIImage(contentsOfFile: "MenuButton")
             cell.userName.text = "ALEX"

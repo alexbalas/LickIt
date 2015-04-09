@@ -53,8 +53,9 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         cell.licks.font = UIFont(name: "AmericanTypewriter", size: 14)
         cell.name.text = recipe.name
         cell.name.font = UIFont(name: "Zapfino", size: 18)
-        cell.image.image = recipe.image
-        
+        if let imagine = recipe.image as PFFile!{
+            cell.image.image = UIImage(contentsOfFile: recipe.image!.name) as UIImage!
+        }
         return cell
     }
     

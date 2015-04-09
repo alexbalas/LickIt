@@ -72,7 +72,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
        
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as BookmarkedRecipesCell
         
-        cell.image.image = recipes[indexPath.row].image
+ //       cell.image.image = recipes[indexPath.row].image
         cell.name = "Spaghetti"
         
   //      var up = UISwipeGestureRecognizer(target: self, action: "showName")
