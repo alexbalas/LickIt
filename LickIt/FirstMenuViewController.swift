@@ -26,6 +26,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
    
         var manager = RecipeManager()
         manager.getAllRecipes { (recipes: [Recipe]) -> Void in
+            println("dajkcnakjsdn")
             self.recipes = recipes
             self.collectionView.reloadData()
         }
@@ -53,8 +54,11 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         cell.licks.font = UIFont(name: "AmericanTypewriter", size: 14)
         cell.name.text = recipe.name
         cell.name.font = UIFont(name: "Zapfino", size: 18)
-        if let imagine = recipe.image as PFFile!{
-            cell.image.image = UIImage(contentsOfFile: recipe.image!.name) as UIImage!
+        recipes[indexPath.row].image?.getDataInBackgroundWithBlock {
+            (imageData: NSData!, error: NSError!) -> Void in
+            if !(error != nil) {
+                cell.image.image = UIImage(data:imageData)
+            }
         }
         return cell
     }

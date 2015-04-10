@@ -559,7 +559,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="imagine" id="mVn-hP-Beh">
-                                            <rect key="frame" x="0.0" y="0.0" width="960" height="243"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1600" height="405"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                     </subviews>

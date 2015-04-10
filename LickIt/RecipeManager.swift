@@ -18,11 +18,13 @@ class RecipeManager: NSObject {
         var query = PFQuery(className: "Recipe")
         query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error) -> Void in
           var recipes = [Recipe]()
+//            if objects != nil{
             for object in objects {
                 var recipe = Recipe(object: object as PFObject)
                 recipes.append(recipe)
-            }
-            completionBlock(recipes)
+                }
+                completionBlock(recipes)
+            //}
         })
     }
 }

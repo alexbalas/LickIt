@@ -15,8 +15,12 @@ class TopWantedViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var topRecipesData = NSUserDefaults.standardUserDefaults().objectForKey("topRecipes") as NSData
-        self.topRecipes = NSKeyedUnarchiver.unarchiveObjectWithData(topRecipesData) as [Recipe]
+        var manager = RecipeManager()
+        manager.getAllRecipes { (recipes: [Recipe]) -> Void in
+            println("dajkcnakjsdn")
+            self.topRecipes = recipes
+            self.tableView.reloadData()
+        }
         
     }
 
@@ -50,8 +54,16 @@ class TopWantedViewController: BaseTableViewController {
         }
         else{
             var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as TopWantedRecipeCell
-            cell.nrOfLicks.text = "22"
-            cell.lickImage.image = UIImage(contentsOfFile: "food")
+            cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row-1].numberOfLicks!)"
+            topRecipes[indexPath.row-1].image?.getDataInBackgroundWithBlock {
+                (imageData: NSData!, error: NSError!) -> Void in
+                if !(error != nil) {
+                    cell.recipeImage.image = UIImage(data:imageData)
+                }
+            }
+
+       //     cell.recipeImage.image = UIImage(CIImage: topRecipes[indexPath.row-1].image)
+            //UIImage(named: "\(topRecipes[indexPath.row-1].image)")
    //         cell.recipeImage.image = topRecipes[indexPath.row-1].image
             cell.recipeName.text = topRecipes[indexPath.row-1].name
             cell.userImage.image = UIImage(contentsOfFile: "MenuButton")
@@ -60,7 +72,16 @@ class TopWantedViewController: BaseTableViewController {
             return cell
 
         }
-     //   return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if(indexPath.row > 0){
+        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
+        
+        viewController.recipe = topRecipes[indexPath.row-1]
+        self.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
 
 

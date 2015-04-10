@@ -19,15 +19,14 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var recipesData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
-        var recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipesData) as [Recipe]
-        
-        savedRecipesIDs = NSUserDefaults.standardUserDefaults().arrayForKey("savedRecipes") as [String]
-        for recipe in recipes {
-            if(contains(savedRecipesIDs, recipe.ID)){
-                self.recipes.append(recipe)
-            }
+        var manager = RecipeManager()
+        manager.getAllRecipes { (recipes: [Recipe]) -> Void in
+            println("dajkcnakjsdn")
+            self.recipes = recipes
+            self.collectionView?.reloadData()
         }
+        
+        //ar trebui o triere a retetelor,doar cele salvate sa fie afisate
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -68,12 +67,20 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
-  //      var cell = collectionView.dequeueReusableCellWithIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as BookmarkedRecipeCell
-       
+
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as BookmarkedRecipesCell
         
- //       cell.image.image = recipes[indexPath.row].image
-        cell.name = "Spaghetti"
+        
+        
+        recipes[indexPath.row].image?.getDataInBackgroundWithBlock {
+        (imageData: NSData!, error: NSError!) -> Void in
+        if !(error != nil) {
+            cell.image.image = UIImage(data:imageData)
+        }
+        }
+        
+        
+        cell.name = "\(recipes[indexPath.row].name!)"
         
   //      var up = UISwipeGestureRecognizer(target: self, action: "showName")
   //      cell.image.addGestureRecognizer(up)

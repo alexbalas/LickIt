@@ -48,7 +48,7 @@ class BookmarkedRecipeViewController: BaseViewController, UITableViewDelegate, U
         var cell = tableView.dequeueReusableCellWithIdentifier("BookmarkedRecipeCell", forIndexPath: indexPath) as BookmarkedRecipeCell
         
         cell.name.text = recipes[indexPath.row].name
-        cell.imagine.image = UIImage(contentsOfFile: "recipes[indexPath.row].image")
+        cell.imagine.image = UIImage(named: "2")
         
         return cell
     }
