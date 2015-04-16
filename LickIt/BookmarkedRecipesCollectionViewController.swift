@@ -25,6 +25,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
             self.recipes = recipes
             self.collectionView?.reloadData()
         }
+
         
         //ar trebui o triere a retetelor,doar cele salvate sa fie afisate
         
@@ -71,25 +72,29 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as BookmarkedRecipesCell
         
         
-        
-        recipes[indexPath.row].image?.getDataInBackgroundWithBlock {
+   
+        recipes[indexPath.item].image?.getDataInBackgroundWithBlock {
         (imageData: NSData!, error: NSError!) -> Void in
         if !(error != nil) {
             cell.image.image = UIImage(data:imageData)
         }
         }
-        
-        
-        cell.name = "\(recipes[indexPath.row].name!)"
-        
-  //      var up = UISwipeGestureRecognizer(target: self, action: "showName")
-  //      cell.image.addGestureRecognizer(up)
-        // Configure the cell
-    
+
+        cell.name = "\(recipes[indexPath.item].name!)"
+
         return cell
     }
     
-    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
+        
+        viewController.recipe = recipes[indexPath.item]
+        self.navigationController?.pushViewController(viewController, animated: true)
+
+    }
 
     // MARK: UICollectionViewDelegate
 

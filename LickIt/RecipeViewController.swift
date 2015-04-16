@@ -29,10 +29,21 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
         if(indexPath.row==0) {
         var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as ImageRecipeCell
             
-            cell.imagine.image = UIImage(contentsOfFile: "recipe.image")
-            self.tableView.rowHeight = 140.0
+           // cell.imagine.image = UIImage(contentsOfFile: "recipe.image")
+            recipe.image?.getDataInBackgroundWithBlock {
+                (imageData: NSData!, error: NSError!) -> Void in
+                if !(error != nil) {
+                    var img = UIImage(data:imageData)
+                    
+                    cell.imagine.image = img
+
+                }
+            }
+            self.tableView.rowHeight = 110.0
+   //      cell.imagine.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
+   //      cell.imagine.sizeToFit()
             
-            return cell
+        return cell
         }
         else{
 

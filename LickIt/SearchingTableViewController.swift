@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchingTableViewController: BaseTableViewController {
+class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate {
 
     var recipes=[Recipe]()
     var foundRecipes = [Recipe]()
@@ -52,17 +52,20 @@ class SearchingTableViewController: BaseTableViewController {
         
         if(indexPath.row==0){
             var cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as SearchingInputCell
-            if(cell.textLabel != nil){
+          //  cell.input.delegate = self
+          //  cell.bringSubviewToFront(cell.input)
+            if(cell.input != nil){
                 cautare(cell.input.text)
             }
-        
+            self.tableView.rowHeight = 100
+        return cell
         }
         else{
             var cell = tableView.dequeueReusableCellWithIdentifier("SearchingResultCell", forIndexPath: indexPath) as SearchingResultCell
+            return cell
         }
         // Configure the cell...
-var cell=UITableViewCell()
-        return cell
+        
     }
     
     func cautare(userInput: String){

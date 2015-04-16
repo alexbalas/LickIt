@@ -16,11 +16,11 @@ class TopWantedViewController: BaseTableViewController {
         super.viewDidLoad()
 
         var manager = RecipeManager()
-        manager.getAllRecipes { (recipes: [Recipe]) -> Void in
+        manager.getTopRecipes(4, completionBlock: { (recipes) -> Void in
             println("dajkcnakjsdn")
             self.topRecipes = recipes
             self.tableView.reloadData()
-        }
+        })
         
     }
 

@@ -14,6 +14,8 @@ class BookmarkedRecipesCell: UICollectionViewCell{
     @IBOutlet weak var image: UIImageView!
     var name = String()
     var efect = 0
+    var visualEffectView : UIVisualEffectView!
+    var numeReteta : UILabel!
     
     override func awakeFromNib() {
         var up = UISwipeGestureRecognizer(target: self, action: "showName")
@@ -24,39 +26,32 @@ class BookmarkedRecipesCell: UICollectionViewCell{
         down.direction = UISwipeGestureRecognizerDirection.Down
         self.addGestureRecognizer(down)
         
+        visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        visualEffectView.frame = self.image.bounds
+        visualEffectView.hidden = true
+        
+        self.addSubview(visualEffectView)
+
+        numeReteta = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: (self.frame.height)*3/2))
+
+        numeReteta.font = UIFont(name: "CourierNewPS-ItalicMT", size: 18)
+        numeReteta.hidden = true
+        self.addSubview(numeReteta)
+
+        
     }
 
 
     func showName(){
-        if(self.efect==0){
-        var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        visualEffectView.frame = self.image.bounds
-        visualEffectView.alpha = 0.85
-
-        self.addSubview(visualEffectView)
-        
-            
-        var numeReteta = UILabel()
         numeReteta.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: (self.frame.height)*3/2)
         numeReteta.text = self.name
-        numeReteta.font = UIFont(name: "CourierNewPS-ItalicMT", size: 18)
-        self.addSubview(numeReteta)
-            
-            
-        self.efect++
-        }
+            self.visualEffectView.hidden = false
+                self.numeReteta.hidden = false
     }
     func hideName(){
-        if(self.efect==1)
-        {
-            var i = 0
-            var subViews = self.subviews
-            
-            self.subviews.last?.removeFromSuperview()
-            self.subviews.last?.removeFromSuperview()
-            self.efect--
-           
+      self.numeReteta.hidden = true
+        self.visualEffectView.hidden = true
     }
 }
     
-}
+
