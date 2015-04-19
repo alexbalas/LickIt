@@ -14,18 +14,65 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        println(recipe.numberOfLicks)
-        println(recipe.time)
         // Do any additional setup after loading the view.
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 5
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //var cell : UITableViewCell = UITableViewCell()
+
+        switch indexPath.row {
+                case 1:
+            var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as InfoRecipeCell
+            cell.delegate = self
+            cell.time.text = "\(recipe.time!)"
+            cell.licks.text = "\(recipe.numberOfLicks!)"
+            
+            cell.saveButton = UIButton()
+            return cell
+        case 2:
+            var cell = tableView.dequeueReusableCellWithIdentifier("CategoriesRecipeCell", forIndexPath: indexPath) as CategoriesRecipeCell
+            
+           // if(recipe.categorieString? != nil){
+           //     cell.categoriesLabel.text = recipe.categorieString
+            //    println("mjva")
+           // }
+            return cell
+        case 3:
+            var cell = tableView.dequeueReusableCellWithIdentifier("IngredientsRecipeCell", forIndexPath: indexPath) as IngredientsRecipeCell
+            cell.ingredientName.text = recipe.ingredientsString?.description
+            return cell
+        case 4:
+            var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as HowToDoItCell
+            cell.content.text = recipe.recipeDescription
+            return cell
+
+            
+        default:
+            var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as ImageRecipeCell
+            
+            recipe.image?.getDataInBackgroundWithBlock {
+                (imageData: NSData!, error: NSError!) -> Void in
+                if !(error != nil) {
+                    var img = UIImage(data:imageData)
+                    
+                    cell.imagine.image = img
+                    
+                }
+            }
+            self.tableView.rowHeight = 110.0
+            //      cell.imagine.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
+            //      cell.imagine.sizeToFit()
+            
+            return cell
+
+        }
         
+        
+        
+        /*
         if(indexPath.row==0) {
         var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as ImageRecipeCell
             
@@ -45,7 +92,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
             
         return cell
         }
-        else{
+        else{if(indexPath.row == 1){
 
         var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as InfoRecipeCell
             cell.delegate = self
@@ -54,8 +101,11 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
 
             cell.saveButton = UIButton()
             return cell
-           
+            }
         }
+*/
+
+
     }
     
     
