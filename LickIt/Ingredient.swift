@@ -10,7 +10,7 @@ import UIKit
 
 class Ingredient: NSObject {
     var name : String?
-    var image : UIImage?
+    var image : PFFile?
     
 }
 extension Ingredient{
@@ -25,4 +25,13 @@ extension Ingredient{
         }
         return object
 }
+    convenience init(object: PFObject){
+        self.init()
+        if let name = object["name"] as? String{
+            self.name = name
+        }
+        if let image = object["image"] as? PFFile{
+            self.image = image
+        }
+    }
 }

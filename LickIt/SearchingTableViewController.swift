@@ -13,11 +13,16 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
     var recipes=[Recipe]()
     var foundRecipes = [Recipe]()
     
+    
+  //  @IBAction func searchButtonPressed(sender: AnyObject) {}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        var manager = RecipeManager()
+    //    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: "searchButtonPressed:")
         
-        var recipeData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
-        self.recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipeData) as [Recipe]
+    //    var recipeData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
+     //   self.recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipeData) as [Recipe]
 
         
         
@@ -52,11 +57,7 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
         
         if(indexPath.row==0){
             var cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as SearchingInputCell
-          //  cell.input.delegate = self
-          //  cell.bringSubviewToFront(cell.input)
-            if(cell.input != nil){
-                cautare(cell.input.text)
-            }
+          
             self.tableView.rowHeight = 100
         return cell
         }
@@ -78,6 +79,7 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
             
         }
     }
+    
     
 
     /*

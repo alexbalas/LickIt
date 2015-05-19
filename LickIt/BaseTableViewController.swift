@@ -22,7 +22,11 @@ class BaseTableViewController: UITableViewController {
         menuButton.addTarget(self, action: "menuButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         var menuButtonItem = UIBarButtonItem(customView: menuButton)
         self.navigationItem.leftBarButtonItem = menuButtonItem
-        // Do any additional setup after loading the view.
+        
+      
+        
+    
+        // Do any addition//al setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {

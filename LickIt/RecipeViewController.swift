@@ -8,12 +8,19 @@
 
 import UIKit
 
-class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
+class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate{
 
     var recipe: Recipe!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var recipeManager = RecipeManager()
+        recipeManager.getIngredientsForRecipe(self.recipe, completionBlock: { (ingredients) -> Void in
+            self.recipe.ingredients = ingredients
+            self.tableView.reloadData()
+        })
+        
         // Do any additional setup after loading the view.
     }
     
@@ -22,7 +29,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
+ 
         switch indexPath.row {
                 case 1:
             var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as InfoRecipeCell
@@ -42,11 +49,17 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
             return cell
         case 3:
             var cell = tableView.dequeueReusableCellWithIdentifier("IngredientsRecipeCell", forIndexPath: indexPath) as IngredientsRecipeCell
-            cell.ingredientName.text = recipe.ingredientsString?.description
+            if let ingredients = recipe.ingredients{
+                
+            cell.ingredients = ingredients
+            cell.collectionView.reloadData()
+            
+            }
             return cell
         case 4:
             var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as HowToDoItCell
             cell.content.text = recipe.recipeDescription
+            
             return cell
 
             
@@ -71,7 +84,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
         }
         
         
-        
+    }
         /*
         if(indexPath.row==0) {
         var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as ImageRecipeCell
@@ -106,6 +119,21 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
 */
 
 
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == 4 {
+            var atribute = [
+                NSFontAttributeName : UIFont.systemFontOfSize(14)]
+            var dimensions = (self.recipe.recipeDescription! as NSString).boundingRectWithSize(CGSize(width: self.view.frame.size.width, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: atribute, context: nil)
+            return dimensions.height+145
+        }
+        else if indexPath.row == 3 {
+            return 70
+        }
+/*        var footerView = self.tableView.tableFooterView;
+        self.tableView.tableFooterView = nil;
+        self.tableView.tableFooterView = footerView;
+ */       return 100
+        
     }
     
     
@@ -127,6 +155,11 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate {
         NSUserDefaults.standardUserDefaults().setObject(savedRecipesIDs, forKey: "savedRecipes")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println(indexPath.row)
+    }
+    
     
     /*
     // MARK: - Navigation

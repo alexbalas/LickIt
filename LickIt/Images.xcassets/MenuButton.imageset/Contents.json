@@ -2,7 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "10847862_356243991222601_7185529859052780571_n-2.jpg"
     },
     {
       "idiom" : "universal",
@@ -11,7 +12,8 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "10847862_356243991222601_7185529859052780571_n-2-1.jpg"
     }
   ],
   "info" : {

@@ -14,13 +14,14 @@ class Recipe: NSObject, NSCoding {
     var name : String?
     var numberOfLicks : Int?
     var ingredients : [Ingredient]?
-    var ingredientsString : [String]?
     var time : Int!
     var categories : [RecipeCategory]?
     var categorieString : String?
     var image : PFFile?
     var recipeDescription : String?
     var comments : [Comment]?
+    var ingredientsRelation : PFRelation?
+    
     
     init (ID : String){
         self.ID = ID
@@ -78,9 +79,7 @@ extension Recipe{
         if let comms = self.comments{
             object["comments"] = comms
         }
-        if let ingredientss = self.ingredientsString{
-            object["ingredients"] = ingredientss
-        }
+       
         if let categs = self.categorieString{
             object["categories"] = categs
         }
@@ -113,8 +112,9 @@ extension Recipe{
         if let comms = object["comments"] as? [Comment]{
             self.comments = comms
         }
-        if let ingredientss = object["ingredients"] as? [String]{
-            self.ingredientsString = ingredientss
+        if let ingredientsRelation = object["ingredients"] as? PFRelation{
+            self.ingredientsRelation = ingredientsRelation
+        
         }
         if let categs = object["categories"] as? String{
             self.categorieString = categs

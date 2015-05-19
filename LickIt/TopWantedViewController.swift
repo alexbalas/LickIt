@@ -17,7 +17,6 @@ class TopWantedViewController: BaseTableViewController {
 
         var manager = RecipeManager()
         manager.getTopRecipes(4, completionBlock: { (recipes) -> Void in
-            println("dajkcnakjsdn")
             self.topRecipes = recipes
             self.tableView.reloadData()
         })

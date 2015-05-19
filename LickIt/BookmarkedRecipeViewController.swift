@@ -23,10 +23,10 @@ class BookmarkedRecipeViewController: BaseViewController, UITableViewDelegate, U
         
         
    
-        var recipesData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
-        var recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipesData) as [Recipe]
+ //       var recipesData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
+ //       var recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipesData) as [Recipe]
         
-        savedRecipesIDs = NSUserDefaults.standardUserDefaults().arrayForKey("savedRecipes") as [String]
+ //       savedRecipesIDs = NSUserDefaults.standardUserDefaults().arrayForKey("savedRecipes") as [String]
         for recipe in recipes {
             if(contains(savedRecipesIDs, recipe.ID)){
                 self.recipes.append(recipe)

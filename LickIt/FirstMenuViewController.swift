@@ -19,7 +19,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     @IBOutlet weak var whatCanICookImage: UIImageView!
     
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,6 +34,34 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         self.whatCanICookImage.addGestureRecognizer(gesture)
         
              // Do any additional setup after loading the view.
+        
+    
+        var loginViewController = PFLogInViewController()
+        var users = [PFUser]()
+        var user = PFUser()
+      //  if(user.isNew){
+  
+        /*manager.getUsers(users, completionBlock: { (user) -> Void in
+            users = user
+            
+        })
+        for user in users{
+            println(user.username); print("1")
+        }
+        
+        for user in users{
+            if(!(PFFacebookUtils.isLinkedWithUser(user/*.toPFObject()*/))){
+            loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
+            self.presentViewController(loginViewController, animated: true) { () -> Void in
+    //    }
+        }
+
+            }
+        }
+        //else{
+  //          println(user.username)
+    //        println(user.password)
+        //}*/
     }
     
     func imageViewTapped() {
@@ -76,7 +104,10 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
 
+    }
+    
     /*
     // MARK: - Navigation
 
