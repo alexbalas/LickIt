@@ -35,10 +35,10 @@ class SideMenuViewController: UITableViewController {
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
-        var bookmarkedMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
+        var ingredientSearchMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipes") as BookmarkedRecipeViewController
+            var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchController") as IngredientSearchController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
@@ -65,7 +65,7 @@ class SideMenuViewController: UITableViewController {
         
         self.dataSource.append(mainMenuItem)
         self.dataSource.append(topWantedMenuItem)
-        self.dataSource.append(bookmarkedMenuItem)
+        self.dataSource.append(ingredientSearchMenuItem)
         self.dataSource.append(searchMenuItem)
         self.dataSource.append(bookmarkedRecipesMenuItem)
         // Uncomment the following line to preserve selection between presentations

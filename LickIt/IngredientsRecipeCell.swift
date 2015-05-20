@@ -21,7 +21,7 @@ class IngredientsRecipeCell: UITableViewCell, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell : OneIngredientCollectionViewCell
+        var cell = OneIngredientCollectionViewCell()
         cell = collectionView.dequeueReusableCellWithReuseIdentifier("OneIngredientRecipeCell", forIndexPath: indexPath) as OneIngredientCollectionViewCell
         
         ingredients[indexPath.item].image?.getDataInBackgroundWithBlock {
@@ -29,8 +29,8 @@ class IngredientsRecipeCell: UITableViewCell, UICollectionViewDataSource, UIColl
             if !(error != nil) {
                 var img = UIImage(data:imageData)
                 
-                cell.image.image = img
-                
+                cell.image.image = img!
+                cell.name = "ing"
             }
         }
         

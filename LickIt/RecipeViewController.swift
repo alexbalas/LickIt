@@ -15,6 +15,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = self.recipe.name
         var recipeManager = RecipeManager()
         recipeManager.getIngredientsForRecipe(self.recipe, completionBlock: { (ingredients) -> Void in
             self.recipe.ingredients = ingredients

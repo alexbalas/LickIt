@@ -44,7 +44,7 @@ class TopWantedViewController: BaseTableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(indexPath.row==0){
+        if(indexPath.row == 0){
         var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedTopImageCell", forIndexPath: indexPath) as TopWantedTopImageCell
             
             self.tableView.rowHeight = 80.0
@@ -53,18 +53,18 @@ class TopWantedViewController: BaseTableViewController {
         }
         else{
             var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as TopWantedRecipeCell
-            cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row-1].numberOfLicks!)"
-            topRecipes[indexPath.row-1].image?.getDataInBackgroundWithBlock {
+            topRecipes[indexPath.row].image?.getDataInBackgroundWithBlock {
                 (imageData: NSData!, error: NSError!) -> Void in
                 if !(error != nil) {
                     cell.recipeImage.image = UIImage(data:imageData)
                 }
             }
+            cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row].numberOfLicks!)"
 
        //     cell.recipeImage.image = UIImage(CIImage: topRecipes[indexPath.row-1].image)
             //UIImage(named: "\(topRecipes[indexPath.row-1].image)")
    //         cell.recipeImage.image = topRecipes[indexPath.row-1].image
-            cell.recipeName.text = topRecipes[indexPath.row-1].name
+            cell.recipeName.text = topRecipes[indexPath.row].name
             cell.userImage.image = UIImage(contentsOfFile: "MenuButton")
             cell.userName.text = "ALEX"
             

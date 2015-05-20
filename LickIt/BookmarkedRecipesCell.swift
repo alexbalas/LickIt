@@ -31,27 +31,26 @@ class BookmarkedRecipesCell: UICollectionViewCell{
         visualEffectView.hidden = true
         
         self.addSubview(visualEffectView)
-
+        
         numeReteta = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: (self.frame.height)*3/2))
-
+        
         numeReteta.font = UIFont(name: "CourierNewPS-ItalicMT", size: 18)
         numeReteta.hidden = true
         self.addSubview(numeReteta)
-
+        
         
     }
-
-
+    
+    
     func showName(){
         numeReteta.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: (self.frame.height)*3/2)
         numeReteta.text = self.name
-            self.visualEffectView.hidden = false
-                self.numeReteta.hidden = false
+        self.visualEffectView.hidden = false
+        self.numeReteta.hidden = false
     }
     func hideName(){
-      self.numeReteta.hidden = true
+        self.numeReteta.hidden = true
         self.visualEffectView.hidden = true
     }
 }
     
-

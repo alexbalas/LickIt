@@ -61,6 +61,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     }
 
 
+
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         return recipes.count
@@ -76,7 +77,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
         recipes[indexPath.item].image?.getDataInBackgroundWithBlock {
         (imageData: NSData!, error: NSError!) -> Void in
         if !(error != nil) {
-            cell.image.image = UIImage(data:imageData)
+            cell.image.image = UIImage(data:imageData)!
         }
         }
 

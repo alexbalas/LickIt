@@ -59,6 +59,21 @@ class RecipeManager: NSObject {
             })
                 }
     
+    func getAllIngredients(completionBlock: ([Ingredient]) -> Void){
+        var query = PFQuery(className: "Ingredient")
+        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error) -> Void in
+            var ingredients = [Ingredient]()
+            if((error) == nil){
+                for object in objects {
+                    var ingredient = Ingredient(object: object as PFObject)
+                    ingredients.append(ingredient)
+                }}
+            completionBlock(ingredients)
+        
+        })
+    }
+
+    
     
 func getIngredientsForRecipe (recipe: Recipe, completionBlock:([Ingredient]) -> Void){
     recipe.ingredientsRelation?.query().findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
