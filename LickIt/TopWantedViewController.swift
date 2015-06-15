@@ -52,7 +52,8 @@ class TopWantedViewController: BaseTableViewController {
                     cell.recipeImage.image = UIImage(data:imageData)
                 }
             }
-            cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row].numberOfLicks!)"
+        
+        cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row].numberOfLicks?)"
 
             cell.recipeName.text = topRecipes[indexPath.row].name!
             cell.userName.text = "by " + "ALEX"
