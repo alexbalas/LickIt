@@ -10,6 +10,9 @@ import UIKit
 
 class IngredientSearchController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
+    
+    
+    
     @IBOutlet weak var selectedCV: SelectedColView!
     @IBOutlet weak var chooseCV: ChooseColView!
     var selectedIngr = [Ingredient]()
@@ -17,6 +20,19 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         touches
+    }
+    
+    @IBAction func searchButtonPressed(sender: AnyObject) {
+        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResult") as IngredientSearchResultController
+        viewController.ingredients = selectedIngr
+        var recipeManager = RecipeManager()
+        recipeManager.getRecipesForIngredients(selectedIngr, completionBlock: { (recipes) -> Void in
+            viewController.foundRecipes = recipes
+            println(recipes)
+        })
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     override func viewDidLoad() {
@@ -28,10 +44,25 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
             self.chooseCV.reloadData()
         }
 
+        var searchButton = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
+        var buttonImage = UIImage(named: "MenuButton")
+        searchButton.setImage(buttonImage, forState: UIControlState.Normal)
         
+        searchButton.addTarget(self, action: "searchButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+        var menuButtonItem = UIBarButtonItem(customView: searchButton)
+        self.navigationItem.rightBarButtonItem = menuButtonItem
+        
+        let backButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "backButtonPressed")
+        self.navigationItem.leftBarButtonItem = backButton
+
         // Do any additional setup after loading the view.
     }
+   
+    func backButtonPressed(){
+        
+    }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         self.selectedCV.userInteractionEnabled = true
@@ -82,11 +113,16 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
             }
         }
     
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let a = collectionView as? ChooseColView{
             if(!(contains(selectedIngr, chooseIngr[indexPath.item]))){
             selectedIngr.append(chooseIngr[indexPath.item])
                 selectedCV.reloadData()
+                self.selectedCV.scrollToItemAtIndexPath(NSIndexPath(forItem: selectedIngr.count-1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Bottom, animated: true)
+                var recipeManager = RecipeManager()
+                recipeManager.getRecipesForIngredients(selectedIngr, completionBlock: { (recipes) -> Void in
+                    println(recipes)
+                })
             }
         }
     }

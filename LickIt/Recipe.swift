@@ -16,12 +16,12 @@ class Recipe: NSObject, NSCoding {
     var ingredients : [Ingredient]?
     var time : Int!
     var categories : [RecipeCategory]?
-    var categorieString : String?
+    var categorieString : [String]?
     var image : PFFile?
     var recipeDescription : String?
     var comments : [Comment]?
     var ingredientsRelation : PFRelation?
-    
+    var parseObject : PFObject?
     
     init (ID : String){
         self.ID = ID
@@ -116,9 +116,10 @@ extension Recipe{
             self.ingredientsRelation = ingredientsRelation
         
         }
-        if let categs = object["categories"] as? String{
+        if let categs = object["categories"] as? [String]{
             self.categorieString = categs
             println("dada")
         }
+        self.parseObject = object
     }
 }

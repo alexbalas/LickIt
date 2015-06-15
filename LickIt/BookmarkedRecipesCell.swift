@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol BookmarkedRecipeCellDelegate{
+    func bookmarkedRecipeCellDidLongTap(cell: BookmarkedRecipesCell)
+}
+
 
 class BookmarkedRecipesCell: UICollectionViewCell{
+    
+    var delegate: BookmarkedRecipeCellDelegate?
     
     @IBOutlet weak var image: UIImageView!
     var name = String()
@@ -39,8 +45,13 @@ class BookmarkedRecipesCell: UICollectionViewCell{
         self.addSubview(numeReteta)
         
         
+        var longTap = UILongPressGestureRecognizer(target: self, action: "showImage")
+        self.addGestureRecognizer(longTap)
     }
     
+    func showImage(){
+        self.delegate?.bookmarkedRecipeCellDidLongTap(self)
+    }
     
     func showName(){
         numeReteta.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: (self.frame.height)*3/2)

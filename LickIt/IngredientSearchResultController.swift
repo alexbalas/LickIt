@@ -1,34 +1,32 @@
 //
-//  BookmarkedRecipesCollectionViewController.swift
+//  IngredientSearchResultController.swift
 //  LickIt
 //
-//  Created by MBP on 31/03/15.
+//  Created by MBP on 11/06/15.
 //  Copyright (c) 2015 MBP. All rights reserved.
 //
 
 import UIKit
 
-let reuseIdentifier = "Cell"
 
-class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, UICollectionViewDelegate, UICollectionViewDataSource, BookmarkedRecipeCellDelegate{
+class IngredientSearchResultController: UICollectionViewController {
 
-    var recipes = [Recipe]()
-    var savedRecipesIDs = [String]()
-
+    
+    
+    let reuseIdentifier = "WeRecommandCell"
+    var foundRecipes = [Recipe]()
+    var ingredients = [Ingredient]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var manager = RecipeManager()
-        manager.getAllRecipes { (recipes: [Recipe]) -> Void in
-            println("dajkcnakjsdn")
-            self.recipes = recipes
+        self.collectionView?.backgroundColor = UIColor(patternImage: (UIImage(named: "clouds2"))!)
+       /* var recipeManager = RecipeManager()
+        recipeManager.getRecipesForIngredients(ingredients, completionBlock: { (recipes) -> Void in
+            self.foundRecipes = recipes
             self.collectionView?.reloadData()
-        }
-
-        
-        //ar trebui o triere a retetelor,doar cele salvate sa fie afisate
-        
+            println(recipes)
+        })*/
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -60,53 +58,34 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
         return 1
     }
 
-
+    override func viewWillAppear(animated: Bool) {
+        
+    }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return recipes.count
+        return self.foundRecipes.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-
-
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as BookmarkedRecipesCell
-        cell.delegate = self
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as WeRecommandCell
+        foundRecipes[indexPath.row].image?.getDataInBackgroundWithBlock {
+            (imageData: NSData!, error: NSError!) -> Void in
+            if !(error != nil) {
+                cell.image.image = UIImage(data:imageData)
+            }
+        }
         
-   
-        recipes[indexPath.item].image?.getDataInBackgroundWithBlock {
-        (imageData: NSData!, error: NSError!) -> Void in
-        if !(error != nil) {
-            cell.image.image = UIImage(data:imageData)!
-        }
-        }
-
-        cell.name = "\(recipes[indexPath.item].name!)"
-
+        var recipe = foundRecipes[indexPath.item]
+        cell.licks.text = "\(recipe.numberOfLicks!)"
+        cell.licks.font = UIFont(name: "AmericanTypewriter", size: 14)
+        cell.name.text = recipe.name
+        cell.name.font = UIFont(name: "Zapfino", size: 18)
+        // Configure the cell
+    
         return cell
     }
-    
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
-        
-        viewController.recipe = recipes[indexPath.item]
-        self.navigationController?.pushViewController(viewController, animated: true)
 
-    }
-
-    func bookmarkedRecipeCellDidLongTap(cell: BookmarkedRecipesCell) {
-        var image = cell.image.image
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle?())
-        var controller = storyboard.instantiateViewControllerWithIdentifier("FullScreenPicController") as FullScreenPicController
-        controller.img = image
-        
-        self.presentViewController(controller, animated: true) { () -> Void in
-        }
-    }
-    
     // MARK: UICollectionViewDelegate
 
     /*

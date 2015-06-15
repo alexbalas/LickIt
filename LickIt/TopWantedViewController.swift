@@ -39,19 +39,12 @@ class TopWantedViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return topRecipes.count+1
+        return topRecipes.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(indexPath.row == 0){
-        var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedTopImageCell", forIndexPath: indexPath) as TopWantedTopImageCell
-            
-            self.tableView.rowHeight = 80.0
-            return cell
-
-        }
-        else{
+        
             var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as TopWantedRecipeCell
             topRecipes[indexPath.row].image?.getDataInBackgroundWithBlock {
                 (imageData: NSData!, error: NSError!) -> Void in
@@ -61,26 +54,23 @@ class TopWantedViewController: BaseTableViewController {
             }
             cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row].numberOfLicks!)"
 
-       //     cell.recipeImage.image = UIImage(CIImage: topRecipes[indexPath.row-1].image)
-            //UIImage(named: "\(topRecipes[indexPath.row-1].image)")
-   //         cell.recipeImage.image = topRecipes[indexPath.row-1].image
-            cell.recipeName.text = topRecipes[indexPath.row].name
-            cell.userImage.image = UIImage(contentsOfFile: "MenuButton")
-            cell.userName.text = "ALEX"
+            cell.recipeName.text = topRecipes[indexPath.row].name!
+            cell.userName.text = "by " + "ALEX"
             
+            self.tableView.rowHeight = 90.0
             return cell
 
-        }
+        
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(indexPath.row > 0){
+       
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
         
-        viewController.recipe = topRecipes[indexPath.row-1]
+        viewController.recipe = topRecipes[indexPath.row]
         self.navigationController?.pushViewController(viewController, animated: true)
-        }
+        
     }
 
 

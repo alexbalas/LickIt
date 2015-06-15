@@ -11,7 +11,7 @@ import UIKit
 class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate{
 
     var recipe: Recipe!
-    @IBOutlet weak var collectionView: UICollectionView!
+    var lickedOrNot: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +21,21 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             self.recipe.ingredients = ingredients
             self.tableView.reloadData()
         })
+        
+      //  var recipeLickers: [User] = self.recipe.parseObject?.objectForKey("lickers") as [User]!
+        var alreadyLicked = false
+   /*     for licker in recipeLickers{
+            if( PFUser.currentUser() == licker){
+                alreadyLicked = true
+            }
+        }*/
+        
+        if(alreadyLicked == true){
+            self.lickedOrNot = true
+        }
+        else{
+            self.lickedOrNot = false
+        }
         
         // Do any additional setup after loading the view.
     }
@@ -39,6 +54,18 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             cell.licks.text = "\(recipe.numberOfLicks!)"
             
             cell.saveButton = UIButton()
+            
+            cell.recipe = self.recipe
+            //trebuie setat si cell.lickedOrNot    cu true or false
+            //            cell.lickedOrNot = self.lickedOrNot
+            
+            if((self.lickedOrNot) != nil){
+                cell.lickButton.titleLabel?.text = "Licked! :P"
+            }
+            else{
+                cell.lickButton.titleLabel?.text = "Give it a lick!"
+            }
+            
             return cell
         case 2:
             var cell = tableView.dequeueReusableCellWithIdentifier("CategoriesRecipeCell", forIndexPath: indexPath) as CategoriesRecipeCell
@@ -159,6 +186,13 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
+        if(indexPath.row == 0 )
+        {
+            var recipeManager = RecipeManager()
+            recipeManager.lickRecipe(self.recipe, user: PFUser.currentUser(), completionBlock: { (success) -> Void in
+                println("succes: \(success)")
+            })
+        }
     }
     
     

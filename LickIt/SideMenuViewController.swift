@@ -63,11 +63,20 @@ class SideMenuViewController: UITableViewController {
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
+        var addNewRecipeMenuItem = MenuItem(image: UIImage(named: "clouds2")!) { () -> (Void) in
+            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            var viewController = storyboard.instantiateViewControllerWithIdentifier("AddNewRecipeControllerViewController") as AddNewRecipeControllerViewController
+            self.sideMenuViewController.hideMenuViewController()
+            var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            
+        }
         self.dataSource.append(mainMenuItem)
         self.dataSource.append(topWantedMenuItem)
         self.dataSource.append(ingredientSearchMenuItem)
         self.dataSource.append(searchMenuItem)
         self.dataSource.append(bookmarkedRecipesMenuItem)
+        self.dataSource.append(addNewRecipeMenuItem)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

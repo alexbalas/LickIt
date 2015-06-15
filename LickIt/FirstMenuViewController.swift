@@ -31,7 +31,6 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         self.title = "Welcome chef!"
         self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Zapfino", size: 20)!]
         self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
-        //        scrollView.backgroundColor = UIColor.brownColor()
 
        
         var manager = RecipeManager()
@@ -41,16 +40,25 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             self.collectionView.reloadData()
         }
 
-             // Do any additional setup after loading the view.
+                     // Do any additional setup after loading the view.
         
     
-        var loginViewController = PFLogInViewController()
-        var users = [PFUser]()
-        var user = PFUser()
         
-      //  if(user.isNew){
+        
+       
+        if(PFUser.currentUser() == nil){
+            var loginViewController = PFLogInViewController()
+            loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
+
+            self.presentViewController(loginViewController, animated: true) { () -> Void in
+            }
+
+        }
+        
+        /*
+        if(user.isNew){
   
-        /*manager.getUsers(users, completionBlock: { (user) -> Void in
+        manager.getUsers(users, completionBlock: { (user) -> Void in
             users = user
             
         })
@@ -62,7 +70,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             if(!(PFFacebookUtils.isLinkedWithUser(user/*.toPFObject()*/))){
             loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
             self.presentViewController(loginViewController, animated: true) { () -> Void in
-    //    }
+        }
         }
 
             }
@@ -150,6 +158,8 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             UIImage(named: "food")!]
         
         self.scrollView.contentSize = pageImages[0].size
+        self.scrollView.zoomScale = 0
+         scrollView.contentInset = UIEdgeInsetsZero;
 
         let pageCount = pageImages.count
         
@@ -168,7 +178,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         // Load the initial set of pages that are on screen
         loadVisiblePages()
-    
+        scrollView.contentInset = UIEdgeInsetsZero
     }
     
 
@@ -213,6 +223,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             var frame = scrollView.frame
             frame.origin.x = frame.size.width * CGFloat(page)
             frame.origin.y = 0.0
+            
          //   frame = CGRectInset(frame, 10.0, 0.0)
             
             let newPageView = UIImageView(image: pageImages[page])

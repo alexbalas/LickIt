@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreGraphics
 
 class BaseViewController: UIViewController {
 
@@ -22,6 +23,9 @@ class BaseViewController: UIViewController {
         
         menuButton.addTarget(self, action: "menuButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         var menuButtonItem = UIBarButtonItem(customView: menuButton)
+        menuButton.layer.borderWidth = 2.0
+        menuButton.layer.borderColor = UIColor.blackColor().CGColor
+        
         self.navigationItem.leftBarButtonItem = menuButtonItem
         // Do any additional setup after loading the view.
     }

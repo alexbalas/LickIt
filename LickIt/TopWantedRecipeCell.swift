@@ -11,12 +11,10 @@ import UIKit
 class TopWantedRecipeCell: UITableViewCell {
 
     @IBOutlet weak var nrOfLicks: UILabel!
-    @IBOutlet weak var lickImage: UIImageView!
     
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
     
-    @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     
     override func awakeFromNib() {

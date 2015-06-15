@@ -51,11 +51,15 @@ class RecipeManager: NSObject {
           var recipes = [Recipe]()
             if((error) == nil){
             for object in objects {
+                var lickerRelation: PFRelation = (object as PFObject).relationForKey("lickers") as PFRelation
                 var recipe = Recipe(object: object as PFObject)
+                
+                recipe.numberOfLicks = lickerRelation.query().countObjects()
+                
+                println(lickerRelation)
                 recipes.append(recipe)
                 }}
                 completionBlock(recipes)
-            //}
             })
                 }
     
@@ -73,7 +77,20 @@ class RecipeManager: NSObject {
         })
     }
 
-    
+    func getRecipesForIngredients (ingredients: [Ingredient], completionBlock: ([Recipe]) -> Void){
+        var query = PFQuery(className: "Recipe")
+        query.whereKey("ingredients", containedIn: ingredients.map({ return $0.parseObject!}))
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            var recipes = [Recipe]()
+            if((error) == nil){
+                for object in objects {
+                    var recipe = Recipe(object: object as PFObject)
+                    recipes.append(recipe)
+                }}
+            completionBlock(recipes)
+
+        }
+    }
     
 func getIngredientsForRecipe (recipe: Recipe, completionBlock:([Ingredient]) -> Void){
     recipe.ingredientsRelation?.query().findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
@@ -85,6 +102,28 @@ func getIngredientsForRecipe (recipe: Recipe, completionBlock:([Ingredient]) -> 
         completionBlock(ingredients)
     })
 
+    }
+    
+    func lickRecipe (recipe: Recipe, user: PFUser, completionBlock:(success: Bool) -> Void){
+        
+        var lickers = recipe.parseObject?.relationForKey("lickers")
+        lickers?.addObject(user)
+        recipe.parseObject?.saveInBackgroundWithBlock({ (successfullyGotObjectInParse, error) -> Void in
+            
+            completionBlock(success: successfullyGotObjectInParse)
+        })
+        
+    }
+    
+    func addRecipeToParse (recipe: Recipe, completionBlock:(success: Bool) -> Void){
+        var parseRecipe = PFObject(className: "Recipe")
+        parseRecipe = recipe.toPFObject()
+        
+        parseRecipe.saveInBackgroundWithBlock { (successfullyGotObjectInParse, error) -> Void in
+        completionBlock(success: successfullyGotObjectInParse)
+        }
+        
+        
     }
     
     func getUsers (user: [User], completionBlock:([User]) -> Void){

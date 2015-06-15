@@ -11,7 +11,7 @@ import UIKit
 class Ingredient: NSObject {
     var name : String?
     var image : PFFile?
-    
+    var parseObject : PFObject?
 }
 extension Ingredient{
     func toPFObject() -> PFObject{
@@ -33,5 +33,6 @@ extension Ingredient{
         if let image = object["image"] as? PFFile{
             self.image = image
         }
+        self.parseObject = object
     }
 }
