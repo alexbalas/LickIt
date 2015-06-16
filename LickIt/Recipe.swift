@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class Recipe: NSObject, NSCoding {
     
@@ -16,7 +17,7 @@ class Recipe: NSObject, NSCoding {
     var ingredients : [Ingredient]?
     var time : Int!
     var categories : [RecipeCategory]?
-    var categorieString : [String]?
+    var categorieString : String?
     var image : PFFile?
     var recipeDescription : String?
     var comments : [Comment]?
@@ -116,10 +117,43 @@ extension Recipe{
             self.ingredientsRelation = ingredientsRelation
         
         }
-        if let categs = object["categories"] as? [String]{
+        if let categs = object["categories"] as? String{
             self.categorieString = categs
             println("dada")
         }
         self.parseObject = object
     }
 }
+
+extension Recipe{
+    func toManagedObject() -> RecipeModel{
+        var recipeModel = NSEntityDescription.insertNewObjectForEntityForName("RecipeModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as RecipeModel
+        if let name = self.name{
+            recipeModel.name = name
+        }
+        if let time = self.time{
+            recipeModel.time = time
+        }
+//        if let ingredients = self.ingredients{
+//            for ingredient in ingredients{
+//                var ingredientModel = ingredient.toManagedObjects()
+//                recipeModel.addIngredient(ingredientModel)
+//            }
+//        }
+        recipeModel.id = self.ID
+        return recipeModel
+    }
+    
+    convenience init(recipeModel: RecipeModel){
+        self.init(ID: recipeModel.id)
+        self.name = recipeModel.name
+        self.time = recipeModel.time.integerValue
+    }
+}
+
+
+
+
+
+
+

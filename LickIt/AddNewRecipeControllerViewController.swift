@@ -21,7 +21,7 @@ class AddNewRecipeControllerViewController: BaseViewController, UIImagePickerCon
     override func viewDidLoad() {
         super.viewDidLoad()
         //done button
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "doneButtonPressed:")
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "doneButtonPressed")
         self.navigationItem.rightBarButtonItem = doneButton
         //camera button
         self.cameraPicture.addTarget(self, action: "showCamera", forControlEvents: UIControlEvents.TouchUpInside)
@@ -30,6 +30,19 @@ class AddNewRecipeControllerViewController: BaseViewController, UIImagePickerCon
         // Do any additional setup after loading the view.
     }
 
+    func doneButtonPressed(){
+        self.recipe?.name = self.name.text
+        self.recipe?.time = self.time.text.toInt()
+        self.recipe?.categorieString = self.categories.text
+    
+        var controller = ThankYouViewController()
+        controller.recipe = self.recipe
+        controller.view.backgroundColor = UIColor.blueColor()
+        self.presentViewController(controller, animated: true) { () -> Void in
+            
+        }
+    }
+    
     func chooseButtonPressed(){
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchController") as IngredientSearchController

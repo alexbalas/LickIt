@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
 
     var recipes: [Recipe] = [Recipe]()
@@ -25,6 +24,8 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     var pageViews: [UIImageView?] = []
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,11 +35,15 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
 
        
         var manager = RecipeManager()
-        manager.getAllRecipes { (recipes: [Recipe]) -> Void in
+      /*  manager.getAllRecipes { (recipes: [Recipe]) -> Void in
             println("dajkcnakjsdn")
             self.recipes = recipes
             self.collectionView.reloadData()
-        }
+        }*/
+        manager.getRecommendedRecipes(3, completionBlock: { (recipess) -> Void in
+            self.recipes = recipess
+            self.collectionView.reloadData()
+        })
 
                      // Do any additional setup after loading the view.
         
@@ -49,7 +54,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         if(PFUser.currentUser() == nil){
             var loginViewController = PFLogInViewController()
             loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
-
+        
             self.presentViewController(loginViewController, animated: true) { () -> Void in
             }
 
@@ -159,7 +164,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         self.scrollView.contentSize = pageImages[0].size
         self.scrollView.zoomScale = 0
-         scrollView.contentInset = UIEdgeInsetsZero;
+        self.scrollView.contentInset = UIEdgeInsetsZero;
 
         let pageCount = pageImages.count
         
@@ -178,7 +183,12 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         // Load the initial set of pages that are on screen
         loadVisiblePages()
+        
         scrollView.contentInset = UIEdgeInsetsZero
+        self.scrollView.scrollsToTop = true
+       // self.scrollView.subviews[0].sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+        
+        
     }
     
 

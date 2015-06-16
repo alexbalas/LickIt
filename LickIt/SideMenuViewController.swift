@@ -71,12 +71,26 @@ class SideMenuViewController: UITableViewController {
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
             
         }
+        
+        var loginItem = MenuItem(image: UIImage(named: "top_food")!) { () -> (Void) in
+            
+                var loginViewController = PFLogInViewController()
+                loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
+                loginViewController.title = "Login"
+                self.presentViewController(loginViewController, animated: true) { () -> Void in
+                
+            }
+
+        }
         self.dataSource.append(mainMenuItem)
         self.dataSource.append(topWantedMenuItem)
         self.dataSource.append(ingredientSearchMenuItem)
         self.dataSource.append(searchMenuItem)
         self.dataSource.append(bookmarkedRecipesMenuItem)
         self.dataSource.append(addNewRecipeMenuItem)
+        if( PFUser.currentUser() == nil){
+            self.dataSource.append(loginItem)
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

@@ -26,6 +26,11 @@ class InfoRecipeCell: UITableViewCell {
     var delegate : InfoRecipeCellDelegate?
     
     @IBAction func lickButtonPressed(sender: AnyObject) {
+        
+        if(PFUser.currentUser() == nil){
+            self.lickButton.titleLabel?.text = "Login first!"
+        }
+        else{
         println("lick")
         var recipeManager = RecipeManager()
         recipeManager.lickRecipe(self.recipe, user: PFUser.currentUser()) { (success) -> Void in
@@ -37,7 +42,7 @@ class InfoRecipeCell: UITableViewCell {
             }
         }
     
-        
+        }
         
     }
     

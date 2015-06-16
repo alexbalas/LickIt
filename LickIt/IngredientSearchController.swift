@@ -23,15 +23,17 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     }
     
     @IBAction func searchButtonPressed(sender: AnyObject) {
+        var recipesFound = [Recipe]()
+        
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResult") as IngredientSearchResultController
         viewController.ingredients = selectedIngr
         var recipeManager = RecipeManager()
         recipeManager.getRecipesForIngredients(selectedIngr, completionBlock: { (recipes) -> Void in
-            viewController.foundRecipes = recipes
+            recipesFound = recipes
             println(recipes)
         })
-        
+        viewController.foundRecipes = recipesFound
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -52,15 +54,12 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         var menuButtonItem = UIBarButtonItem(customView: searchButton)
         self.navigationItem.rightBarButtonItem = menuButtonItem
         
-        let backButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "backButtonPressed")
-        self.navigationItem.leftBarButtonItem = backButton
+        
 
         // Do any additional setup after loading the view.
     }
    
-    func backButtonPressed(){
-        
-    }
+    
 
     
     override func didReceiveMemoryWarning() {

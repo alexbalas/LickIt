@@ -21,7 +21,6 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
 
         var manager = RecipeManager()
         manager.getAllRecipes { (recipes: [Recipe]) -> Void in
-            println("dajkcnakjsdn")
             self.recipes = recipes
             self.collectionView?.reloadData()
         }

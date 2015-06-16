@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate{
+class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate {
 
     var recipe: Recipe!
     var lickedOrNot: Bool!
@@ -22,13 +22,14 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             self.tableView.reloadData()
         })
         
-      //  var recipeLickers: [User] = self.recipe.parseObject?.objectForKey("lickers") as [User]!
+       // var recipeLickers: [User] = self.recipe.parseObject?.objectForKey("lickers") as [User]
+        var recipeLickers = [User(object: self.recipe.parseObject?.objectForKey("lickers")! as PFObject)]
         var alreadyLicked = false
-   /*     for licker in recipeLickers{
+        for licker in recipeLickers{
             if( PFUser.currentUser() == licker){
                 alreadyLicked = true
             }
-        }*/
+        }
         
         if(alreadyLicked == true){
             self.lickedOrNot = true
@@ -51,8 +52,12 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as InfoRecipeCell
             cell.delegate = self
             cell.time.text = "\(recipe.time!)"
+            if(recipe.numberOfLicks != nil){
             cell.licks.text = "\(recipe.numberOfLicks!)"
-            
+            }
+            else{
+                cell.licks.text = "?"
+            }
             cell.saveButton = UIButton()
             
             cell.recipe = self.recipe

@@ -8,13 +8,20 @@
 
 import UIKit
 
+protocol SearchingInputCellDelegate{
+    func searchingInputCellGotMagicWord(magicWord: String)
+}
+
 class SearchingInputCell: UITableViewCell, UITextFieldDelegate {
 
+    var delegate: SearchingInputCellDelegate?
+    
     @IBOutlet weak var topText: UILabel!
     @IBOutlet weak var input: UITextField!
     
     @IBAction func butonPressed(sender: AnyObject) {
     println(input.text)
+        self.delegate?.searchingInputCellGotMagicWord(input.text)
     
     }
     

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+
 
 class Ingredient: NSObject {
     var name : String?
@@ -34,5 +36,15 @@ extension Ingredient{
             self.image = image
         }
         self.parseObject = object
+    }
+}
+
+extension Ingredient{
+    func toManagedObjects() -> IngredientModel{
+        var managedObject = NSEntityDescription.insertNewObjectForEntityForName("IngredientModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as IngredientModel
+        if let name = self.name{
+            managedObject.name = name
+        }
+        return managedObject
     }
 }

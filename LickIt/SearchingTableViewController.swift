@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate {
+class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate, SearchingInputCellDelegate {
 
     var recipes=[Recipe]()
     var foundRecipes = [Recipe]()
@@ -69,18 +69,14 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
         
     }
     
-    func cautare(userInput: String){
-
-    
-        for(var i=0;i<recipes.count;i++){
-            if((recipes[i].name?.hasPrefix(userInput)) != nil){
-                foundRecipes.append(recipes[i])
-            }
-            
-        }
+    func searchingInputCellGotMagicWord(magicWord: String){
+        var manager = RecipeManager()
+        manager.getSearchedRecipes(magicWord, completionBlock: { (recipesss) -> Void in
+            self.recipes = recipesss
+            self.tableView.reloadData()
+        })
+        
     }
-    
-    
 
     /*
     // Override to support conditional editing of the table view.
