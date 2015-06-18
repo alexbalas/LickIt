@@ -19,15 +19,49 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         var manager = RecipeManager()
-        manager.getAllRecipes { (recipes: [Recipe]) -> Void in
+        manager.getRecipesFromCore { (recipes: [Recipe]) -> Void in
             self.recipes = recipes
             self.collectionView?.reloadData()
         }
 
         
-        //ar trebui o triere a retetelor,doar cele salvate sa fie afisate
+//        var query = PFQuery(className: "Recipe").fromLocalDatastore()
+//        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+//            for object in objects{
+//                var recipe = Recipe(object: object as PFObject)
+//                println(recipe.name)
+//                self.recipes.append(recipe)
+//            }
+//        }
+//        query.fromLocalDatastore()
+
+//        var retete = PFObject()
+//        retete.fetchFromLocalDatastore()
+//        self.recipes.append(Recipe(object: retete))
         
+//        var query = PFQuery(className:"Recipe")
+//        query.fromLocalDatastore()
+//        //query.orderByAscending("")
+//        
+//        // Query for new results from the work
+//        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+//            for object in objects{
+//                var reteta = Recipe(object: object as PFObject)
+//                self.recipes.append(reteta)
+//            }
+//        }
+        
+        self.collectionView?.reloadData()
+//        var query = PFQuery(className: "Recipe")
+//        query.getObjectWithId("44")
+//        query.fromPinWithName("44")
+//        var recipe = query.getFirstObject()
+//
+//        self.recipes.append(Recipe(object: recipe))
+        
+        self.collectionView?.reloadData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

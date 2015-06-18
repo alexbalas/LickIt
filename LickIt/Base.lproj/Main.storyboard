@@ -165,7 +165,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dsf" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JOD-vM-qSb">
-                                            <rect key="frame" x="17" y="-56" width="286" height="368"/>
+                                            <rect key="frame" x="17" y="-56" width="286" height="445"/>
                                             <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -225,10 +225,10 @@
             </objects>
             <point key="canvasLocation" x="-213" y="225"/>
         </scene>
-        <!--Searching Table View Controller-->
+        <!--Search-->
         <scene sceneID="TuN-7D-Cz1">
             <objects>
-                <tableViewController storyboardIdentifier="SearchMenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ruO-d8-rcl" customClass="SearchingTableViewController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchMenuViewController" title="Search" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ruO-d8-rcl" customClass="SearchingTableViewController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Yyh-e9-5Os">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -268,54 +268,34 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fB4-co-JIa" id="49E-B0-ALI">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cu2-GT-Jdb">
-                                            <rect key="frame" x="145" y="0.0" width="167" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ch2-kx-din">
-                                            <rect key="frame" x="145" y="34" width="167" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1gi-tm-iby">
-                                            <rect key="frame" x="145" y="63" width="167" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categories" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yFW-Hv-RF2">
-                                            <rect key="frame" x="145" y="92" width="167" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="licks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lrD-zT-CTj">
-                                            <rect key="frame" x="8" y="111" width="129" height="21"/>
+                                            <rect key="frame" x="46" y="111" width="129" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="vfe-k4-u73">
-                                            <rect key="frame" x="8" y="8" width="1910" height="820"/>
+                                            <rect key="frame" x="8" y="8" width="107" height="91"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tongue" id="biO-Jq-Utb">
+                                            <rect key="frame" x="8" y="102" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cu2-GT-Jdb">
+                                            <rect key="frame" x="123" y="34" width="189" height="36"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="categories" destination="yFW-Hv-RF2" id="tJn-zt-YCB"/>
-                                    <outlet property="ingredients" destination="ch2-kx-din" id="JWI-xe-HbP"/>
                                     <outlet property="licks" destination="lrD-zT-CTj" id="WiO-61-iHH"/>
                                     <outlet property="name" destination="cu2-GT-Jdb" id="dK0-B8-k9N"/>
                                     <outlet property="photo" destination="vfe-k4-u73" id="k0h-Y6-M3w"/>
-                                    <outlet property="time" destination="1gi-tm-iby" id="DGn-Ki-xke"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -552,10 +532,10 @@
             </objects>
             <point key="canvasLocation" x="206" y="864"/>
         </scene>
-        <!--BookmarkedRecipes UICollectionViewController-->
+        <!--CookBook-->
         <scene sceneID="hyT-66-gKz">
             <objects>
-                <collectionViewController storyboardIdentifier="BookmarkedRecipesCollection" title="BookmarkedRecipes UICollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IbR-mT-d4j" customClass="BookmarkedRecipesCollectionViewController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="BookmarkedRecipesCollection" title="CookBook" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IbR-mT-d4j" customClass="BookmarkedRecipesCollectionViewController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="GOA-rD-ay0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -595,10 +575,10 @@
             </objects>
             <point key="canvasLocation" x="683" y="864"/>
         </scene>
-        <!--IngredientSearchController-->
+        <!--IngredientSearch-->
         <scene sceneID="jFq-gP-VkQ">
             <objects>
-                <viewController storyboardIdentifier="IngredientSearchController" title="IngredientSearchController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sPr-1Q-Byh" customClass="IngredientSearchController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IngredientSearchController" title="IngredientSearch" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sPr-1Q-Byh" customClass="IngredientSearchController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i0Z-Xx-pdE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -700,69 +680,68 @@
             <point key="canvasLocation" x="1065" y="864"/>
         </scene>
         <!--IngredientSearchResult-->
-        <scene sceneID="pM9-hC-88q">
+        <scene sceneID="h6x-V8-jUb">
             <objects>
-                <collectionViewController storyboardIdentifier="IngredientSearchResult" title="IngredientSearchResult" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wR8-sF-8XS" customClass="IngredientSearchResultController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="aUJ-Gb-Mxn">
+                <collectionViewController storyboardIdentifier="IngredientSearchResultController" title="IngredientSearchResult" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UNL-YV-QsK" customClass="IngredientSearchResultController" customModule="LickIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jO3-h9-MUa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NC0-P1-2ft">
-                            <size key="itemSize" width="128" height="196"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5bh-mX-Fu6">
+                            <size key="itemSize" width="142" height="217"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="bottom" restorationIdentifier="IngrSearchResultCell" reuseIdentifier="IngrSearchResultCell" id="tSB-ud-J0z" customClass="WeRecommandCell" customModule="LickIt" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="IngrSearchResultCell" reuseIdentifier="IngrSearchResultCell" id="fJ8-1u-ySD" customClass="IngredientSearchResultCell" customModule="LickIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="196"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="142" height="217"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="r6I-62-b4c">
-                                            <rect key="frame" x="0.0" y="42" width="128" height="125"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="sHq-w0-rUX">
+                                            <rect key="frame" x="-8" y="35" width="150" height="135"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YYF-87-Zj8">
-                                            <rect key="frame" x="8" y="0.0" width="92" height="40"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="licks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K6C-OO-qIX">
+                                            <rect key="frame" x="52" y="184" width="90" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                            <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tongue" id="ze3-MR-9Df">
-                                            <rect key="frame" x="8" y="170" width="28" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="licks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="030-CR-6OJ">
-                                            <rect key="frame" x="41" y="175" width="59" height="13"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u7o-SH-Qwl">
+                                            <rect key="frame" x="8" y="8" width="134" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tongue" id="9ac-TP-edp">
+                                            <rect key="frame" x="8" y="178" width="36" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <outlet property="image" destination="r6I-62-b4c" id="B25-mp-PpL"/>
-                                    <outlet property="licks" destination="030-CR-6OJ" id="D9F-7j-wcP"/>
-                                    <outlet property="name" destination="YYF-87-Zj8" id="iKY-oe-iOd"/>
+                                    <outlet property="image" destination="sHq-w0-rUX" id="Fz6-vS-hh9"/>
+                                    <outlet property="licks" destination="K6C-OO-qIX" id="NyJ-2N-ZUa"/>
+                                    <outlet property="name" destination="u7o-SH-Qwl" id="6s8-sg-A0T"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
-                            <outlet property="dataSource" destination="wR8-sF-8XS" id="8fc-gV-XWk"/>
-                            <outlet property="delegate" destination="wR8-sF-8XS" id="LwV-Oi-YyK"/>
+                            <outlet property="dataSource" destination="UNL-YV-QsK" id="id7-8B-nYW"/>
+                            <outlet property="delegate" destination="UNL-YV-QsK" id="QCq-30-ksa"/>
                         </connections>
                     </collectionView>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cyb-9H-RPk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CNj-I1-qaG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1451" y="864"/>
+            <point key="canvasLocation" x="1435" y="864"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eGb-AK-Ikm">

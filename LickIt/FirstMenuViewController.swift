@@ -40,7 +40,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             self.recipes = recipes
             self.collectionView.reloadData()
         }*/
-        manager.getRecommendedRecipes(3, completionBlock: { (recipess) -> Void in
+        manager.getRecommendedRecipes(5, completionBlock: { (recipess) -> Void in
             self.recipes = recipess
             self.collectionView.reloadData()
         })
@@ -156,11 +156,11 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         //scroll view part 3
         
         
-        pageImages = [UIImage(named: "1")!,
-            UIImage(named: "2")!,
-            UIImage(named: "3")!,
-            UIImage(named: "4")!,
-            UIImage(named: "food")!]
+        pageImages = [UIImage(named: "unu")!,
+            UIImage(named: "doi")!,
+            UIImage(named: "trei")!,
+            UIImage(named: "patru")!,
+            UIImage(named: "cinci")!]
         
         self.scrollView.contentSize = pageImages[0].size
         self.scrollView.zoomScale = 0

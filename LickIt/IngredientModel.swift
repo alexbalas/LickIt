@@ -12,6 +12,7 @@ import CoreData
 class IngredientModel: NSManagedObject {
 
     @NSManaged var name: String
+    @NSManaged var image: UIImage
     @NSManaged var recipes: NSSet
 
 }

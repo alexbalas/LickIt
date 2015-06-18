@@ -119,7 +119,6 @@ extension Recipe{
         }
         if let categs = object["categories"] as? String{
             self.categorieString = categs
-            println("dada")
         }
         self.parseObject = object
     }
@@ -140,14 +139,40 @@ extension Recipe{
 //                recipeModel.addIngredient(ingredientModel)
 //            }
 //        }
+        if let imagine = self.image{
+            imagine.getDataInBackgroundWithBlock {
+                (imageData: NSData!, error: NSError!) -> Void in
+                if !(error != nil) {
+                    var img = UIImage(data:imageData)
+                    recipeModel.image = img!
+                }
+            }
+        }
+        
+        if let licks = self.numberOfLicks{
+            recipeModel.nrOfLicks = licks
+        }
         recipeModel.id = self.ID
         return recipeModel
     }
     
     convenience init(recipeModel: RecipeModel){
         self.init(ID: recipeModel.id)
-        self.name = recipeModel.name
-        self.time = recipeModel.time.integerValue
+        if let nume = recipeModel.name as String?{
+            self.name = nume
+        }
+        if let timp = recipeModel.time as? Int{
+            self.time = timp
+        }
+        if let imagine = recipeModel.image as UIImage?{
+            //var pfImagine = PFFile(data: imagine) as PFFile?
+            var data = UIImageJPEGRepresentation(imagine, 0.0)
+            var pfImagine = PFFile(data: data)
+            self.image = pfImagine
+        }
+        if let licks = recipeModel.nrOfLicks as? Int{
+            self.numberOfLicks = licks
+        }
     }
 }
 

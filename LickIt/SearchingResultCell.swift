@@ -13,9 +13,7 @@ class SearchingResultCell: UITableViewCell {
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var licks: UILabel!
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var ingredients: UILabel!
-    @IBOutlet weak var time: UILabel!
-    @IBOutlet weak var categories: UILabel!
+
     
     
     

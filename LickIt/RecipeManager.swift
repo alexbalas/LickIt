@@ -43,11 +43,16 @@ class RecipeManager: NSObject {
     
     func getSearchedRecipes(magicWord : String, completionBlock: ([Recipe])-> Void){
         
-        println(magicWord)
-        var predicat = NSPredicate(format: "%K CONTAINS %@", "name", magicWord)
+        var qry = PFQuery(className: "Recipe")
+        qry.whereKey("name", containsString: magicWord)
         
-        var query = PFQuery(className: "Recipe", predicate: predicat)
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+        println(magicWord)
+//        var predicat = NSPredicate(format: "%K CONTAINS %@", magicWord, "name")
+//        var predicat2 = NSPredicate(format: "%K CONTAINS %i", "name", magicWord)
+    //    var queryy = PFQuery(className: "Recipe").whereKey(<#key: String!#>, containedIn: <#[AnyObject]!#>)
+    //    var query2 = PFQuery(className: "Recipe").whereKey(magicWord, containedIn: "name")
+      //  var query = PFQuery(className: "Recipe", predicate: predicat2)
+        qry.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if !(error != nil){
             var searchedRecipes = [Recipe]()
             if(objects != nil){
@@ -63,25 +68,26 @@ class RecipeManager: NSObject {
     }
     
     func getAllRecipes(completionBlock: ([Recipe]) -> Void){
-//        var query = PFQuery(className: "Recipe")
-//        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error) -> Void in
-//          var recipes = [Recipe]()
-//            if((error) == nil){
-//            for object in objects {
-//                var lickerRelation: PFRelation = (object as PFObject).relationForKey("lickers") as PFRelation
-//                var recipe = Recipe(object: object as PFObject)
-//                
-//                recipe.numberOfLicks = lickerRelation.query().countObjects()
-//                
-//                var recipeModel = recipe.toManagedObject()
-//         //       CoreDataManager.sharedInstance.saveObject(recipeModel)
-//                
-//                recipes.append(recipe)
-//                }}
-//                CoreDataManager.sharedInstance.managedObjectContext.save(nil)
-//                completionBlock(recipes)
-//            })
-
+        var query = PFQuery(className: "Recipe")
+        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error) -> Void in
+          var recipes = [Recipe]()
+            if((error) == nil){
+            for object in objects {
+                var lickerRelation: PFRelation = (object as PFObject).relationForKey("lickers") as PFRelation
+                var recipe = Recipe(object: object as PFObject)
+                
+                recipe.numberOfLicks = lickerRelation.query().countObjects()
+                
+                var recipeModel = recipe.toManagedObject()
+                
+                recipes.append(recipe)
+                }}
+                CoreDataManager.sharedInstance.managedObjectContext.save(nil)
+                completionBlock(recipes)
+            })
+    }
+    
+    func getRecipesFromCore(completionBlock: ([Recipe]) -> Void){
         var fetchRequest = NSFetchRequest(entityName: "RecipeModel")
         var recipesFromCoreData = CoreDataManager.sharedInstance.managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as [RecipeModel]
         var recipes = [Recipe]()
@@ -90,7 +96,7 @@ class RecipeManager: NSObject {
             recipes.append(reteta)
         }
         completionBlock(recipes)
-                }
+    }
     
     func getAllIngredients(completionBlock: ([Ingredient]) -> Void){
         var query = PFQuery(className: "Ingredient")

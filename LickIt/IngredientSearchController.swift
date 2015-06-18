@@ -26,14 +26,14 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         var recipesFound = [Recipe]()
         
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResult") as IngredientSearchResultController
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResultController") as IngredientSearchResultController
         viewController.ingredients = selectedIngr
-        var recipeManager = RecipeManager()
-        recipeManager.getRecipesForIngredients(selectedIngr, completionBlock: { (recipes) -> Void in
-            recipesFound = recipes
-            println(recipes)
-        })
-        viewController.foundRecipes = recipesFound
+//        var recipeManager = RecipeManager()
+//        recipeManager.getRecipesForIngredients(selectedIngr, completionBlock: { (recipes) -> Void in
+//            recipesFound = recipes
+//            println(recipes)
+//        })
+      //  viewController.foundRecipes = recipesFound
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

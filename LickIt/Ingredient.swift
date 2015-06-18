@@ -45,6 +45,15 @@ extension Ingredient{
         if let name = self.name{
             managedObject.name = name
         }
+        if let imagine = self.image{
+            imagine.getDataInBackgroundWithBlock {
+                (imageData: NSData!, error: NSError!) -> Void in
+                if !(error != nil) {
+                    var img = UIImage(data:imageData)
+                    managedObject.image = img!
+                }
+            }
+        }
         return managedObject
     }
 }

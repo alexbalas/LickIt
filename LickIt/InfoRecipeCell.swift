@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol InfoRecipeCellDelegate {
     func infoRecipeCellSaveButtonPressed(cell : InfoRecipeCell)
@@ -72,5 +73,7 @@ class InfoRecipeCell: UITableViewCell {
     @IBAction func saveButtonPressed(sender: UIButton) {
         delegate?.infoRecipeCellSaveButtonPressed(self)
         println("save button pressed")
+
+        
     }
 }

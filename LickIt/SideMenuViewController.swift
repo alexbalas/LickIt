@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SideMenuViewController: UITableViewController {
+class SideMenuViewController: UITableViewController{
     
     var dataSource = [MenuItem]()
     
@@ -32,7 +32,8 @@ class SideMenuViewController: UITableViewController {
             var viewController = storyboard.instantiateViewControllerWithIdentifier("TopWantedViewContoller") as TopWantedViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+    //        appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
         var ingredientSearchMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
@@ -41,7 +42,8 @@ class SideMenuViewController: UITableViewController {
             var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchController") as IngredientSearchController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
 
         }
         
@@ -51,8 +53,9 @@ class SideMenuViewController: UITableViewController {
             var viewController = storyboard.instantiateViewControllerWithIdentifier("SearchMenuViewController") as SearchingTableViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            
+          //  appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+
         }
         
         var bookmarkedRecipesMenuItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
@@ -60,26 +63,31 @@ class SideMenuViewController: UITableViewController {
             var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipesCollection") as BookmarkedRecipesCollectionViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+
         }
         
-        var addNewRecipeMenuItem = MenuItem(image: UIImage(named: "clouds2")!) { () -> (Void) in
+        var addNewRecipeMenuItem = MenuItem(image: UIImage(named: "add recipe")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             var viewController = storyboard.instantiateViewControllerWithIdentifier("AddNewRecipeControllerViewController") as AddNewRecipeControllerViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            
+            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+
         }
         
-        var loginItem = MenuItem(image: UIImage(named: "top_food")!) { () -> (Void) in
+        var loginItem = MenuItem(image: UIImage(named: "add recipe")!) { () -> (Void) in
             
                 var loginViewController = PFLogInViewController()
                 loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
                 loginViewController.title = "Login"
-                self.presentViewController(loginViewController, animated: true) { () -> Void in
-                
-            }
+                //self.presentViewController(loginViewController, animated: true) { () -> Void in   }
+            var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            appDelegate.mainViewController?.pushViewController(loginViewController, animated: true)
+
+            
 
         }
         self.dataSource.append(mainMenuItem)
@@ -88,9 +96,9 @@ class SideMenuViewController: UITableViewController {
         self.dataSource.append(searchMenuItem)
         self.dataSource.append(bookmarkedRecipesMenuItem)
         self.dataSource.append(addNewRecipeMenuItem)
-        if( PFUser.currentUser() == nil){
+       // if( PFUser.currentUser() == nil){
             self.dataSource.append(loginItem)
-        }
+       // }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

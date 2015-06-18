@@ -10,7 +10,6 @@ import UIKit
 
 class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate, SearchingInputCellDelegate {
 
-    var recipes=[Recipe]()
     var foundRecipes = [Recipe]()
     
     
@@ -18,8 +17,9 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var manager = RecipeManager()
-    //    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: "searchButtonPressed:")
+
+        self.navigationController?.title = "Search"
+        //    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: "searchButtonPressed:")
         
     //    var recipeData = NSUserDefaults.standardUserDefaults().objectForKey("recipes") as NSData
      //   self.recipes = NSKeyedUnarchiver.unarchiveObjectWithData(recipeData) as [Recipe]
@@ -57,12 +57,21 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
         
         if(indexPath.row==0){
             var cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as SearchingInputCell
-          
+            cell.delegate = self
             self.tableView.rowHeight = 100
         return cell
         }
         else{
             var cell = tableView.dequeueReusableCellWithIdentifier("SearchingResultCell", forIndexPath: indexPath) as SearchingResultCell
+         //   cell.photo.image = foundRecipes[indexPath.row].image
+            foundRecipes[indexPath.row + 1].image?.getDataInBackgroundWithBlock {
+                (imageData: NSData!, error: NSError!) -> Void in
+                if !(error != nil) {
+                    cell.photo.image = UIImage(data:imageData)!
+                }
+            }
+            cell.licks.text = "\(foundRecipes[indexPath.row + 1].numberOfLicks!)"
+            cell.name.text = foundRecipes[indexPath.row + 1].name
             return cell
         }
         // Configure the cell...
@@ -70,12 +79,16 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
     }
     
     func searchingInputCellGotMagicWord(magicWord: String){
+        println("L-a trimis!!")
+        print(magicWord)
         var manager = RecipeManager()
         manager.getSearchedRecipes(magicWord, completionBlock: { (recipesss) -> Void in
-            self.recipes = recipesss
+            self.foundRecipes = recipesss
             self.tableView.reloadData()
         })
         
+    
+    
     }
 
     /*

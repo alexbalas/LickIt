@@ -14,12 +14,13 @@ class IngredientSearchResultController: UICollectionViewController {
     
     
     let reuseIdentifier = "IngrSearchResultCell"
-    var foundRecipes : [Recipe]!
+    var foundRecipes = [Recipe]()
     var ingredients : [Ingredient]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.title = "You can"
         self.collectionView?.backgroundColor = UIColor(patternImage: (UIImage(named: "clouds2"))!)
         var recipeManager = RecipeManager()
         recipeManager.getRecipesForIngredients(ingredients, completionBlock: { (recipes) -> Void in
@@ -30,8 +31,7 @@ class IngredientSearchResultController: UICollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
-        // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+   
 
         // Do any additional setup after loading the view.
         let backButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "backButtonPressed")
@@ -78,8 +78,10 @@ class IngredientSearchResultController: UICollectionViewController {
         return self.foundRecipes.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as WeRecommandCell
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> IngredientSearchResultCell {
+       // var cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as IngredientSearchResultCell
+        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("IngrSearchResultCell", forIndexPath: indexPath) as IngredientSearchResultCell
+        
         foundRecipes[indexPath.item].image?.getDataInBackgroundWithBlock {
             (imageData: NSData!, error: NSError!) -> Void in
             if !(error != nil) {
@@ -90,8 +92,9 @@ class IngredientSearchResultController: UICollectionViewController {
         var recipe = foundRecipes[indexPath.item]
         
         
-        cell.licks.text = "1"//"\(recipe.numberOfLicks?)"
         
+ //       cell.licks.text = "\(self.foundRecipes[indexPath.item].numberOfLicks)"
+        cell.licks.text = "\(self.foundRecipes[indexPath.item].numberOfLicks!)"
         
         cell.licks.font = UIFont(name: "AmericanTypewriter", size: 14)
         cell.name.text = recipe.name
@@ -99,6 +102,15 @@ class IngredientSearchResultController: UICollectionViewController {
         // Configure the cell
     
         return cell
+    }
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
+        
+        viewController.recipe = foundRecipes[indexPath.item]
+        self.navigationController?.pushViewController(viewController, animated: true)
+
     }
 
     // MARK: UICollectionViewDelegate
