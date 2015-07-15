@@ -86,7 +86,7 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
             self.foundRecipes = recipesss
             self.tableView.reloadData()
         })
-        
+        println(foundRecipes)
     
     
     }

@@ -73,7 +73,13 @@ class InfoRecipeCell: UITableViewCell {
     @IBAction func saveButtonPressed(sender: UIButton) {
         delegate?.infoRecipeCellSaveButtonPressed(self)
         println("save button pressed")
-
+        
+        var coreManager = CoreDataManager()
+        var reteta = RecipeModel()
+        reteta.time = self.recipe.time
+        reteta.name = self.recipe.name!
+        
+        coreManager.saveObject(reteta)
         
     }
 }

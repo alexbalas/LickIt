@@ -21,7 +21,6 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             self.recipe.ingredients = ingredients
             self.tableView.reloadData()
         })
-        
        // var recipeLickers: [User] = self.recipe.parseObject?.objectForKey("lickers") as [User]
 //        var recipeLickers = [User(object: self.recipe.parseObject?.objectForKey("lickers")! as PFObject)]
 //        var alreadyLicked = false
