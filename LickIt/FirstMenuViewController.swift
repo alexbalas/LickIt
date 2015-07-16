@@ -326,6 +326,11 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         cell.licks.font = UIFont(name: "AmericanTypewriter", size: 14)
         cell.name.text = recipe.name
         cell.name.font = UIFont(name: "Zapfino", size: 18)
+        var size = 18 as CGFloat
+        while( cell.name.intrinsicContentSize().width > cell.name.frame.width ){
+            cell.name.font = UIFont(name: "Zapfino", size: size - 1)
+            size--
+        }
         recipes[indexPath.row].image?.getDataInBackgroundWithBlock {
             (imageData: NSData!, error: NSError!) -> Void in
             if !(error != nil) {

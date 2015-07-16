@@ -86,7 +86,8 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             return cell
         case 3:
             var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as HowToDoItCell
-            cell.content.text = recipe.recipeDescription
+            cell.content.text = recipe.recipeDescription!
+            println(recipe.recipeDescription!)
             
             return cell
 
@@ -117,13 +118,21 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         var relatie = self.recipe.parseObject?.relationForKey("lickers")
         var query = PFQuery(className: "Recipe")
         var relationQuery = relatie?.query().whereKey("objectId", equalTo: user.objectId)
-        if relationQuery?.getObjectWithId(PFUser.currentUser().objectId) != nil{
+        
+        var smth = relationQuery?.getFirstObject()
+        if( smth != nil ){
             return true
         }
         else{
             return false
         }
         
+        if relationQuery?.getObjectWithId(PFUser.currentUser().objectId) != nil{
+            return true
+        }
+        else{
+            return false
+        }
     }
     
     
@@ -167,7 +176,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
                 NSFontAttributeName : UIFont.systemFontOfSize(14)]
             if (self.recipe.recipeDescription != nil){
             var dimensions = (self.recipe.recipeDescription! as NSString).boundingRectWithSize(CGSize(width: self.view.frame.size.width, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: atribute, context: nil)
-            return dimensions.height+145
+            return dimensions.height
             }
             else{
                 return 100

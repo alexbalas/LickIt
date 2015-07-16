@@ -58,26 +58,33 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
         if(indexPath.row==0){
             var cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as SearchingInputCell
             cell.delegate = self
-            self.tableView.rowHeight = 100
+   //         self.tableView.rowHeight = 100
         return cell
         }
         else{
             var cell = tableView.dequeueReusableCellWithIdentifier("SearchingResultCell", forIndexPath: indexPath) as SearchingResultCell
-         //   cell.photo.image = foundRecipes[indexPath.row].image
-            foundRecipes[indexPath.row + 1].image?.getDataInBackgroundWithBlock {
-                (imageData: NSData!, error: NSError!) -> Void in
-                if !(error != nil) {
-                    cell.photo.image = UIImage(data:imageData)!
-                }
-            }
-            cell.licks.text = "\(foundRecipes[indexPath.row + 1].numberOfLicks!)"
-            cell.name.text = foundRecipes[indexPath.row + 1].name
+//            foundRecipes[0/*indexPath.row-1*/].image?.getDataInBackgroundWithBlock {
+//                (imageData: NSData!, error: NSError!) -> Void in
+//                if !(error != nil) {
+//                    cell.photo.image = UIImage(data:imageData)
+//                }
+//            }
+//            cell.licks.text = "\(foundRecipes[indexPath.row - 1].numberOfLicks!)"
+//            cell.name.text = foundRecipes[indexPath.row - 1].name
+            println(foundRecipes[indexPath.row-1])
             return cell
         }
         // Configure the cell...
         
     }
-    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if(indexPath.row==0){
+            return 100
+        }
+        else{
+            return 150
+        }
+    }
     func searchingInputCellGotMagicWord(magicWord: String){
         println("L-a trimis!!")
         print(magicWord)
