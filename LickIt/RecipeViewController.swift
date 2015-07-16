@@ -47,7 +47,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
  
         switch indexPath.row {
-                case 1:
+        case 1:
             var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as InfoRecipeCell
             cell.delegate = self
             cell.time.text = "\(recipe.time!)"
@@ -67,14 +67,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             }
             
             return cell
-//        case 2:
-//            var cell = tableView.dequeueReusableCellWithIdentifier("CategoriesRecipeCell", forIndexPath: indexPath) as CategoriesRecipeCell
-//            
-//           // if(recipe.categorieString? != nil){
-//           //     cell.categoriesLabel.text = recipe.categorieString
-//            //    println("mjva")
-//           // }
-//            return cell
+
         case 2:
             var cell = tableView.dequeueReusableCellWithIdentifier("IngredientsRecipeCell", forIndexPath: indexPath) as IngredientsRecipeCell
             if let ingredients = recipe.ingredients{
@@ -126,49 +119,9 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         else{
             return false
         }
-        
-        if relationQuery?.getObjectWithId(PFUser.currentUser().objectId) != nil{
-            return true
-        }
-        else{
-            return false
-        }
     }
     
-    
-        /*
-        if(indexPath.row==0) {
-        var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as ImageRecipeCell
-            
-           // cell.imagine.image = UIImage(contentsOfFile: "recipe.image")
-            recipe.image?.getDataInBackgroundWithBlock {
-                (imageData: NSData!, error: NSError!) -> Void in
-                if !(error != nil) {
-                    var img = UIImage(data:imageData)
-                    
-                    cell.imagine.image = img
-
-                }
-            }
-            self.tableView.rowHeight = 110.0
-   //      cell.imagine.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
-   //      cell.imagine.sizeToFit()
-            
-        return cell
-        }
-        else{if(indexPath.row == 1){
-
-        var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as InfoRecipeCell
-            cell.delegate = self
-            cell.time.text = "\(recipe.time!)"
-            cell.licks.text = "\(recipe.numberOfLicks!)"
-
-            cell.saveButton = UIButton()
-            return cell
-            }
-        }
-*/
-
+ 
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 3 {
@@ -185,10 +138,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         else if indexPath.row == 2 {
             return 70
         }
-/*        var footerView = self.tableView.tableFooterView;
-        self.tableView.tableFooterView = nil;
-        self.tableView.tableFooterView = footerView;
- */       return 100
+       return 100
         
     }
     

@@ -18,6 +18,7 @@ class RecipeModel: NSManagedObject {
     @NSManaged var id: String
     @NSManaged var image: UIImage
     @NSManaged var nrOfLicks: NSNumber
+    @NSManaged var info: String
     
     func addIngredient(ingredient: IngredientModel){
         var mutableIngredients = self.mutableSetValueForKey("ingredients")

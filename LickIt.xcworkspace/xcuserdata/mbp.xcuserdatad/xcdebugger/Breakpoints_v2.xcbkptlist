@@ -153,7 +153,7 @@
                   symbolName = "LickIt.IngredientSearchResultController.viewDidLoad (LickIt.IngredientSearchResultController)() -&gt; ()"
                   moduleName = "LickIt"
                   urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/IngredientSearchResultController.swift"
-                  timestampString = "458732022.858334"
+                  timestampString = "458740556.804378"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "26"
@@ -167,7 +167,7 @@
                   symbolName = "LickIt.IngredientSearchResultController.(viewDidLoad (LickIt.IngredientSearchResultController) -&gt; () -&gt; ()).(closure #1)"
                   moduleName = "LickIt"
                   urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/IngredientSearchResultController.swift"
-                  timestampString = "458732022.858496"
+                  timestampString = "458740556.804572"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "26"
@@ -279,11 +279,11 @@
                   symbolName = "LickIt.SearchingTableViewController.searchingInputCellGotMagicWord (LickIt.SearchingTableViewController)(Swift.String) -&gt; ()"
                   moduleName = "LickIt"
                   urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/SearchingTableViewController.swift"
-                  timestampString = "458732022.862142"
+                  timestampString = "458740556.819122"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "88"
-                  endingLineNumber = "88"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
                   offsetFromSymbolStart = "299">
                </Location>
                <Location
@@ -293,11 +293,11 @@
                   symbolName = "LickIt.SearchingTableViewController.(searchingInputCellGotMagicWord (LickIt.SearchingTableViewController) -&gt; (Swift.String) -&gt; ()).(closure #1)"
                   moduleName = "LickIt"
                   urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/SearchingTableViewController.swift"
-                  timestampString = "458732022.862291"
+                  timestampString = "458740556.819296"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "88"
-                  endingLineNumber = "88"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
                   offsetFromSymbolStart = "19">
                </Location>
             </Locations>

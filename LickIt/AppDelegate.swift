@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.enableLocalDatastore()
         Parse.setApplicationId("LwxamL5Rx5AOtWuSDhwuVeYPLW7XXwKKBBhvx75g", clientKey: "rNxWpsRBxMuctjLoZ4PcLFa0izmwPl6FxzZuto3W")
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
-        
+        PFTwitterUtils.initializeWithConsumerKey("wdtgoD0ZuXk6HjGntWB3MsmMl", consumerSecret: "YlMd3Ua47psUKObrvdhCBj7wyzuPakMGbNczQKgBjyAAHqp2Og")
         return true
     }
 

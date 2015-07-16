@@ -74,12 +74,12 @@ class InfoRecipeCell: UITableViewCell {
         delegate?.infoRecipeCellSaveButtonPressed(self)
         println("save button pressed")
         
-        var coreManager = CoreDataManager()
-        var reteta = RecipeModel()
-        reteta.time = self.recipe.time
-        reteta.name = self.recipe.name!
-        
-        coreManager.saveObject(reteta)
-        
+//        var coreManager = CoreDataManager()
+//        var reteta = RecipeModel()
+//        reteta.time = self.recipe.time
+//        reteta.name = self.recipe.name!
+//        
+//        coreManager.saveObject(reteta)
+//        
     }
 }

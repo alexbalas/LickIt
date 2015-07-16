@@ -8,6 +8,7 @@
     <entity name="RecipeModel" representedClassName="RecipeModel" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="info" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nrOfLicks" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -15,6 +16,6 @@
     </entity>
     <elements>
         <element name="IngredientModel" positionX="169" positionY="-18" width="128" height="88"/>
-        <element name="RecipeModel" positionX="-63" positionY="-9" width="128" height="133"/>
+        <element name="RecipeModel" positionX="-63" positionY="-9" width="128" height="148"/>
     </elements>
 </model>
