@@ -29,7 +29,7 @@ class Recipe: NSObject, NSCoding {
     }
     
     required init(coder aDecoder: NSCoder) {
-        self.ID = aDecoder.decodeObjectForKey("ID") as String
+        self.ID = aDecoder.decodeObjectForKey("ID") as! String
         self.name = aDecoder.decodeObjectForKey("name") as? String
         self.numberOfLicks = Int(aDecoder.decodeIntForKey("numberOfLicks"))
         self.time = Int(aDecoder.decodeIntForKey("time"))
@@ -88,7 +88,7 @@ extension Recipe{
     }
     
     convenience init(object: PFObject){
-        self.init(ID: object["ID"] as String)
+        self.init(ID: object["ID"] as! String)
         if let name = object["name"] as? String{
             self.name = name
         }
@@ -126,7 +126,7 @@ extension Recipe{
 
 extension Recipe{
     func toManagedObject() -> RecipeModel{
-        var recipeModel = NSEntityDescription.insertNewObjectForEntityForName("RecipeModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as RecipeModel
+        var recipeModel = NSEntityDescription.insertNewObjectForEntityForName("RecipeModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as! RecipeModel
         if let name = self.name{
             recipeModel.name = name
         }
@@ -141,9 +141,9 @@ extension Recipe{
 //        }
         if let imagine = self.image{
             imagine.getDataInBackgroundWithBlock {
-                (imageData: NSData!, error: NSError!) -> Void in
+                (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData)
+                    var img = UIImage(data:imageData!)
                     recipeModel.image = img!
                 }
             }

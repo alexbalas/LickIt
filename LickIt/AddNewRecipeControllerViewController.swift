@@ -45,7 +45,7 @@ class AddNewRecipeControllerViewController: BaseViewController, UIImagePickerCon
     
     func chooseButtonPressed(){
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchController") as IngredientSearchController
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchController") as! IngredientSearchController
         viewController.view.backgroundColor = UIColor.yellowColor()
         viewController.navigationItem.title = "Recipe ingredients"
         //trebuie acoperit butonul de meniuri laterale
@@ -60,9 +60,9 @@ class AddNewRecipeControllerViewController: BaseViewController, UIImagePickerCon
         presentViewController(camera, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         println("a ajuns aici")
-        self.recipe?.image = PFFile(data: NSData(contentsOfFile: "image"))
+        self.recipe?.image = PFFile(data: NSData(contentsOfFile: "image")!)
         
         self.dismissViewControllerAnimated(true, completion: nil)
         

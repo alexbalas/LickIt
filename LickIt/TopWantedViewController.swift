@@ -45,11 +45,11 @@ class TopWantedViewController: BaseTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-            var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as TopWantedRecipeCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as! TopWantedRecipeCell
             topRecipes[indexPath.row].image?.getDataInBackgroundWithBlock {
-                (imageData: NSData!, error: NSError!) -> Void in
+                (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    cell.recipeImage.image = UIImage(data:imageData)
+                    cell.recipeImage.image = UIImage(data:imageData!)
                 }
             }
         if(self.topRecipes[indexPath.row].numberOfLicks != nil){
@@ -72,7 +72,7 @@ class TopWantedViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
        
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
         viewController.recipe = topRecipes[indexPath.row]
         self.navigationController?.pushViewController(viewController, animated: true)

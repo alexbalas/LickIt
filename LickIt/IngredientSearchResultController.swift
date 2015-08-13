@@ -80,12 +80,12 @@ class IngredientSearchResultController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> IngredientSearchResultCell {
        // var cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as IngredientSearchResultCell
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("IngrSearchResultCell", forIndexPath: indexPath) as IngredientSearchResultCell
+        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("IngrSearchResultCell", forIndexPath: indexPath) as! IngredientSearchResultCell
         
         foundRecipes[indexPath.item].image?.getDataInBackgroundWithBlock {
-            (imageData: NSData!, error: NSError!) -> Void in
+            (imageData: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
-                cell.image.image = UIImage(data:imageData)
+                cell.image.image = UIImage(data:imageData!)
             }
         }
         
@@ -106,7 +106,7 @@ class IngredientSearchResultController: UICollectionViewController {
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
         viewController.recipe = foundRecipes[indexPath.item]
         self.navigationController?.pushViewController(viewController, animated: true)

@@ -34,7 +34,7 @@ class InfoRecipeCell: UITableViewCell {
         else{
         println("lick")
         var recipeManager = RecipeManager()
-        recipeManager.lickRecipe(self.recipe, user: PFUser.currentUser()) { (success) -> Void in
+        recipeManager.lickRecipe(self.recipe, user: PFUser.currentUser()!) { (success) -> Void in
         if(success){
             println("Liked")
             var nrOfLicks = self.licks.text!.toInt()! + 1

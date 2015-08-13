@@ -59,7 +59,7 @@ extension User{
         self.init()
         self.name = object["name"] as? String
         self.age = object["age"] as? Int
-        self.gender = Gender(rawValue: object["gender"] as Int)
+        self.gender = Gender(rawValue: object["gender"] as! Int)
         self.image = object["image"] as? UIImage
         self.username = object["username"] as? String
         self.password = object["password"] as? String

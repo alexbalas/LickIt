@@ -20,21 +20,23 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
         super.viewDidLoad()
 
         
-        var manager = RecipeManager()
-        manager.getRecipesFromCore { (recipes: [Recipe]) -> Void in
-            self.recipes = recipes
-            self.collectionView?.reloadData()
-        }
+//        var manager = RecipeManager()
+//        manager.getRecipesFromCore { (recipes: [Recipe]) -> Void in
+//            self.recipes = recipes
+//            self.collectionView?.reloadData()
+//        }
 
         
-//        var query = PFQuery(className: "Recipe").fromLocalDatastore()
-//        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-//            for object in objects{
-//                var recipe = Recipe(object: object as PFObject)
-//                println(recipe.name)
-//                self.recipes.append(recipe)
-//            }
-//        }
+        var query = PFQuery(className: "Recipe").fromLocalDatastore()
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            for object in objects!{
+                var recipe = Recipe(object: object as! PFObject)
+                println(recipe.name)
+                self.recipes.append(recipe)
+            }
+            self.collectionView?.reloadData()
+
+        }
 //        query.fromLocalDatastore()
 
 //        var retete = PFObject()
@@ -53,7 +55,6 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
 //            }
 //        }
         
-        self.collectionView?.reloadData()
 //        var query = PFQuery(className: "Recipe")
 //        query.getObjectWithId("44")
 //        query.fromPinWithName("44")
@@ -61,7 +62,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
 //
 //        self.recipes.append(Recipe(object: recipe))
         
-        self.collectionView?.reloadData()
+  //      self.collectionView?.reloadData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -103,14 +104,14 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
 
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as BookmarkedRecipesCell
+        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as! BookmarkedRecipesCell
         cell.delegate = self
         
    
         recipes[indexPath.item].image?.getDataInBackgroundWithBlock {
-        (imageData: NSData!, error: NSError!) -> Void in
+        (imageData: NSData?, error: NSError?) -> Void in
         if !(error != nil) {
-            cell.image.image = UIImage(data:imageData)!
+            cell.image.image = UIImage(data:imageData!)!
         }
         }
 
@@ -123,7 +124,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
         
         
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
         viewController.recipe = recipes[indexPath.item]
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -133,7 +134,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     func bookmarkedRecipeCellDidLongTap(cell: BookmarkedRecipesCell) {
         var image = cell.image.image
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle?())
-        var controller = storyboard.instantiateViewControllerWithIdentifier("FullScreenPicController") as FullScreenPicController
+        var controller = storyboard.instantiateViewControllerWithIdentifier("FullScreenPicController") as! FullScreenPicController
         controller.img = image
         
         self.presentViewController(controller, animated: true) { () -> Void in

@@ -9,102 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LickIt/IngredientSearchController.swift"
-            timestampString = "456306698.244205"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "searchButtonPressed(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LickIt/IngredientSearchController.swift"
-            timestampString = "456306740.617012"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "searchButtonPressed(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LickIt/IngredientSearchController.swift"
-            timestampString = "456306741.286992"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "searchButtonPressed(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LickIt/IngredientSearchController.swift"
-            timestampString = "456306744.82476"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "searchButtonPressed(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LickIt/IngredientSearchController.swift"
-            timestampString = "456306751.134375"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "searchButtonPressed(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LickIt/IngredientSearchController.swift"
-            timestampString = "456306752.090668"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "searchButtonPressed(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "LickIt/IngredientSearchResultController.swift"
             timestampString = "456312519.006084"
             startingColumnNumber = "9223372036854775807"
@@ -152,13 +56,14 @@
                   continueAfterRunningActions = "No"
                   symbolName = "LickIt.IngredientSearchResultController.viewDidLoad (LickIt.IngredientSearchResultController)() -&gt; ()"
                   moduleName = "LickIt"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/IngredientSearchResultController.swift"
-                  timestampString = "458740556.804378"
+                  timestampString = "459868812.669832"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "26"
                   endingLineNumber = "26"
-                  offsetFromSymbolStart = "1963">
+                  offsetFromSymbolStart = "1037">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -166,13 +71,14 @@
                   continueAfterRunningActions = "No"
                   symbolName = "LickIt.IngredientSearchResultController.(viewDidLoad (LickIt.IngredientSearchResultController) -&gt; () -&gt; ()).(closure #1)"
                   moduleName = "LickIt"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/IngredientSearchResultController.swift"
-                  timestampString = "458740556.804572"
+                  timestampString = "459868812.670081"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "19">
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "26">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -239,6 +145,38 @@
             endingLineNumber = "95"
             landmarkName = "searchingInputCellGotMagicWord(_:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LickIt.SearchingTableViewController.searchingInputCellGotMagicWord (LickIt.SearchingTableViewController)(Swift.String) -&gt; ()"
+                  moduleName = "LickIt"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/SearchingTableViewController.swift"
+                  timestampString = "459868812.846778"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "337">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LickIt.SearchingTableViewController.(searchingInputCellGotMagicWord (LickIt.SearchingTableViewController) -&gt; (Swift.String) -&gt; ()).(closure #1)"
+                  moduleName = "LickIt"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/SearchingTableViewController.swift"
+                  timestampString = "459868812.847089"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "266">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -278,13 +216,14 @@
                   continueAfterRunningActions = "No"
                   symbolName = "LickIt.SearchingTableViewController.searchingInputCellGotMagicWord (LickIt.SearchingTableViewController)(Swift.String) -&gt; ()"
                   moduleName = "LickIt"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/SearchingTableViewController.swift"
-                  timestampString = "458740556.819122"
+                  timestampString = "459868812.851198"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
                   endingLineNumber = "92"
-                  offsetFromSymbolStart = "299">
+                  offsetFromSymbolStart = "217">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -292,15 +231,48 @@
                   continueAfterRunningActions = "No"
                   symbolName = "LickIt.SearchingTableViewController.(searchingInputCellGotMagicWord (LickIt.SearchingTableViewController) -&gt; (Swift.String) -&gt; ()).(closure #1)"
                   moduleName = "LickIt"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mbp/Desktop/LickIt/LickIt/SearchingTableViewController.swift"
-                  timestampString = "458740556.819296"
+                  timestampString = "459868812.851398"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "92"
-                  endingLineNumber = "92"
-                  offsetFromSymbolStart = "19">
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "27">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LickIt/LogInViewController.swift"
+            timestampString = "459862012.188283"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LickIt/FirstMenuViewController.swift"
+            timestampString = "459866137.13647"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

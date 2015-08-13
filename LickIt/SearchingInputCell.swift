@@ -30,7 +30,7 @@ class SearchingInputCell: UITableViewCell, UITextFieldDelegate {
     
         super.awakeFromNib()
         // Initialization code
-        let buton   = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let buton   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         buton.frame = CGRect(x: self.input.frame.maxX, y: self.input.frame.minY, width: 40, height: self.input.frame.height)
         buton.setBackgroundImage(UIImage(named: "lupa"), forState: UIControlState.Normal)
         buton.addTarget(self, action: "butonPressed:", forControlEvents: UIControlEvents.TouchUpInside)

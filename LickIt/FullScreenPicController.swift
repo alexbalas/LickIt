@@ -25,13 +25,13 @@ class FullScreenPicController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        println("touches began")
-    }
-    
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        println("touches ended")
-    }
+//    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+//        println("touches began")
+//    }
+//    
+//    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+//        println("touches ended")
+//    }
     /*
     // MARK: - Navigation
 

@@ -16,12 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var leftViewController : UIViewController?
     var sideMenu : UIViewController?
     
+
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         
         self.mainViewController = storyboard.instantiateViewControllerWithIdentifier("NavigationController") as? UINavigationController
-        self.leftViewController = storyboard.instantiateViewControllerWithIdentifier("SideMenuViewController") as SideMenuViewController
+        self.leftViewController = storyboard.instantiateViewControllerWithIdentifier("SideMenuViewController") as! SideMenuViewController
         self.sideMenu = RESideMenu(contentViewController: mainViewController, leftMenuViewController: leftViewController, rightMenuViewController: nil)
         self.window!.rootViewController = sideMenu
  /*
@@ -66,11 +68,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         */
         Parse.enableLocalDatastore()
         Parse.setApplicationId("LwxamL5Rx5AOtWuSDhwuVeYPLW7XXwKKBBhvx75g", clientKey: "rNxWpsRBxMuctjLoZ4PcLFa0izmwPl6FxzZuto3W")
-        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        if let options = launchOptions{
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(options)
+        }
+        else{
+            PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(Dictionary())
+        }
         PFTwitterUtils.initializeWithConsumerKey("wdtgoD0ZuXk6HjGntWB3MsmMl", consumerSecret: "YlMd3Ua47psUKObrvdhCBj7wyzuPakMGbNczQKgBjyAAHqp2Og")
         return true
     }
 
+
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

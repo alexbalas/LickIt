@@ -27,9 +27,29 @@ class BaseViewController: UIViewController {
         menuButton.layer.borderColor = UIColor.blackColor().CGColor
         
         self.navigationItem.leftBarButtonItem = menuButtonItem
+        
+    //butonul drept
+   //     if(PFUser.currentUser() == nil){
+        var rightMenuButton = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
+        var image = UIImage(named: "key")
+        rightMenuButton.setImage(image, forState: UIControlState.Normal)
+        rightMenuButton.addTarget(self, action: "rightMenuButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        var rightMenuButtonItem = UIBarButtonItem(customView: rightMenuButton)
+        self.navigationItem.rightBarButtonItem = rightMenuButtonItem
+     //   }
         // Do any additional setup after loading the view.
     }
 
+    func rightMenuButtonPressed(){
+        println("apasat")
+        var loginViewController = LogInViewController()
+        loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
+        
+        self.presentViewController(loginViewController, animated: true) { () -> Void in
+        }
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

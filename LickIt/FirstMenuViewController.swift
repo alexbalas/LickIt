@@ -52,11 +52,12 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
        
         if(PFUser.currentUser() == nil){
-            var loginViewController = PFLogInViewController()
-            loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
+            var loginViewController = LogInViewController()
+            loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
         
             self.presentViewController(loginViewController, animated: true) { () -> Void in
             }
+            //self.navigationController?.pushViewController(loginViewController, animated: true)
 
         }
         
@@ -156,15 +157,16 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         //scroll view part 3
         
         
-        pageImages = [UIImage(named: "unu")!,
+        pageImages = [UIImage(named: "doi")!,
             UIImage(named: "doi")!,
             UIImage(named: "trei")!,
             UIImage(named: "patru")!,
-            UIImage(named: "cinci")!]
+            UIImage(named: "cinci")!
+        ]
         
-        self.scrollView.contentSize = pageImages[0].size
-        self.scrollView.zoomScale = 0
-        self.scrollView.contentInset = UIEdgeInsetsZero;
+//        self.scrollView.contentSize = pageImages[0].size
+//        self.scrollView.zoomScale = 0
+//        self.scrollView.contentInset = UIEdgeInsetsZero;
 
         let pageCount = pageImages.count
         
@@ -178,15 +180,20 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         }
         
         // Set up the content size of the scroll view
-        let pagesScrollViewSize = scrollView.frame.size
-        scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(pageImages.count), pagesScrollViewSize.height)
+//        let pagesScrollViewSize = scrollView.frame.size
+     //   scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * CGFloat(pageImages.count), pagesScrollViewSize.height)
         
         // Load the initial set of pages that are on screen
-        loadVisiblePages()
+//        loadVisiblePages()
+        var view = UIImageView(image: pageImages[0])
         
-        scrollView.contentInset = UIEdgeInsetsZero
-        self.scrollView.scrollsToTop = true
-       // self.scrollView.subviews[0].sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+        view.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scrollView.frame.height)
+
+        self.scrollView.addSubview(view)
+      //  scrollView.contentInset = UIEdgeInsetsZero
+//        self.scrollView.scrollsToTop = true
+//        self.scrollView.bounces = false
+//       // self.scrollView.subviews[0].sendActionsForControlEvents(UIControlEvents.TouchUpInside)
         
         
     }
@@ -238,7 +245,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             
             let newPageView = UIImageView(image: pageImages[page])
             newPageView.contentMode = UIViewContentMode.ScaleToFill//.ScaleAspectFit
-            newPageView.frame = frame
+            
             scrollView.addSubview(newPageView)
             pageViews[page] = newPageView
         }
@@ -257,9 +264,9 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView!) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         // Load the pages that are now on screen
-        loadVisiblePages()
+//        loadVisiblePages()
     }    /*
     func centerScrollViewContents() {
         let boundsSize = scrollView.bounds.size
@@ -320,7 +327,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var cell : WeRecommandCell = collectionView.dequeueReusableCellWithReuseIdentifier("WeRecommandCell", forIndexPath: indexPath) as WeRecommandCell
+        var cell : WeRecommandCell = collectionView.dequeueReusableCellWithReuseIdentifier("WeRecommandCell", forIndexPath: indexPath) as! WeRecommandCell
         var recipe = recipes[indexPath.item]
         cell.licks.text = "\(recipe.numberOfLicks!)"
         cell.licks.font = UIFont(name: "AmericanTypewriter", size: 14)
@@ -332,9 +339,9 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             size--
         }
         recipes[indexPath.row].image?.getDataInBackgroundWithBlock {
-            (imageData: NSData!, error: NSError!) -> Void in
+            (imageData: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
-                cell.image.image = UIImage(data:imageData)
+                cell.image.image = UIImage(data:imageData!)
             }
         }
         return cell
@@ -342,7 +349,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as RecipeViewController
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
        viewController.recipe = recipes[indexPath.item]
         self.navigationController?.pushViewController(viewController, animated: true)

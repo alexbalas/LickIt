@@ -56,19 +56,19 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if(indexPath.row==0){
-            var cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as SearchingInputCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as! SearchingInputCell
             cell.delegate = self
    //         self.tableView.rowHeight = 100
         return cell
         }
         else{
-            var cell = tableView.dequeueReusableCellWithIdentifier("SearchingResultCell", forIndexPath: indexPath) as SearchingResultCell
-//            foundRecipes[0/*indexPath.row-1*/].image?.getDataInBackgroundWithBlock {
-//                (imageData: NSData!, error: NSError!) -> Void in
-//                if !(error != nil) {
-//                    cell.photo.image = UIImage(data:imageData)
-//                }
-//            }
+            var cell = tableView.dequeueReusableCellWithIdentifier("SearchingResultCell", forIndexPath: indexPath) as! SearchingResultCell
+            foundRecipes[0/*indexPath.row-1*/].image?.getDataInBackgroundWithBlock {
+                (imageData: NSData?, error: NSError?) -> Void in
+                if !(error != nil) {
+                    cell.photo.image = UIImage(data:imageData!)
+                }
+            }
 //            cell.licks.text = "\(foundRecipes[indexPath.row - 1].numberOfLicks!)"
 //            cell.name.text = foundRecipes[indexPath.row - 1].name
             println(foundRecipes[indexPath.row-1])

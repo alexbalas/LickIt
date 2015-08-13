@@ -48,7 +48,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
  
         switch indexPath.row {
         case 1:
-            var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as InfoRecipeCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as! InfoRecipeCell
             cell.delegate = self
             cell.time.text = "\(recipe.time!)"
             if(recipe.numberOfLicks != nil){
@@ -58,18 +58,18 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
                 cell.licks.text = "?"
             }
             cell.recipe = self.recipe
-            
-            if( didAlreadyLikeRecipe(PFUser.currentUser())){
+            if( PFUser.currentUser() != nil ){
+            if( didAlreadyLikeRecipe(PFUser.currentUser()!) ){
                 cell.lickButton.titleLabel?.text = "Licked! :P"
             }
             else{
                 cell.lickButton.titleLabel?.text = "Give it a lick!"
             }
-            
+            }
             return cell
 
         case 2:
-            var cell = tableView.dequeueReusableCellWithIdentifier("IngredientsRecipeCell", forIndexPath: indexPath) as IngredientsRecipeCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("IngredientsRecipeCell", forIndexPath: indexPath) as! IngredientsRecipeCell
             if let ingredients = recipe.ingredients{
                 
             cell.ingredients = ingredients
@@ -78,7 +78,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             }
             return cell
         case 3:
-            var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as HowToDoItCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as! HowToDoItCell
             cell.content.text = recipe.recipeDescription!
             println(recipe.recipeDescription!)
             
@@ -86,12 +86,12 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
 
             
         default:
-            var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as ImageRecipeCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as! ImageRecipeCell
             
             recipe.image?.getDataInBackgroundWithBlock {
-                (imageData: NSData!, error: NSError!) -> Void in
+                (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData)
+                    var img = UIImage(data:imageData!)
                     
                     cell.imagine.image = img
                     
@@ -110,7 +110,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         
         var relatie = self.recipe.parseObject?.relationForKey("lickers")
         var query = PFQuery(className: "Recipe")
-        var relationQuery = relatie?.query().whereKey("objectId", equalTo: user.objectId)
+        var relationQuery = relatie?.query()!.whereKey("objectId", equalTo: user.objectId!)
         
         var smth = relationQuery?.getFirstObject()
         if( smth != nil ){
@@ -163,14 +163,17 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
 //        
 //        
 //        
-        var recipeToSave = self.recipe.toManagedObject()
-        CoreDataManager.sharedInstance.saveObject(recipeToSave)
-        println(44)
+        
+//        var recipeToSave = self.recipe.toManagedObject()
+//        CoreDataManager.sharedInstance.saveObject(recipeToSave)
+//        println(44)
+        
+        
          //self.recipe.parseObject?.pinInBackgroundWithName("44")
 //         self.recipe.parseObject?.pin()
 //        self.recipe.parseObject?.save()
 //        var query = PFQuery()
-        
+        self.recipe.parseObject?.pinInBackgroundWithName(self.recipe.name!)
         
     }
     

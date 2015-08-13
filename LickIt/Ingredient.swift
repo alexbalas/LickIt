@@ -41,18 +41,19 @@ extension Ingredient{
 
 extension Ingredient{
     func toManagedObjects() -> IngredientModel{
-        var managedObject = NSEntityDescription.insertNewObjectForEntityForName("IngredientModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as IngredientModel
+        var managedObject = NSEntityDescription.insertNewObjectForEntityForName("IngredientModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as! IngredientModel
         if let name = self.name{
             managedObject.name = name
         }
         if let imagine = self.image{
             imagine.getDataInBackgroundWithBlock {
-                (imageData: NSData!, error: NSError!) -> Void in
+                (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData)
+                    var img = UIImage(data:imageData!)
                     managedObject.image = img!
                 }
             }
+            
         }
         return managedObject
     }

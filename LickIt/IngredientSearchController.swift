@@ -18,7 +18,10 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     var selectedIngr = [Ingredient]()
     var chooseIngr = [Ingredient]()
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+//    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+//        touches
+//    }
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         touches
     }
     
@@ -26,7 +29,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         var recipesFound = [Recipe]()
         
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResultController") as IngredientSearchResultController
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResultController") as! IngredientSearchResultController
         viewController.ingredients = selectedIngr
 //        var recipeManager = RecipeManager()
 //        recipeManager.getRecipesForIngredients(selectedIngr, completionBlock: { (recipes) -> Void in
@@ -82,12 +85,12 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let a = collectionView as? SelectedColView{
-            var cell = selectedCV.dequeueReusableCellWithReuseIdentifier("IngredientSearchSelected", forIndexPath: indexPath) as SelectedIngredientSearchCell
+            var cell = selectedCV.dequeueReusableCellWithReuseIdentifier("IngredientSearchSelected", forIndexPath: indexPath) as! SelectedIngredientSearchCell
             
             selectedIngr[indexPath.item].image?.getDataInBackgroundWithBlock {
-                (imageData: NSData!, error: NSError!) -> Void in
+                (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData)
+                    var img = UIImage(data:imageData!)
                     
                     cell.image.image = img!
                     cell.name = self.selectedIngr[indexPath.item].name
@@ -97,11 +100,11 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
             return cell
         }
         else{
-            var cell = chooseCV.dequeueReusableCellWithReuseIdentifier("IngredientSearchChoose", forIndexPath: indexPath) as ChooseIngredientSearchCell
+            var cell = chooseCV.dequeueReusableCellWithReuseIdentifier("IngredientSearchChoose", forIndexPath: indexPath) as! ChooseIngredientSearchCell
             chooseIngr[indexPath.item].image?.getDataInBackgroundWithBlock {
-                (imageData: NSData!, error: NSError!) -> Void in
+                (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData)
+                    var img = UIImage(data:imageData!)
                     
                     cell.image.image = img!
                     cell.name = self.chooseIngr[indexPath.item].name
