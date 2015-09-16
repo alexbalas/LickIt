@@ -16,6 +16,10 @@
 		103C075D1AA9C7210087EC3C /* TopWantedRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103C075C1AA9C7210087EC3C /* TopWantedRecipeCell.swift */; };
 		103C07611AA9CDA50087EC3C /* FirstMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103C07601AA9CDA50087EC3C /* FirstMenuViewController.swift */; };
 		103C07631AA9D1200087EC3C /* WeRecommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103C07621AA9D1200087EC3C /* WeRecommandCell.swift */; };
+		103D6A5E1BA8580200E9FB0F /* BookmarkedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D6A5D1BA8580200E9FB0F /* BookmarkedTableViewController.swift */; };
+		103D6A601BA8598400E9FB0F /* BookmarkedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D6A5F1BA8598400E9FB0F /* BookmarkedTableViewCell.swift */; };
+		103D6A621BA86A6300E9FB0F /* SearchNewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D6A611BA86A6300E9FB0F /* SearchNewTableViewController.swift */; };
+		103D6A641BA8824400E9FB0F /* SearchNewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D6A631BA8824400E9FB0F /* SearchNewTableViewCell.swift */; };
 		104075781B0BB4AB00A39DC8 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104075771B0BB4AB00A39DC8 /* ScrollView.swift */; };
 		105458971AFCE6F700C2DDEA /* IngredientsRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105458961AFCE6F700C2DDEA /* IngredientsRecipeCell.swift */; };
 		105458991AFCE86400C2DDEA /* OneIngredientCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105458981AFCE86400C2DDEA /* OneIngredientCollectionViewCell.swift */; };
@@ -84,6 +88,10 @@
 		103C075C1AA9C7210087EC3C /* TopWantedRecipeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopWantedRecipeCell.swift; sourceTree = "<group>"; };
 		103C07601AA9CDA50087EC3C /* FirstMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstMenuViewController.swift; sourceTree = "<group>"; };
 		103C07621AA9D1200087EC3C /* WeRecommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeRecommandCell.swift; sourceTree = "<group>"; };
+		103D6A5D1BA8580200E9FB0F /* BookmarkedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkedTableViewController.swift; sourceTree = "<group>"; };
+		103D6A5F1BA8598400E9FB0F /* BookmarkedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkedTableViewCell.swift; sourceTree = "<group>"; };
+		103D6A611BA86A6300E9FB0F /* SearchNewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNewTableViewController.swift; sourceTree = "<group>"; };
+		103D6A631BA8824400E9FB0F /* SearchNewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNewTableViewCell.swift; sourceTree = "<group>"; };
 		104075771B0BB4AB00A39DC8 /* ScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
 		105458961AFCE6F700C2DDEA /* IngredientsRecipeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientsRecipeCell.swift; sourceTree = "<group>"; };
 		105458981AFCE86400C2DDEA /* OneIngredientCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneIngredientCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -256,6 +264,7 @@
 				103C07581AA9C65E0087EC3C /* TopWantedViewController.swift */,
 				103C07601AA9CDA50087EC3C /* FirstMenuViewController.swift */,
 				108FEEAF1ACB37DD00307982 /* BookmarkedRecipesCollectionViewController.swift */,
+				103D6A5D1BA8580200E9FB0F /* BookmarkedTableViewController.swift */,
 				10760DC31AADE4D60048895E /* AddRecipeViewController.swift */,
 				10760DCB1AADE7620048895E /* SideMenuViewController.swift */,
 				1059C1B71ABC49F4002FC2EA /* BaseViewController.swift */,
@@ -267,6 +276,7 @@
 				102AF82A1B2B0478008C8F8C /* FullScreenPicController.swift */,
 				102AF82C1B2EF6B2008C8F8C /* ThankYouViewController.swift */,
 				10D4DAB61B64F1AF008D4D21 /* LogInViewController.swift */,
+				103D6A611BA86A6300E9FB0F /* SearchNewTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -301,6 +311,8 @@
 				10FC0F981B0D1633005F20FF /* ChooseIngredientSearchCell.swift */,
 				10FC0FA21B0D20C8005F20FF /* SelectedIngredientSearchCell.swift */,
 				10D97A411B32B2B1007F4E80 /* IngredientSearchResultCell.swift */,
+				103D6A5F1BA8598400E9FB0F /* BookmarkedTableViewCell.swift */,
+				103D6A631BA8824400E9FB0F /* SearchNewTableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -466,18 +478,22 @@
 				103C075B1AA9C6B30087EC3C /* TopWantedTopImageCell.swift in Sources */,
 				10FC0F991B0D1633005F20FF /* ChooseIngredientSearchCell.swift in Sources */,
 				10760DCC1AADE7620048895E /* SideMenuViewController.swift in Sources */,
+				103D6A5E1BA8580200E9FB0F /* BookmarkedTableViewController.swift in Sources */,
 				102AF8321B2F142B008C8F8C /* CoreDataManager.swift in Sources */,
 				1059C1B81ABC49F4002FC2EA /* BaseViewController.swift in Sources */,
+				103D6A641BA8824400E9FB0F /* SearchNewTableViewCell.swift in Sources */,
 				109CED4E1A9CAE4900D027BD /* Ingredient.swift in Sources */,
 				103C07611AA9CDA50087EC3C /* FirstMenuViewController.swift in Sources */,
 				10DC3CC41B2A3F0D00745DC8 /* AddNewRecipeControllerViewController.swift in Sources */,
 				1059C1BC1ABC504B002FC2EA /* MenuItem.swift in Sources */,
 				109CED521A9CAF8000D027BD /* Comment.swift in Sources */,
+				103D6A621BA86A6300E9FB0F /* SearchNewTableViewController.swift in Sources */,
 				102AF82B1B2B0478008C8F8C /* FullScreenPicController.swift in Sources */,
 				10FC0FA11B0D1EA0005F20FF /* ChooseColView.swift in Sources */,
 				104075781B0BB4AB00A39DC8 /* ScrollView.swift in Sources */,
 				109CED631A9CC2EF00D027BD /* CommentsRecipeCell.swift in Sources */,
 				109CED501A9CAEC100D027BD /* RecipeCategory.swift in Sources */,
+				103D6A601BA8598400E9FB0F /* BookmarkedTableViewCell.swift in Sources */,
 				109CED4C1A9CADDC00D027BD /* Recipe.swift in Sources */,
 				10D18E8B1B305AF100F5E6FB /* RecipeModel.swift in Sources */,
 				109CED571A9CB45000D027BD /* RecipeViewController.swift in Sources */,

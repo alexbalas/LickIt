@@ -42,24 +42,42 @@ class RecipeManager: NSObject {
         }
     }
     
+    func didLikeRecipe(recipe: Recipe,user: PFUser, completionBlock:(PFUser) -> Void){
+        println("step 2.5")
+        var relatie = recipe.parseObject!.relationForKey("lickers")
+        var relationQuery = relatie.query()!.whereKey("objectId", equalTo: user.objectId!)
+        println("2.555")
+//        var obj = PFObject(className: "jjaa")
+//        obj.pin()
+        var smth: Void = relationQuery.getFirstObjectInBackgroundWithBlock({ (object, error) -> Void in
+            println("step 2.6")
+            var usser = PFUser()
+            if let uzer = object as? PFUser{
+                usser = object as! PFUser
+            }
+            println("step 2.7")
+            completionBlock(usser)
+        })
+    }
+    
     func getSearchedRecipes(magicWord : String, completionBlock: ([Recipe])-> Void){
         
         var qry = PFQuery(className: "Recipe")
+        //qry.whereKey(magicWord, containedIn: [AnyObject]())
         qry.whereKey("name", containsString: magicWord)
         
-        println(magicWord)
-//        var predicat = NSPredicate(format: "%K CONTAINS %@", magicWord, "name")
-//        var predicat2 = NSPredicate(format: "%K CONTAINS %i", "name", magicWord)
-    //    var queryy = PFQuery(className: "Recipe").whereKey(<#key: String!#>, containedIn: <#[AnyObject]!#>)
-    //    var query2 = PFQuery(className: "Recipe").whereKey(magicWord, containedIn: "name")
-      //  var query = PFQuery(className: "Recipe", predicate: predicat2)
+       // var pred = NSPredicate(
+        
+      //  let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", magicWord)
+        //var query = PFQuery(className: "Recipe", predicate: searchPredicate)
+        
         qry.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if !(error != nil){
             var searchedRecipes = [Recipe]()
             if let objs = objects {
                 for object in objs{
                     var recipe = Recipe(object: object as! PFObject)
-                    searchedRecipes.append(object as! Recipe)
+                    searchedRecipes.append(recipe as Recipe)
                 }
             }
             completionBlock(searchedRecipes)
@@ -113,6 +131,23 @@ class RecipeManager: NSObject {
             completionBlock(ingredients)
         
         })
+    }
+    
+    func getNews(completionBlock: ([PFFile]) -> Void){
+        var query = PFQuery(className: "News")
+        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error) -> Void in
+            var images = [PFFile]()
+            if(error == nil){
+                if let objs = objects{
+                    for object in objs{
+                        if let image = object["image"] as? PFFile{
+                            images.append(image)
+                        }
+                    }
+                }
+            }
+            completionBlock(images)
+        }
     }
 
     func getRecipesForIngredients (ingredients: [Ingredient], completionBlock: ([Recipe]) -> Void){

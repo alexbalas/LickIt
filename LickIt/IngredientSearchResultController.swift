@@ -20,7 +20,7 @@ class IngredientSearchResultController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationController?.title = "You can"
+        self.title = "Results"
         self.collectionView?.backgroundColor = UIColor(patternImage: (UIImage(named: "clouds2"))!)
         var recipeManager = RecipeManager()
         recipeManager.getRecipesForIngredients(ingredients, completionBlock: { (recipes) -> Void in

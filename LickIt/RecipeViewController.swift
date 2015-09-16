@@ -13,6 +13,9 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     var recipe: Recipe!
     var lickedOrNot: Bool!
     
+    
+   // @IBOutlet weak var expand: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = self.recipe.name
@@ -21,6 +24,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             self.recipe.ingredients = ingredients
             self.tableView.reloadData()
         })
+    //    expand.addTarget(self, action: "expandButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
        // var recipeLickers: [User] = self.recipe.parseObject?.objectForKey("lickers") as [User]
 //        var recipeLickers = [User(object: self.recipe.parseObject?.objectForKey("lickers")! as PFObject)]
 //        var alreadyLicked = false
@@ -38,6 +42,10 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
 //        }
         
         // Do any additional setup after loading the view.
+    }
+    
+    func expandButtonPressed(){
+        
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,14 +66,6 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
                 cell.licks.text = "?"
             }
             cell.recipe = self.recipe
-            if( PFUser.currentUser() != nil ){
-            if( didAlreadyLikeRecipe(PFUser.currentUser()!) ){
-                cell.lickButton.titleLabel?.text = "Licked! :P"
-            }
-            else{
-                cell.lickButton.titleLabel?.text = "Give it a lick!"
-            }
-            }
             return cell
 
         case 2:
@@ -80,8 +80,6 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         case 3:
             var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as! HowToDoItCell
             cell.content.text = recipe.recipeDescription!
-            println(recipe.recipeDescription!)
-            
             return cell
 
             
@@ -106,22 +104,33 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         }
     }
     
-    func didAlreadyLikeRecipe(user: PFUser) -> Bool{
-        
-        var relatie = self.recipe.parseObject?.relationForKey("lickers")
-        var query = PFQuery(className: "Recipe")
-        var relationQuery = relatie?.query()!.whereKey("objectId", equalTo: user.objectId!)
-        
-        var smth = relationQuery?.getFirstObject()
-        if( smth != nil ){
-            return true
-        }
-        else{
-            return false
-        }
-    }
+//    func didAlreadyLikeRecipe(user: PFUser) -> Bool{
+//        
+//        var relatie = self.recipe.parseObject?.relationForKey("lickers")
+//        var query = PFQuery(className: "Recipe")
+//        var relationQuery = relatie?.query()!.whereKey("objectId", equalTo: user.objectId!)
+//        
+//        var smth = relationQuery?.getFirstObject()
+//        if( smth != nil ){
+//            return true
+//        }
+//        else{
+//            return false
+//        }
+//    }
     
- 
+//    func didLikeRecipe(user: PFUser, completionBlock:(PFUser) -> Void){
+//        var relatie = self.recipe?.parseObject?.relationForKey("lickers")
+//        var query = PFQuery(className: "Recipe")
+//        var relationQuery = relatie?.query()!.whereKey("objectId", equalTo: user.objectId!)
+//        var smth: Void? = relationQuery?.getFirstObjectInBackgroundWithBlock({ (object, error) -> Void in
+//            var usser = PFUser()
+//            if let uzer = object as? PFUser{
+//                usser = uzer
+//            }
+//            completionBlock(usser)
+//        })
+//    }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 3 {
@@ -129,7 +138,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
                 NSFontAttributeName : UIFont.systemFontOfSize(14)]
             if (self.recipe.recipeDescription != nil){
             var dimensions = (self.recipe.recipeDescription! as NSString).boundingRectWithSize(CGSize(width: self.view.frame.size.width, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: atribute, context: nil)
-            return dimensions.height
+            return dimensions.height+50
             }
             else{
                 return 100
@@ -168,7 +177,6 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
 //        CoreDataManager.sharedInstance.saveObject(recipeToSave)
 //        println(44)
         
-        
          //self.recipe.parseObject?.pinInBackgroundWithName("44")
 //         self.recipe.parseObject?.pin()
 //        self.recipe.parseObject?.save()
@@ -179,13 +187,14 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
-//        if(indexPath.row == 0 )
-//        {
-//            var recipeManager = RecipeManager()
-//            recipeManager.lickRecipe(self.recipe, user: PFUser.currentUser(), completionBlock: { (success) -> Void in
-//                println("succes: \(success)")
-//            })
-//        }
+        if(indexPath.row==0){
+            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            var viewController = storyboard.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
+            
+            viewController.imageFile = self.recipe.image
+            
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     

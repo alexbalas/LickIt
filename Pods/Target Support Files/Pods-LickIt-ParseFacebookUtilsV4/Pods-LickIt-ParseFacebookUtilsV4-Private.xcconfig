@@ -1,6 +1,0 @@
-#include "Pods-LickIt-ParseFacebookUtilsV4.xcconfig"
-FRAMEWORK_SEARCH_PATHS = ${PODS_LICKIT_PARSEFACEBOOKUTILSV__FRAMEWORK_SEARCH_PATHS}
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/ParseFacebookUtilsV4" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Bolts" "${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK" "${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FBSDKCoreKit" "${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FBSDKLoginKit" "${PODS_ROOT}/Headers/Public/Parse" "${PODS_ROOT}/Headers/Public/ParseFacebookUtilsV4" "${PODS_ROOT}/Headers/Public/ParseUI" "${PODS_ROOT}/Headers/Public/RESideMenu"
-OTHER_LDFLAGS = ${PODS_LICKIT_PARSEFACEBOOKUTILSV__OTHER_LDFLAGS} -ObjC
-PODS_ROOT = ${SRCROOT}

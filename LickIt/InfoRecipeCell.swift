@@ -15,8 +15,9 @@ protocol InfoRecipeCellDelegate {
 
 class InfoRecipeCell: UITableViewCell {
 
-    var recipe: Recipe!
+    var recipe = Recipe()
     var lickedOrNot: Bool!
+    
     
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var licks: UILabel!
@@ -49,9 +50,32 @@ class InfoRecipeCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        println("step 1")
+        self.recipe.parseObject = self.recipe.toPFObject()
         // Initialization code
-        
+        //check if licked or not
+        if PFUser.currentUser() != nil{
+            println("step 2")
+            var manager = RecipeManager()
+            manager.didLikeRecipe(self.recipe,user: PFUser.currentUser()!, completionBlock: { (usser) -> Void in
+                println("step 3")
+                var uzer = usser as PFUser!
+                if uzer != nil {
+                    self.lickButton.titleLabel?.text = "Licked :P"
+                }
+                else{
+                    self.lickButton.titleLabel?.text = "Give it a lick!"
+                }
+            self.reloadInputViews()
+            self.contentView.reloadInputViews()
+            println("Ar trebui sa se schimbe")
+            })
+        }
+        else{
+            self.lickButton.titleLabel?.text = "Log on to lick"
+        }
     
+        
     /*
         if(self.lickedOrNot == true){
             self.lickButton.titleLabel?.text = "Licked :P"
@@ -64,6 +88,8 @@ class InfoRecipeCell: UITableViewCell {
 
     }
 
+
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

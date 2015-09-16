@@ -36,6 +36,13 @@ class SideMenuViewController: UITableViewController{
     //        appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
+        var bookmarkedTableViewControllerItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
+            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedTableViewController") as! BookmarkedTableViewController
+            self.sideMenuViewController.hideMenuViewController()
+            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+        }
         var ingredientSearchMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
@@ -44,7 +51,16 @@ class SideMenuViewController: UITableViewController{
             var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
-
+        }
+        
+        var newSearchMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
+            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            
+            var viewController = storyboard.instantiateViewControllerWithIdentifier("SearchNewTableViewController") as! SearchNewTableViewController
+            self.sideMenuViewController.hideMenuViewController()
+            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
         var searchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
@@ -93,6 +109,8 @@ class SideMenuViewController: UITableViewController{
         self.dataSource.append(mainMenuItem)
         self.dataSource.append(topWantedMenuItem)
         self.dataSource.append(ingredientSearchMenuItem)
+        self.dataSource.append(newSearchMenuItem)
+        self.dataSource.append(bookmarkedTableViewControllerItem)
         self.dataSource.append(searchMenuItem)
         self.dataSource.append(bookmarkedRecipesMenuItem)
         self.dataSource.append(addNewRecipeMenuItem)

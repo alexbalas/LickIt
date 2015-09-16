@@ -134,7 +134,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     func bookmarkedRecipeCellDidLongTap(cell: BookmarkedRecipesCell) {
         var image = cell.image.image
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle?())
-        var controller = storyboard.instantiateViewControllerWithIdentifier("FullScreenPicController") as! FullScreenPicController
+        var controller = storyboard.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
         controller.img = image
         
         self.presentViewController(controller, animated: true) { () -> Void in

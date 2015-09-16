@@ -11,7 +11,7 @@ import CoreData
 
 class Recipe: NSObject, NSCoding {
     
-    var ID : String
+    var ID : String?
     var name : String?
     var numberOfLicks : Int?
     var ingredients : [Ingredient]?
@@ -24,18 +24,20 @@ class Recipe: NSObject, NSCoding {
     var ingredientsRelation : PFRelation?
     var parseObject : PFObject?
     
-    init (ID : String){
-        self.ID = ID
+//    init (ID : String){
+//        self.ID = ID
+//    }
+    override init(){
     }
     
     required init(coder aDecoder: NSCoder) {
-        self.ID = aDecoder.decodeObjectForKey("ID") as! String
+        self.ID = (aDecoder.decodeObjectForKey("ID") as? String)!
         self.name = aDecoder.decodeObjectForKey("name") as? String
         self.numberOfLicks = Int(aDecoder.decodeIntForKey("numberOfLicks"))
         self.time = Int(aDecoder.decodeIntForKey("time"))
 //        self.image = UIImage(contentsOfFile: "self.image") as UIImage!
         self.recipeDescription = aDecoder.decodeObjectForKey("recipeDescription") as? String
-
+        self.parseObject = aDecoder.decodeObjectForKey("parseObject") as? PFObject
         
     }
     func encodeWithCoder(aCoder: NSCoder) {
@@ -45,7 +47,7 @@ class Recipe: NSObject, NSCoding {
         aCoder.encodeInteger(self.time, forKey: "time")
 //        aCoder.encodeObject(UIImagePNGRepresentation(self.image), forKey: "image")
         aCoder.encodeObject(self.recipeDescription, forKey: "recipeDescription")
-        
+        aCoder.encodeObject(self.parseObject, forKey: "parseObject")
     }
     
    
@@ -55,7 +57,9 @@ extension Recipe{
     func toPFObject() -> PFObject{
         
         var object = PFObject(className: "Recipe")
-        object["ID"] = self.ID
+        if let aidi = self.ID as String?{
+            object["ID"] = aidi
+        }
         if let name = self.name {
             object["name"] = name
         }
@@ -88,7 +92,11 @@ extension Recipe{
     }
     
     convenience init(object: PFObject){
-        self.init(ID: object["ID"] as! String)
+        //self.init(ID: object["ID"] as! String)
+        self.init()
+        if let aidi = object["ID"] as? String{
+            self.ID = aidi
+        }
         if let name = object["name"] as? String{
             self.name = name
         }
@@ -152,12 +160,19 @@ extension Recipe{
         if let licks = self.numberOfLicks{
             recipeModel.nrOfLicks = licks
         }
-        recipeModel.id = self.ID
+        
+        if let aidi = self.ID as String?{
+            recipeModel.id = aidi
+        }
         return recipeModel
     }
     
     convenience init(recipeModel: RecipeModel){
-        self.init(ID: recipeModel.id)
+    //    self.init(ID: recipeModel.id)
+        self.init()
+        if let aidi = recipeModel.id as String!{
+            self.ID = aidi
+        }
         if let nume = recipeModel.name as String?{
             self.name = nume
         }

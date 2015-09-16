@@ -10,14 +10,36 @@ import UIKit
 
 class FullScreenPicController: UIViewController {
 
-    @IBOutlet weak var image: UIImageView!
+    
+    @IBOutlet weak var buton: UIButton!
     var img: UIImage?
+    var imageFile: PFFile?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.image.image = self.img
-        
+       // self.buton.backgroundImageForState(state: UIControlState.Normal) = self.img
+        if( img != nil ){
+            self.buton.setBackgroundImage(img, forState: UIControlState.Normal)
+        }
+        else{
+            self.imageFile!.getDataInBackgroundWithBlock {
+                (imageData: NSData?, error: NSError?) -> Void in
+                if !(error != nil) {
+                    var imag = UIImage(data:imageData!)
+                    self.buton.setBackgroundImage(imag, forState: UIControlState.Normal)
+                    
+                }
+            }
+
+        }
         self.view.userInteractionEnabled = true
+        self.buton.addTarget(self, action: "butonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func butonPressed(){
+        
     }
 
     override func didReceiveMemoryWarning() {
