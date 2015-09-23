@@ -10,8 +10,10 @@ import UIKit
 
 class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate {
 
+
     var recipe: Recipe!
     var lickedOrNot: Bool!
+    var savedOrNot = false
     
     
    // @IBOutlet weak var expand: UIButton!
@@ -24,6 +26,8 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             self.recipe.ingredients = ingredients
             self.tableView.reloadData()
         })
+        
+        
     //    expand.addTarget(self, action: "expandButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
        // var recipeLickers: [User] = self.recipe.parseObject?.objectForKey("lickers") as [User]
 //        var recipeLickers = [User(object: self.recipe.parseObject?.objectForKey("lickers")! as PFObject)]
@@ -48,6 +52,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         
     }
     
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
@@ -64,6 +69,9 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             }
             else{
                 cell.licks.text = "?"
+            }
+            if(self.savedOrNot == true){
+                cell.saveButton.titleLabel?.text = "you have it"
             }
             cell.recipe = self.recipe
             return cell
@@ -138,7 +146,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
                 NSFontAttributeName : UIFont.systemFontOfSize(14)]
             if (self.recipe.recipeDescription != nil){
             var dimensions = (self.recipe.recipeDescription! as NSString).boundingRectWithSize(CGSize(width: self.view.frame.size.width, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: atribute, context: nil)
-            return dimensions.height+50
+            return 1.3*dimensions.height
             }
             else{
                 return 100
@@ -160,7 +168,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     }
     
 
-    func infoRecipeCellSaveButtonPressed(cell: InfoRecipeCell) {
+    func infoRecipeCellSaveButtonPressed() {
 //        var savedRecipesIDs = NSUserDefaults.standardUserDefaults().arrayForKey("savedRecipes") as [String]?
 //        if(savedRecipesIDs==nil){
 //            savedRecipesIDs = [String]()
@@ -192,11 +200,20 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             var viewController = storyboard.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
             
             viewController.imageFile = self.recipe.image
+            viewController.nume = self.recipe.name
             
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
+    func loginControllerShouldAppear() {
+        var loginViewController = LogInViewController()
+        loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
+        self.presentViewController(loginViewController, animated: true) { () -> Void in
+        }
+    }
+    
+
     
     /*
     // MARK: - Navigation

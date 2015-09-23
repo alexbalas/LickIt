@@ -58,6 +58,7 @@
 		10D18E891B305AF100F5E6FB /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D18E881B305AF100F5E6FB /* IngredientModel.swift */; };
 		10D18E8B1B305AF100F5E6FB /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D18E8A1B305AF100F5E6FB /* RecipeModel.swift */; };
 		10D4DAB71B64F1AF008D4D21 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D4DAB61B64F1AF008D4D21 /* LogInViewController.swift */; };
+		10D543FB1BB1C0F1009463EE /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D543FA1BB1C0F1009463EE /* PopupViewController.swift */; };
 		10D97A421B32B2B1007F4E80 /* IngredientSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D97A411B32B2B1007F4E80 /* IngredientSearchResultCell.swift */; };
 		10DC3CC41B2A3F0D00745DC8 /* AddNewRecipeControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10DC3CC31B2A3F0D00745DC8 /* AddNewRecipeControllerViewController.swift */; };
 		10E7E1E31B0CE4BF004096E8 /* IngredientSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E7E1E21B0CE4BF004096E8 /* IngredientSearchController.swift */; };
@@ -135,6 +136,7 @@
 		10D18E8A1B305AF100F5E6FB /* RecipeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		10D4BA8B1AADD3A3001298AA /* LickIt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LickIt-Bridging-Header.h"; sourceTree = "<group>"; };
 		10D4DAB61B64F1AF008D4D21 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		10D543FA1BB1C0F1009463EE /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		10D97A411B32B2B1007F4E80 /* IngredientSearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientSearchResultCell.swift; sourceTree = "<group>"; };
 		10DC3CC31B2A3F0D00745DC8 /* AddNewRecipeControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewRecipeControllerViewController.swift; sourceTree = "<group>"; };
 		10E7E1E21B0CE4BF004096E8 /* IngredientSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientSearchController.swift; sourceTree = "<group>"; };
@@ -242,8 +244,8 @@
 			children = (
 				10D18E8A1B305AF100F5E6FB /* RecipeModel.swift */,
 				10D18E881B305AF100F5E6FB /* IngredientModel.swift */,
-				109CED4B1A9CADDC00D027BD /* Recipe.swift */,
 				109CED4D1A9CAE4900D027BD /* Ingredient.swift */,
+				109CED4B1A9CADDC00D027BD /* Recipe.swift */,
 				109CED4F1A9CAEC100D027BD /* RecipeCategory.swift */,
 				109CED511A9CAF8000D027BD /* Comment.swift */,
 				109CED531A9CB11900D027BD /* User.swift */,
@@ -277,6 +279,7 @@
 				102AF82C1B2EF6B2008C8F8C /* ThankYouViewController.swift */,
 				10D4DAB61B64F1AF008D4D21 /* LogInViewController.swift */,
 				103D6A611BA86A6300E9FB0F /* SearchNewTableViewController.swift */,
+				10D543FA1BB1C0F1009463EE /* PopupViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10D543FB1BB1C0F1009463EE /* PopupViewController.swift in Sources */,
 				10D97A421B32B2B1007F4E80 /* IngredientSearchResultCell.swift in Sources */,
 				10E7E1E31B0CE4BF004096E8 /* IngredientSearchController.swift in Sources */,
 				10760DC41AADE4D60048895E /* AddRecipeViewController.swift in Sources */,

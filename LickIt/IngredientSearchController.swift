@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IngredientSearchController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class IngredientSearchController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, ChooseIngredientSearchCellDelegate {
 
     
     
@@ -17,7 +17,8 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     @IBOutlet weak var chooseCV: ChooseColView!
     var selectedIngr = [Ingredient]()
     var chooseIngr = [Ingredient]()
-    
+    var foundRecipes = [Recipe]()
+    var arrivedRecipesCheck = Int()
 //    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 //        touches
 //    }
@@ -26,18 +27,16 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     }
     
     @IBAction func searchButtonPressed(sender: AnyObject) {
-        var recipesFound = [Recipe]()
-        
+        if( self.selectedIngr.count == self.arrivedRecipesCheck){
+            
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResultController") as! IngredientSearchResultController
-        viewController.ingredients = selectedIngr
-//        var recipeManager = RecipeManager()
-//        recipeManager.getRecipesForIngredients(selectedIngr, completionBlock: { (recipes) -> Void in
-//            recipesFound = recipes
-//            println(recipes)
-//        })
-      //  viewController.foundRecipes = recipesFound
+    //    viewController.ingredients = selectedIngr
+        viewController.foundRecipes = self.foundRecipes
+        
+        
         self.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -111,9 +110,65 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
                 }
                 
                 }
+            //add long tap recognizer
             return cell
             }
         }
+    
+//    func didLongTap(gestureRecognizer: UILongPressGestureRecognizer){
+//        if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
+//            //Do Whatever You want on End of Gesture
+//            println("LONG TAP RECOGNIZED")
+//            self.dismissViewControllerAnimated(false, completion: { () -> Void in
+//                
+//            })
+//        }
+//        else if (gestureRecognizer.state == UIGestureRecognizerState.Began){
+//            //Do Whatever You want on Began of Gesture
+//            println("BEGAAAN")
+//            let storyboard : UIStoryboard = UIStoryboard(
+//                name: "Main",
+//                bundle: nil)
+//            var menuViewController: PopupViewController = storyboard.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+//            menuViewController.modalPresentationStyle = .Popover
+//            menuViewController.preferredContentSize = CGSizeMake(100, 60)
+//           // menuViewController.name.text = self.chooseIngr[indexPath.item].name
+//           
+//            let popoverMenuViewController = menuViewController.popoverPresentationController
+//            popoverMenuViewController?.permittedArrowDirections = .Any
+//            popoverMenuViewController?.delegate = self
+//            popoverMenuViewController?.sourceView = gestureRecognizer.view
+//            popoverMenuViewController?.sourceRect = CGRect(
+//                x: gestureRecognizer.locationInView(gestureRecognizer.view).x,
+//                y: gestureRecognizer.locationInView(gestureRecognizer.view).y,
+//                width: 1,
+//                height: 1)
+//            presentViewController(
+//                menuViewController,
+//                animated: true,
+//                completion: nil)
+//        }
+//        
+//    }
+    
+    func adaptivePresentationStyleForPresentationController(
+        controller: UIPresentationController) -> UIModalPresentationStyle {
+            return .None
+    }
+    
+    func showPopup(menuViewController: PopupViewController){
+        
+        let popoverMenuViewController = menuViewController.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Any
+        popoverMenuViewController?.delegate = self
+        
+        println(menuViewController.name?.text)
+        
+                    presentViewController(
+                        menuViewController,
+                        animated: true,
+                        completion: nil)
+    }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let a = collectionView as? ChooseColView{
@@ -121,13 +176,23 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
             selectedIngr.append(chooseIngr[indexPath.item])
                 selectedCV.reloadData()
                 self.selectedCV.scrollToItemAtIndexPath(NSIndexPath(forItem: selectedIngr.count-1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Bottom, animated: true)
+            //cauta retete
                 var recipeManager = RecipeManager()
-                recipeManager.getRecipesForIngredients(selectedIngr, completionBlock: { (recipes) -> Void in
-                    println(recipes)
+                recipeManager.getRecipesForIngredients(self.selectedIngr, completionBlock: { (recipes) -> Void in
+                    self.foundRecipes = recipes
+                    self.arrivedRecipesCheck = self.selectedIngr.count
                 })
+
             }
         }
+        else{
+            self.selectedIngr.removeAtIndex(indexPath.item)
+            selectedCV.reloadData()
+        }
+        
+    
     }
+    
     
     
     /*

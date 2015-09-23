@@ -11,7 +11,7 @@ import UIKit
 class BookmarkedTableViewController: BaseTableViewController {
 
     var recipes = [Recipe]()
-    var savedRecipesIDs = [String]()
+//    var savedRecipesIDs = [String]()
 
     
     override func viewDidLoad() {
@@ -42,7 +42,24 @@ class BookmarkedTableViewController: BaseTableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         //self.navigationItem.rightBarButtonItem = self.editButtonItem()
+         self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            self.recipes.removeAtIndex(indexPath.row)}
+            self.recipes[indexPath.row].parseObject?.unpinInBackgroundWithName(self.recipes[indexPath.row].name!)
+        /*        if (editingStyle == UITableViewCellEditingStyle.Insert){
+        Plus(persons)
+        }
+        */
+        self.tableView.reloadData()
+        // handle delete (by removing the data from your array and updating the tableview)
+        
+    }
+    
+    override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
+        
     }
 
     override func didReceiveMemoryWarning() {

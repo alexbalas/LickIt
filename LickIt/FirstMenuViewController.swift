@@ -30,6 +30,13 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Zapfino", size: 20)!]
         self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
 
+        if(PFUser.currentUser() == nil){
+            var loginViewController = LogInViewController()
+            loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
+            
+            self.presentViewController(loginViewController, animated: true) { () -> Void in
+            }
+        }
        
         var manager = RecipeManager()
         manager.getRecommendedRecipes(5, completionBlock: { (recipess) -> Void in
@@ -37,25 +44,20 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             self.collectionView.reloadData()
         })
        
-        if(PFUser.currentUser() == nil){
-            var loginViewController = LogInViewController()
-            loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
-        
-            self.presentViewController(loginViewController, animated: true) { () -> Void in
-            }
-        }
         
         //setare news
         manager.getNews { (exctractedNews) -> Void in
-            self.news = exctractedNews
-            self.news[0].getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if !(error != nil) {
-                var img = UIImage(data:imageData!)
-                self.newsImages.image = img
-                self.count = 0
+            if (exctractedNews.count > 0){
+                self.news = exctractedNews
+                self.news[0].getDataInBackgroundWithBlock {
+                    (imageData: NSData?, error: NSError?) -> Void in
+                    if !(error != nil) {
+                        var img = UIImage(data:imageData!)
+                        self.newsImages.image = img
+                        self.count = 0
+                    }
+                }
             }
-        }
         }
         
         //setare butoane pentru schimbarea news-urilor

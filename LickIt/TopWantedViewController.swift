@@ -16,13 +16,12 @@ class TopWantedViewController: BaseTableViewController {
         super.viewDidLoad()
 
         var manager = RecipeManager()
-        manager.getTopRecipes(4, completionBlock: { (recipes) -> Void in
+        manager.getTopRecipes(20, completionBlock: { (recipes) -> Void in
             self.topRecipes = recipes
             self.tableView.reloadData()
         })
-        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -58,11 +57,8 @@ class TopWantedViewController: BaseTableViewController {
         else{
             cell.nrOfLicks.text = "?"
         }
- //       cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row].numberOfLicks?)"
-
             cell.recipeName.text = topRecipes[indexPath.row].name!
-            cell.userName.text = "by " + "ALEX"
-            
+        
             self.tableView.rowHeight = 90.0
             return cell
 

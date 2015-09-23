@@ -12,7 +12,8 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
   
   var resultSearchController = UISearchController()
   var recipes = [Recipe]()
-  
+  var searchControlar = UISearchController()
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -67,7 +68,7 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
         }
       }
       cell?.name.text = self.recipes[indexPath.row].name
-      cell?.licks.text = "\(self.recipes[indexPath.row].numberOfLicks)"
+      cell?.licks.text = "\(self.recipes[indexPath.row].numberOfLicks!)"
       
       
     }
@@ -78,28 +79,39 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
     if(indexPath.row <= self.recipes.count && self.recipes.count>0){
       var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
       var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
-      println(indexPath.row)
-      println(self.recipes.count)
       viewController.recipe = self.recipes[indexPath.row]
+        
+        
+        //self.searchDisplayController?.searchBar.
+        var searchFrame = self.searchDisplayController?.searchBar.frame;
+        searchFrame?.size.height = 0;
+        
+        self.searchDisplayController?.searchBar.frame = searchFrame!;
+        self.searchDisplayController?.searchBar.hidden = true
+       
       self.navigationController?.pushViewController(viewController, animated: true)
     }
     println(indexPath.row)
-    
-    
   }
   
   func updateSearchResultsForSearchController(searchController: UISearchController)
   {
     //  self.recipes.removeAll(keepCapacity: true)
+    var controller : UISearchController? = self.searchControlar
+    if controller == nil{
+        self.searchControlar = searchController
+    }
+
     
     //aici trebuie facuta cautarea de elemente
-    
+    if(!searchController.searchBar.text.isEmpty){
     var manager = RecipeManager()
     manager.getSearchedRecipes(searchController.searchBar.text, completionBlock: { (retete) -> Void in
       self.recipes = retete
+      self.tableView.reloadData()
     })
+    }
     
-    self.tableView.reloadData()
   }
   
   

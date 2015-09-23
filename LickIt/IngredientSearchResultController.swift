@@ -16,24 +16,19 @@ class IngredientSearchResultController: UICollectionViewController {
     let reuseIdentifier = "IngrSearchResultCell"
     var foundRecipes = [Recipe]()
     var ingredients : [Ingredient]!
+    //var recipes = [Recipe]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "Results"
         self.collectionView?.backgroundColor = UIColor(patternImage: (UIImage(named: "clouds2"))!)
-        var recipeManager = RecipeManager()
-        recipeManager.getRecipesForIngredients(ingredients, completionBlock: { (recipes) -> Void in
-            self.foundRecipes = recipes
-            self.collectionView?.reloadData()
-            println(recipes)
-        })
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-   
-
-        // Do any additional setup after loading the view.
+//        var recipeManager = RecipeManager()
+//        recipeManager.getRecipesForIngredients(ingredients, completionBlock: { (recipes) -> Void in
+//            self.foundRecipes = recipes
+//            self.collectionView?.reloadData()
+//            println(recipes)
+//        })
         let backButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "backButtonPressed")
       //  self.navigationItem.leftBarButtonItem = backButton
         

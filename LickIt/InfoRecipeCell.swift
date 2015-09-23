@@ -10,7 +10,8 @@ import UIKit
 import CoreData
 
 protocol InfoRecipeCellDelegate {
-    func infoRecipeCellSaveButtonPressed(cell : InfoRecipeCell)
+    func infoRecipeCellSaveButtonPressed()
+    func loginControllerShouldAppear()
 }
 
 class InfoRecipeCell: UITableViewCell {
@@ -30,7 +31,8 @@ class InfoRecipeCell: UITableViewCell {
     @IBAction func lickButtonPressed(sender: AnyObject) {
         
         if(PFUser.currentUser() == nil){
-            self.lickButton.titleLabel?.text = "Login first!"
+            self.lickButton.setTitle("Login first!", forState: UIControlState.Normal)
+            delegate?.loginControllerShouldAppear()
         }
         else{
         println("lick")
@@ -61,10 +63,10 @@ class InfoRecipeCell: UITableViewCell {
                 println("step 3")
                 var uzer = usser as PFUser!
                 if uzer != nil {
-                    self.lickButton.titleLabel?.text = "Licked :P"
+                    self.lickButton.setTitle("Licked :P", forState: UIControlState.Normal)
                 }
                 else{
-                    self.lickButton.titleLabel?.text = "Give it a lick!"
+                    self.lickButton.setTitle("Give it a lick!", forState: UIControlState.Normal)
                 }
             self.reloadInputViews()
             self.contentView.reloadInputViews()
@@ -72,20 +74,24 @@ class InfoRecipeCell: UITableViewCell {
             })
         }
         else{
-            self.lickButton.titleLabel?.text = "Log on to lick"
+            self.lickButton.setTitle("Log on to lick", forState: UIControlState.Normal)
         }
     
         
-    /*
-        if(self.lickedOrNot == true){
-            self.lickButton.titleLabel?.text = "Licked :P"
+        
+        
+        var query = PFQuery(className: "Recipe").fromLocalDatastore()
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            for object in objects!{
+                if( self.recipe.parseObject == object as? PFObject){
+                    self.saveButton.setTitle("got it", forState: UIControlState.Normal)
+                }
+            }
+            if(self.saveButton.titleLabel?.text != "got it"){
+                self.saveButton.setTitle("Save", forState: UIControlState.Normal)
+            }
         }
-        else{
-            self.lickButton.titleLabel?.text = "Give it a lick!"
-        }
-        */
         self.lickButton.addTarget(self, action: "lickButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-
     }
 
 
@@ -97,8 +103,12 @@ class InfoRecipeCell: UITableViewCell {
     }
 
     @IBAction func saveButtonPressed(sender: UIButton) {
-        delegate?.infoRecipeCellSaveButtonPressed(self)
+        self.saveButton.setTitle("got it", forState: UIControlState.Normal)
+        delegate?.infoRecipeCellSaveButtonPressed()
         println("save button pressed")
+        
+        
+
         
 //        var coreManager = CoreDataManager()
 //        var reteta = RecipeModel()

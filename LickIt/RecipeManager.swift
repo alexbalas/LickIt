@@ -47,8 +47,7 @@ class RecipeManager: NSObject {
         var relatie = recipe.parseObject!.relationForKey("lickers")
         var relationQuery = relatie.query()!.whereKey("objectId", equalTo: user.objectId!)
         println("2.555")
-//        var obj = PFObject(className: "jjaa")
-//        obj.pin()
+        
         var smth: Void = relationQuery.getFirstObjectInBackgroundWithBlock({ (object, error) -> Void in
             println("step 2.6")
             var usser = PFUser()
@@ -64,8 +63,8 @@ class RecipeManager: NSObject {
         
         var qry = PFQuery(className: "Recipe")
         //qry.whereKey(magicWord, containedIn: [AnyObject]())
-        qry.whereKey("name", containsString: magicWord)
-        
+     //   qry.whereKey("name", containsString: magicWord)
+        qry.whereKey("name", matchesRegex: magicWord, modifiers: "i")
        // var pred = NSPredicate(
         
       //  let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", magicWord)

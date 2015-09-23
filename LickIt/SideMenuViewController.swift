@@ -53,7 +53,7 @@ class SideMenuViewController: UITableViewController{
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
-        var newSearchMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
+        var newSearchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
             var viewController = storyboard.instantiateViewControllerWithIdentifier("SearchNewTableViewController") as! SearchNewTableViewController
@@ -63,60 +63,57 @@ class SideMenuViewController: UITableViewController{
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
-        var searchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("SearchMenuViewController") as! SearchingTableViewController
-            self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-          //  appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
-
-        }
+//        var searchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
+//            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//            
+//            var viewController = storyboard.instantiateViewControllerWithIdentifier("SearchMenuViewController") as! SearchingTableViewController
+//            self.sideMenuViewController.hideMenuViewController()
+//            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//          //  appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+//            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+//
+//        }
         
-        var bookmarkedRecipesMenuItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipesCollection") as! BookmarkedRecipesCollectionViewController
-            self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
-
-        }
+//        var bookmarkedRecipesMenuItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
+//            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//            var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedRecipesCollection") as! BookmarkedRecipesCollectionViewController
+//            self.sideMenuViewController.hideMenuViewController()
+//            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+//            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+//
+//        }
         
-        var addNewRecipeMenuItem = MenuItem(image: UIImage(named: "add recipe")!) { () -> (Void) in
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("AddNewRecipeControllerViewController") as! AddNewRecipeControllerViewController
-            self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
-
-        }
+//        var addNewRecipeMenuItem = MenuItem(image: UIImage(named: "add recipe")!) { () -> (Void) in
+//            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//            var viewController = storyboard.instantiateViewControllerWithIdentifier("AddNewRecipeControllerViewController") as! AddNewRecipeControllerViewController
+//            self.sideMenuViewController.hideMenuViewController()
+//            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+//            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+//
+//        }
+//        
+//        var loginItem = MenuItem(image: UIImage(named: "add recipe")!) { () -> (Void) in
+//            
+//                var loginViewController = PFLogInViewController()
+//                loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
+//                loginViewController.title = "Login"
+//                //self.presentViewController(loginViewController, animated: true) { () -> Void in   }
+//            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//            appDelegate.mainViewController?.pushViewController(loginViewController, animated: true)
+//        }
         
-        var loginItem = MenuItem(image: UIImage(named: "add recipe")!) { () -> (Void) in
-            
-                var loginViewController = PFLogInViewController()
-                loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter
-                loginViewController.title = "Login"
-                //self.presentViewController(loginViewController, animated: true) { () -> Void in   }
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.mainViewController?.pushViewController(loginViewController, animated: true)
-
-            
-
-        }
+        
         self.dataSource.append(mainMenuItem)
         self.dataSource.append(topWantedMenuItem)
         self.dataSource.append(ingredientSearchMenuItem)
         self.dataSource.append(newSearchMenuItem)
         self.dataSource.append(bookmarkedTableViewControllerItem)
-        self.dataSource.append(searchMenuItem)
-        self.dataSource.append(bookmarkedRecipesMenuItem)
-        self.dataSource.append(addNewRecipeMenuItem)
-       // if( PFUser.currentUser() == nil){
-            self.dataSource.append(loginItem)
-       // }
+//        self.dataSource.append(searchMenuItem)
+//        self.dataSource.append(bookmarkedRecipesMenuItem)
+//        self.dataSource.append(addNewRecipeMenuItem)
+//            self.dataSource.append(loginItem)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
