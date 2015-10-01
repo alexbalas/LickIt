@@ -17,9 +17,9 @@ class RecipeManager: NSObject {
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             var recipes = [Recipe]()
             if(objects != nil){
-            for object in objects! {
-                var recipe = Recipe(object: object as! PFObject)
-                recipes.append(recipe)
+                for object in objects! {
+                    var recipe = Recipe(object: object as! PFObject)
+                    recipes.append(recipe)
                 }
             }
             completionBlock(recipes)
@@ -48,7 +48,7 @@ class RecipeManager: NSObject {
         var relationQuery = relatie.query()!.whereKey("objectId", equalTo: user.objectId!)
         println("2.555")
         
-        var smth: Void = relationQuery.getFirstObjectInBackgroundWithBlock({ (object, error) -> Void in
+        relationQuery.getObjectInBackgroundWithId(user.objectId!) { (object, error) -> Void in
             println("step 2.6")
             var usser = PFUser()
             if let uzer = object as? PFUser{
@@ -56,54 +56,62 @@ class RecipeManager: NSObject {
             }
             println("step 2.7")
             completionBlock(usser)
-        })
+            
+        }
+    }
+    
+    func isRecipeSaved(recipeName: String, completionBlock:(Bool) -> Void){
+        var query = PFQuery(className: "Recipe").whereKey("name", equalTo: recipeName)
+        query.fromLocalDatastore()
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            if objects?.count > 0 {
+                completionBlock(true)
+            }
+            else{
+                completionBlock(false)
+            }
+        }
+        
     }
     
     func getSearchedRecipes(magicWord : String, completionBlock: ([Recipe])-> Void){
         
         var qry = PFQuery(className: "Recipe")
-        //qry.whereKey(magicWord, containedIn: [AnyObject]())
-     //   qry.whereKey("name", containsString: magicWord)
-        qry.whereKey("name", matchesRegex: magicWord, modifiers: "i")
-       // var pred = NSPredicate(
-        
-      //  let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", magicWord)
-        //var query = PFQuery(className: "Recipe", predicate: searchPredicate)
-        
+        qry.whereKey("name", matchesRegex: magicWord, modifiers: "i")        
         qry.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if !(error != nil){
-            var searchedRecipes = [Recipe]()
-            if let objs = objects {
-                for object in objs{
-                    var recipe = Recipe(object: object as! PFObject)
-                    searchedRecipes.append(recipe as Recipe)
+                var searchedRecipes = [Recipe]()
+                if let objs = objects {
+                    for object in objs{
+                        var recipe = Recipe(object: object as! PFObject)
+                        searchedRecipes.append(recipe as Recipe)
+                    }
                 }
+                completionBlock(searchedRecipes)
+                
             }
-            completionBlock(searchedRecipes)
-
-        }
         }
     }
     
     func getAllRecipes(completionBlock: ([Recipe]) -> Void){
         var query = PFQuery(className: "Recipe")
         query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error) -> Void in
-          var recipes = [Recipe]()
+            var recipes = [Recipe]()
             if((error) == nil){
                 if let objs = objects {
-            for object in objs {
-                var lickerRelation: PFRelation = (object as! PFObject).relationForKey("lickers") as PFRelation
-                var recipe = Recipe(object: object as! PFObject)
-                
-                recipe.numberOfLicks = lickerRelation.query()!.countObjects()
-                
-                var recipeModel = recipe.toManagedObject()
-                
-                recipes.append(recipe)
+                    for object in objs {
+                        var lickerRelation: PFRelation = (object as! PFObject).relationForKey("lickers") as PFRelation
+                        var recipe = Recipe(object: object as! PFObject)
+                        
+                        recipe.numberOfLicks = lickerRelation.query()!.countObjects()
+                        
+                        var recipeModel = recipe.toManagedObject()
+                        
+                        recipes.append(recipe)
                     }}}
-                CoreDataManager.sharedInstance.managedObjectContext.save(nil)
-                completionBlock(recipes)
-            })
+            CoreDataManager.sharedInstance.managedObjectContext.save(nil)
+            completionBlock(recipes)
+        })
     }
     
     func getRecipesFromCore(completionBlock: ([Recipe]) -> Void){
@@ -123,12 +131,12 @@ class RecipeManager: NSObject {
             var ingredients = [Ingredient]()
             if((error) == nil){
                 if let objs = objects{
-                for object in objs {
-                    var ingredient = Ingredient(object: object as! PFObject)
-                    ingredients.append(ingredient)
+                    for object in objs {
+                        var ingredient = Ingredient(object: object as! PFObject)
+                        ingredients.append(ingredient)
                     }}}
             completionBlock(ingredients)
-        
+            
         })
     }
     
@@ -148,7 +156,7 @@ class RecipeManager: NSObject {
             completionBlock(images)
         }
     }
-
+    
     func getRecipesForIngredients (ingredients: [Ingredient], completionBlock: ([Recipe]) -> Void){
         var query = PFQuery(className: "Recipe")
         query.whereKey("ingredients", containedIn: ingredients.map({ return $0.parseObject!}))
@@ -156,27 +164,27 @@ class RecipeManager: NSObject {
             var recipes = [Recipe]()
             if((error) == nil){
                 if let objs = objects{
-                for object in objs {
-                    var recipe = Recipe(object: object as! PFObject)
-                    recipes.append(recipe)
+                    for object in objs {
+                        var recipe = Recipe(object: object as! PFObject)
+                        recipes.append(recipe)
                     }}}
             completionBlock(recipes)
-
+            
         }
     }
     
-func getIngredientsForRecipe (recipe: Recipe, completionBlock:([Ingredient]) -> Void){
-    recipe.ingredientsRelation?.query()!.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-        var ingredients = [Ingredient]()
-        if let objs = objects {
-        for object in objs{
-            var ingredient = Ingredient(object: object as! PFObject)
-            ingredients.append(ingredient)
+    func getIngredientsForRecipe (recipe: Recipe, completionBlock:([Ingredient]) -> Void){
+        recipe.ingredientsRelation?.query()!.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+            var ingredients = [Ingredient]()
+            if let objs = objects {
+                for object in objs{
+                    var ingredient = Ingredient(object: object as! PFObject)
+                    ingredients.append(ingredient)
+                }
             }
-        }
-        completionBlock(ingredients)
-    })
-    
+            completionBlock(ingredients)
+        })
+        
     }
     
     func lickRecipe (recipe: Recipe, user: PFUser, completionBlock:(success: Bool) -> Void){
@@ -195,7 +203,7 @@ func getIngredientsForRecipe (recipe: Recipe, completionBlock:([Ingredient]) -> 
         parseRecipe = recipe.toPFObject()
         
         parseRecipe.saveInBackgroundWithBlock { (successfullyGotObjectInParse, error) -> Void in
-        completionBlock(success: successfullyGotObjectInParse)
+            completionBlock(success: successfullyGotObjectInParse)
         }
         
         
@@ -207,9 +215,9 @@ func getIngredientsForRecipe (recipe: Recipe, completionBlock:([Ingredient]) -> 
             var users = [User]()
             if error == nil{
                 if let objs = objects {
-            for object in objs{
-                var user = User(object: object as! PFObject)
-                users.append(user)
+                    for object in objs{
+                        var user = User(object: object as! PFObject)
+                        users.append(user)
                     }}}
             completionBlock(users)
         }

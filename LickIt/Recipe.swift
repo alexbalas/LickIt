@@ -24,9 +24,9 @@ class Recipe: NSObject, NSCoding {
     var ingredientsRelation : PFRelation?
     var parseObject : PFObject?
     
-//    init (ID : String){
-//        self.ID = ID
-//    }
+    //    init (ID : String){
+    //        self.ID = ID
+    //    }
     override init(){
     }
     
@@ -35,9 +35,10 @@ class Recipe: NSObject, NSCoding {
         self.name = aDecoder.decodeObjectForKey("name") as? String
         self.numberOfLicks = Int(aDecoder.decodeIntForKey("numberOfLicks"))
         self.time = Int(aDecoder.decodeIntForKey("time"))
-//        self.image = UIImage(contentsOfFile: "self.image") as UIImage!
+        //        self.image = UIImage(contentsOfFile: "self.image") as UIImage!
         self.recipeDescription = aDecoder.decodeObjectForKey("recipeDescription") as? String
         self.parseObject = aDecoder.decodeObjectForKey("parseObject") as? PFObject
+        
         
     }
     func encodeWithCoder(aCoder: NSCoder) {
@@ -45,12 +46,12 @@ class Recipe: NSObject, NSCoding {
         aCoder.encodeObject(self.name, forKey: "name")
         aCoder.encodeInteger(self.numberOfLicks!, forKey: "numberOfLicks")
         aCoder.encodeInteger(self.time, forKey: "time")
-//        aCoder.encodeObject(UIImagePNGRepresentation(self.image), forKey: "image")
+        //        aCoder.encodeObject(UIImagePNGRepresentation(self.image), forKey: "image")
         aCoder.encodeObject(self.recipeDescription, forKey: "recipeDescription")
         aCoder.encodeObject(self.parseObject, forKey: "parseObject")
     }
     
-   
+    
 }
 
 extension Recipe{
@@ -66,17 +67,17 @@ extension Recipe{
         if let numberOfLicks = self.numberOfLicks {
             object["numberOfLicks"] = numberOfLicks
         }
- /*       if let ingredients = self.ingredients{
-            object["ingredients"] = ingredients
+        /*       if let ingredients = self.ingredients{
+        object["ingredients"] = ingredients
         } */
         if let time = self.time{
             object["time"] = time
         }
- /*       if let categories = self.categories{
-            object["categories"] = categories
+        /*       if let categories = self.categories{
+        object["categories"] = categories
         } */
         if let image = self.image{
-            object["image"] = image
+//            object["image"] = image
         }
         if let description = self.recipeDescription{
             object["recipeDescription"] = description
@@ -84,7 +85,7 @@ extension Recipe{
         if let comms = self.comments{
             object["comments"] = comms
         }
-       
+        
         if let categs = self.categorieString{
             object["categories"] = categs
         }
@@ -103,14 +104,14 @@ extension Recipe{
         if let nrLicks = object["numberOfLicks"] as? Int{
             self.numberOfLicks = nrLicks
         }
-/*        if let ingredients = object["ingredients"] as? [Ingredient]{
-            self.ingredients = ingredients
+        /*        if let ingredients = object["ingredients"] as? [Ingredient]{
+        self.ingredients = ingredients
         }  */
         if let time = object["time"] as? Int{
             self.time = time
         }
-/*        if let categories = object["categories"] as? [RecipeCategory]{
-            self.categories = categories
+        /*        if let categories = object["categories"] as? [RecipeCategory]{
+        self.categories = categories
         } */
         if let image = object["image"] as? PFFile{
             self.image = image
@@ -123,7 +124,7 @@ extension Recipe{
         }
         if let ingredientsRelation = object["ingredients"] as? PFRelation{
             self.ingredientsRelation = ingredientsRelation
-        
+            
         }
         if let categs = object["categories"] as? String{
             self.categorieString = categs
@@ -141,12 +142,12 @@ extension Recipe{
         if let time = self.time{
             recipeModel.time = time
         }
-//        if let ingredients = self.ingredients{
-//            for ingredient in ingredients{
-//                var ingredientModel = ingredient.toManagedObjects()
-//                recipeModel.addIngredient(ingredientModel)
-//            }
-//        }
+        //        if let ingredients = self.ingredients{
+        //            for ingredient in ingredients{
+        //                var ingredientModel = ingredient.toManagedObjects()
+        //                recipeModel.addIngredient(ingredientModel)
+        //            }
+        //        }
         if let imagine = self.image{
             imagine.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
@@ -168,7 +169,7 @@ extension Recipe{
     }
     
     convenience init(recipeModel: RecipeModel){
-    //    self.init(ID: recipeModel.id)
+        //    self.init(ID: recipeModel.id)
         self.init()
         if let aidi = recipeModel.id as String!{
             self.ID = aidi

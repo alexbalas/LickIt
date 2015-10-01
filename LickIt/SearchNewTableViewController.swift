@@ -8,156 +8,196 @@
 
 import UIKit
 
-class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpdating {
-  
-  var resultSearchController = UISearchController()
-  var recipes = [Recipe]()
-  var searchControlar = UISearchController()
+class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpdating, UIPopoverPresentationControllerDelegate {
     
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    var resultSearchController : UISearchController!
+    var recipes = [Recipe]()
+    var isKeyboardOn = false
     
-    self.resultSearchController = ({
-      let controller = UISearchController(searchResultsController: nil)
-      controller.searchResultsUpdater = self
-      controller.dimsBackgroundDuringPresentation = false
-      controller.searchBar.sizeToFit()
-      
-      self.tableView.tableHeaderView = controller.searchBar
-      
-      return controller
-    })()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.resultSearchController = UISearchController(searchResultsController: nil)
+        resultSearchController.searchResultsUpdater = self
+        resultSearchController.dimsBackgroundDuringPresentation = false
+        resultSearchController.searchBar.sizeToFit()
+        
+        self.tableView.tableHeaderView = resultSearchController.searchBar
+        self.tableView.delegate = self
+        // Reload the table
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+        
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        checkForInternetConnection()
+        
+        // Do any additional setup after loading the view.
+    }
     
-    // Reload the table
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    
-  }
-  // MARK: - Table view data source
-  
-  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    // #warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1
-  }
-  
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return self.recipes.count
-  }
-  
-  
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    
-    var cell = tableView.dequeueReusableCellWithIdentifier("SearchNewTableViewCell", forIndexPath: indexPath) as?SearchNewTableViewCell
-    
-    if(self.recipes.count>0){
-      
-      self.recipes[indexPath.row].image!.getDataInBackgroundWithBlock {
-        (imageData: NSData?, error: NSError?) -> Void in
-        if !(error != nil) {
-          var img = UIImage(data:imageData!)
-          if var imag = cell!.imagine {
-            imag.image = img
-            
-          }
+    func checkForInternetConnection(){
+        var checker = Reachability.isConnectedToNetwork()
+        if checker == false{
+            showInternetConnectionMessage()
         }
-      }
-      cell?.name.text = self.recipes[indexPath.row].name
-      cell?.licks.text = "\(self.recipes[indexPath.row].numberOfLicks!)"
-      
-      
     }
-    return cell!
-  }
-  
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if(indexPath.row <= self.recipes.count && self.recipes.count>0){
-      var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-      var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
-      viewController.recipe = self.recipes[indexPath.row]
+    
+    func showInternetConnectionMessage(){
+        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        var _ = menuViewController.view
+        menuViewController.modalPresentationStyle = .Popover
+        menuViewController.preferredContentSize = CGSize(width: self.view.bounds.width, height: 60)
+        //  var message = UILabel(frame: CGRect(x: 110, y: 110, width: self.view.bounds.width, height: 200))
+        //message.text = "no internet connection \n you can only search saved recipes"
+        menuViewController.name?.text = "no internet connection"
+        menuViewController.name?.font = UIFont(name: "ChalkboardSE-Bold", size: 30)
+        //menuViewController.name?.frame.origin = CGPoint(x: 0, y: self.view.bounds.height/2)
+        
+        //menuViewController.view.addSubview(message)
+        //menuViewController.view.bringSubviewToFront(message)
+        
+        let popoverMenuViewController = menuViewController.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Any
+        popoverMenuViewController?.delegate = self
+        popoverMenuViewController?.sourceView = self.view
+        popoverMenuViewController?.sourceRect = CGRectMake(0, 0, 500, 50)//self.view.bounds
         
         
-        //self.searchDisplayController?.searchBar.
-        var searchFrame = self.searchDisplayController?.searchBar.frame;
-        searchFrame?.size.height = 0;
         
-        self.searchDisplayController?.searchBar.frame = searchFrame!;
-        self.searchDisplayController?.searchBar.hidden = true
-       
-      self.navigationController?.pushViewController(viewController, animated: true)
+        println(menuViewController.name?.text)
+        
+        presentViewController(
+            menuViewController,
+            animated: true,
+            completion: nil)
     }
-    println(indexPath.row)
-  }
-  
-  func updateSearchResultsForSearchController(searchController: UISearchController)
-  {
-    //  self.recipes.removeAll(keepCapacity: true)
-    var controller : UISearchController? = self.searchControlar
-    if controller == nil{
-        self.searchControlar = searchController
+    
+    func adaptivePresentationStyleForPresentationController(
+        controller: UIPresentationController) -> UIModalPresentationStyle {
+            return .None
     }
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if recipes.count > 0 {
+            self.resultSearchController.searchBar.resignFirstResponder()
+        }
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Potentially incomplete method implementation.
+        // Return the number of sections.
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete method implementation.
+        // Return the number of rows in the section.
+        return self.recipes.count
+    }
+    
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier("SearchNewTableViewCell", forIndexPath: indexPath) as?SearchNewTableViewCell
+        
+        var recipe = self.recipes[indexPath.row]
+        
+        recipe.image!.getDataInBackgroundWithBlock {
+            (imageData: NSData?, error: NSError?) -> Void in
+            if !(error != nil) {
+                
+                cell?.imagine.image = UIImage(data:imageData!)
+                
+            }
+            
+        }
+        cell?.name.text = recipe.name
+        cell?.licks.text = "\(recipe.numberOfLicks!)"
+        
+        
+        
+        return cell!
+    }
+    
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if(indexPath.row <= self.recipes.count && self.recipes.count>0){
 
-    
-    //aici trebuie facuta cautarea de elemente
-    if(!searchController.searchBar.text.isEmpty){
-    var manager = RecipeManager()
-    manager.getSearchedRecipes(searchController.searchBar.text, completionBlock: { (retete) -> Void in
-      self.recipes = retete
-      self.tableView.reloadData()
-    })
+            var viewController = storyboard!.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+            viewController.recipe = self.recipes[indexPath.row]
+            
+            self.resultSearchController.searchBar.resignFirstResponder()
+            self.resultSearchController.active = false
+            
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+        println(indexPath.row)
     }
     
-  }
-  
-  
-  /*
-  // Override to support conditional editing of the table view.
-  override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-  // Return NO if you do not want the specified item to be editable.
-  return true
-  }
-  */
-  
-  /*
-  // Override to support editing the table view.
-  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-  if editingStyle == .Delete {
-  // Delete the row from the data source
-  tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-  } else if editingStyle == .Insert {
-  // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-  }
-  }
-  */
-  
-  /*
-  // Override to support rearranging the table view.
-  override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-  
-  }
-  */
-  
-  /*
-  // Override to support conditional rearranging of the table view.
-  override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-  // Return NO if you do not want the item to be re-orderable.
-  return true
-  }
-  */
-  
-  /*
-  // MARK: - Navigation
-  
-  // In a storyboard-based application, you will often want to do a little preparation before navigation
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-  // Get the new view controller using [segue destinationViewController].
-  // Pass the selected object to the new view controller.
-  }
-  */
-  
+    
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+               //aici trebuie facuta cautarea de elemente
+        if(!searchController.searchBar.text.isEmpty){
+            var manager = RecipeManager()
+            manager.getSearchedRecipes(searchController.searchBar.text, completionBlock: { (retete) -> Void in
+                self.recipes = retete
+                self.tableView.reloadData()
+            })
+        }
+        
+    }
+    
+    func hideKeyboard(buton: UIButton){
+        self.resultSearchController.resignFirstResponder()
+        buton.removeFromSuperview()
+        self.isKeyboardOn = false
+    }
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    // Return NO if you do not want the specified item to be editable.
+    return true
+    }
+    */
+    
+    /*
+    // Override to support editing the table view.
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    if editingStyle == .Delete {
+    // Delete the row from the data source
+    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    } else if editingStyle == .Insert {
+    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
+    }
+    */
+    
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+    
+    }
+    */
+    
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    // Return NO if you do not want the item to be re-orderable.
+    return true
+    }
+    */
+    
+    /*
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    }
+    */
+    
 }

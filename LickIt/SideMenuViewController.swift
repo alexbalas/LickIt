@@ -18,18 +18,16 @@ class SideMenuViewController: UITableViewController{
         
         
         var mainMenuItem = MenuItem(image: UIImage(named: "home")!) { () -> (Void) in
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("MainMenuViewController") as! FirstMenuViewController
+            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainMenuViewController") as! FirstMenuViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
         var topWantedMenuItem = MenuItem(image: UIImage(named: "top wanted")!) { () -> (Void) in
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("TopWantedViewContoller") as! TopWantedViewController
+            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("TopWantedViewContoller") as! TopWantedViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
@@ -37,16 +35,14 @@ class SideMenuViewController: UITableViewController{
         }
         
         var bookmarkedTableViewControllerItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("BookmarkedTableViewController") as! BookmarkedTableViewController
+            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("BookmarkedTableViewController") as! BookmarkedTableViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         var ingredientSearchMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchController") as! IngredientSearchController
+            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("IngredientSearchController") as! IngredientSearchController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
@@ -54,9 +50,8 @@ class SideMenuViewController: UITableViewController{
         }
         
         var newSearchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("SearchNewTableViewController") as! SearchNewTableViewController
+            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("SearchNewTableViewController") as! SearchNewTableViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)

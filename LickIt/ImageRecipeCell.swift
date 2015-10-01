@@ -24,4 +24,8 @@ class ImageRecipeCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    deinit {
+        println("ImageRecipeCell deinit()")
+    }
+    
 }

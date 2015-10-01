@@ -24,12 +24,12 @@ class IngredientsRecipeCell: UITableViewCell, UICollectionViewDataSource, UIColl
         var cell = OneIngredientCollectionViewCell()
         cell = collectionView.dequeueReusableCellWithReuseIdentifier("OneIngredientRecipeCell", forIndexPath: indexPath) as! OneIngredientCollectionViewCell
         
-        ingredients[indexPath.item].image?.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
+        ingredients[indexPath.item].image?.getDataInBackgroundWithBlock { [weak self]
+            (data: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
-                var img = UIImage(data:imageData!)
-                
-                cell.image.image = img!
+//                var img = UIImage(data:imageData!)
+//                
+                cell.image.image = UIImage(data:data!)
                 cell.name = "ing"
             }
         }

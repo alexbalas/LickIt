@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ImageRecipeCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageRecipeCell" rowHeight="110" id="h6d-iO-tv8" customClass="ImageRecipeCell" customModule="LickIt" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ImageRecipeCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ImageRecipeCell" rowHeight="110" id="h6d-iO-tv8" customClass="ImageRecipeCell" customModule="LickIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h6d-iO-tv8" id="a4Y-nW-8mK">
@@ -42,7 +42,7 @@
                                     <outlet property="imagine" destination="vYh-st-wt2" id="WAV-n9-lmo"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="InfoRecipeCell" rowHeight="86" id="Ryw-3M-lB8" customClass="InfoRecipeCell" customModule="LickIt" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="InfoRecipeCell" rowHeight="86" id="Ryw-3M-lB8" customClass="InfoRecipeCell" customModule="LickIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="132" width="320" height="86"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ryw-3M-lB8" id="Tlr-Vb-WE3">
@@ -103,7 +103,7 @@
                                     <outlet property="time" destination="1xw-ka-sD7" id="GSR-xL-195"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="CategoriesRecipeCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoriesRecipeCell" textLabel="swP-m9-Njn" rowHeight="46" style="IBUITableViewCellStyleDefault" id="zfA-f4-f5o" customClass="CategoriesRecipeCell" customModule="LickIt" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="CategoriesRecipeCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="CategoriesRecipeCell" textLabel="swP-m9-Njn" rowHeight="46" style="IBUITableViewCellStyleDefault" id="zfA-f4-f5o" customClass="CategoriesRecipeCell" customModule="LickIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="218" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zfA-f4-f5o" id="sFW-uw-E9v">
@@ -119,7 +119,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="IngredientsRecipeCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="IngredientsRecipeCell" rowHeight="85" id="veg-iR-KWW" customClass="IngredientsRecipeCell" customModule="LickIt" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="IngredientsRecipeCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="IngredientsRecipeCell" rowHeight="85" id="veg-iR-KWW" customClass="IngredientsRecipeCell" customModule="LickIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="264" width="320" height="61"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="veg-iR-KWW" id="smL-SQ-sAU">
@@ -178,7 +178,7 @@
                                     <outlet property="collectionView" destination="HJG-F7-hMU" id="nFW-qk-o1o"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HowToDoItCell" rowHeight="78" id="Eqs-mE-2Ob" customClass="HowToDoItCell" customModule="LickIt" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="HowToDoItCell" rowHeight="78" id="Eqs-mE-2Ob" customClass="HowToDoItCell" customModule="LickIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="325" width="320" height="78"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="TopLeft" tableViewCell="Eqs-mE-2Ob" id="VPW-sz-Lsv">
@@ -500,7 +500,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIM-DC-73u">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="uIM-DC-73u">
                                 <rect key="frame" x="16" y="20" width="294" height="109"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -511,12 +511,11 @@
                         <constraints>
                             <constraint firstItem="uIM-DC-73u" firstAttribute="leading" secondItem="Dvj-4t-G9w" secondAttribute="leading" constant="8" id="PWi-kt-ztG"/>
                             <constraint firstAttribute="trailing" secondItem="uIM-DC-73u" secondAttribute="trailing" constant="8" id="d0m-TP-l51"/>
-                            <constraint firstItem="cv3-Mj-FaX" firstAttribute="top" secondItem="uIM-DC-73u" secondAttribute="bottom" id="f04-LB-9CB"/>
                             <constraint firstItem="uIM-DC-73u" firstAttribute="top" secondItem="UeX-bm-l1T" secondAttribute="bottom" id="jB4-sG-2EO"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="name" destination="uIM-DC-73u" id="b8m-7s-W4P"/>
+                        <outlet property="name" destination="uIM-DC-73u" id="YAn-TX-l7s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rhu-In-Vpn" userLabel="First Responder" sceneMemberID="firstResponder"/>

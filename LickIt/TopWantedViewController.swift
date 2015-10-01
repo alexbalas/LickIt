@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TopWantedViewController: BaseTableViewController {
+class TopWantedViewController: BaseTableViewController, UIPopoverPresentationControllerDelegate {
 
     var topRecipes = [Recipe]()
     
@@ -20,6 +20,51 @@ class TopWantedViewController: BaseTableViewController {
             self.topRecipes = recipes
             self.tableView.reloadData()
         })
+        checkForInternetConnection()
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    func checkForInternetConnection(){
+        var checker = Reachability.isConnectedToNetwork()
+        if checker == false{
+            showInternetConnectionMessage()
+        }
+    }
+    
+    func showInternetConnectionMessage(){
+        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        var _ = menuViewController.view
+        menuViewController.modalPresentationStyle = .Popover
+        menuViewController.preferredContentSize = CGSize(width: self.view.bounds.width, height: 60)
+        //  var message = UILabel(frame: CGRect(x: 110, y: 110, width: self.view.bounds.width, height: 200))
+        //message.text = "no internet connection \n you can only search saved recipes"
+        menuViewController.name?.text = "no internet connection"
+        menuViewController.name?.font = UIFont(name: "ChalkboardSE-Bold", size: 30)
+        //menuViewController.name?.frame.origin = CGPoint(x: 0, y: self.view.bounds.height/2)
+        
+        //menuViewController.view.addSubview(message)
+        //menuViewController.view.bringSubviewToFront(message)
+        
+        let popoverMenuViewController = menuViewController.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Any
+        popoverMenuViewController?.delegate = self
+        popoverMenuViewController?.sourceView = self.view
+        popoverMenuViewController?.sourceRect = CGRectMake(0, 0, 0, 0)//self.view.bounds
+        
+        
+        
+        println(menuViewController.name?.text)
+        
+        presentViewController(
+            menuViewController,
+            animated: true,
+            completion: nil)
+    }
+    
+    func adaptivePresentationStyleForPresentationController(
+        controller: UIPresentationController) -> UIModalPresentationStyle {
+            return .None
     }
     
     override func didReceiveMemoryWarning() {

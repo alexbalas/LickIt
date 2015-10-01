@@ -47,6 +47,9 @@ class FullScreenPicController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.title = "delicious"
+    }
     func butonPressed(){
         
     }

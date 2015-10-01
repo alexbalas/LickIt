@@ -55,6 +55,7 @@
 		109CED611A9CC27C00D027BD /* HowToDoItCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109CED601A9CC27C00D027BD /* HowToDoItCell.swift */; };
 		109CED631A9CC2EF00D027BD /* CommentsRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109CED621A9CC2EF00D027BD /* CommentsRecipeCell.swift */; };
 		10A6CC261ACB3E4100DB4952 /* BookmarkedRecipesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A6CC251ACB3E4100DB4952 /* BookmarkedRecipesCell.swift */; };
+		10C1A5281BBD4A5800AD372F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C1A5271BBD4A5800AD372F /* Reachability.swift */; };
 		10D18E891B305AF100F5E6FB /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D18E881B305AF100F5E6FB /* IngredientModel.swift */; };
 		10D18E8B1B305AF100F5E6FB /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D18E8A1B305AF100F5E6FB /* RecipeModel.swift */; };
 		10D4DAB71B64F1AF008D4D21 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D4DAB61B64F1AF008D4D21 /* LogInViewController.swift */; };
@@ -132,6 +133,7 @@
 		109CED601A9CC27C00D027BD /* HowToDoItCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HowToDoItCell.swift; sourceTree = "<group>"; };
 		109CED621A9CC2EF00D027BD /* CommentsRecipeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsRecipeCell.swift; sourceTree = "<group>"; };
 		10A6CC251ACB3E4100DB4952 /* BookmarkedRecipesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkedRecipesCell.swift; sourceTree = "<group>"; };
+		10C1A5271BBD4A5800AD372F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		10D18E881B305AF100F5E6FB /* IngredientModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientModel.swift; sourceTree = "<group>"; };
 		10D18E8A1B305AF100F5E6FB /* RecipeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		10D4BA8B1AADD3A3001298AA /* LickIt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LickIt-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			children = (
 				109099251AD693CA00E706BC /* RecipeManager.swift */,
 				102AF8311B2F142B008C8F8C /* CoreDataManager.swift */,
+				10C1A5271BBD4A5800AD372F /* Reachability.swift */,
 			);
 			name = "Business Logic";
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				102AF8321B2F142B008C8F8C /* CoreDataManager.swift in Sources */,
 				1059C1B81ABC49F4002FC2EA /* BaseViewController.swift in Sources */,
 				103D6A641BA8824400E9FB0F /* SearchNewTableViewCell.swift in Sources */,
+				10C1A5281BBD4A5800AD372F /* Reachability.swift in Sources */,
 				109CED4E1A9CAE4900D027BD /* Ingredient.swift in Sources */,
 				103C07611AA9CDA50087EC3C /* FirstMenuViewController.swift in Sources */,
 				10DC3CC41B2A3F0D00745DC8 /* AddNewRecipeControllerViewController.swift in Sources */,
@@ -658,6 +662,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "LickIt/LickIt-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -672,6 +677,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "LickIt/LickIt-Bridging-Header.h";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
