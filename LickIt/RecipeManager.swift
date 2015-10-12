@@ -42,22 +42,33 @@ class RecipeManager: NSObject {
         }
     }
     
-    func didLikeRecipe(recipe: Recipe,user: PFUser, completionBlock:(PFUser) -> Void){
+    func didLikeRecipe(recipe: Recipe,user: PFUser, completionBlock:(Int) -> Void){
         println("step 2.5")
-        var relatie = recipe.parseObject!.relationForKey("lickers")
-        var relationQuery = relatie.query()!.whereKey("objectId", equalTo: user.objectId!)
+        var lickers = recipe.parseObject?.relationForKey("lickers") as PFRelation?
+        var relationQuery = lickers!.query()!.whereKey("objectId", equalTo: user.objectId!)
         println("2.555")
+  //      relationQuery.countObjectsInBackgroundWithBlock { (countt: Int?, error: NSError) -> Void in
+    //        completionBlock(countt)
+      //  }
         
-        relationQuery.getObjectInBackgroundWithId(user.objectId!) { (object, error) -> Void in
-            println("step 2.6")
-            var usser = PFUser()
-            if let uzer = object as? PFUser{
-                usser = object as! PFUser
-            }
-            println("step 2.7")
-            completionBlock(usser)
-            
+        relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            var _ = completionBlock(result!.count)
         }
+//        relationQuery.getObjectInBackgroundWithId(user.objectId!) { (object, error) -> Void in
+//            println("step 2.6")
+//            if (object!.objectId == PFUser.currentUser()?.objectId) {
+//                //usser = object as! PFUser
+//                completionBlock(1)
+//            }
+//            else{
+//                completionBlock(0)
+//            }
+//            
+//            println("step 2.7")
+//            
+//          //  completionBlock(usser)
+//            
+//        }
     }
     
     func isRecipeSaved(recipeName: String, completionBlock:(Bool) -> Void){
@@ -189,13 +200,16 @@ class RecipeManager: NSObject {
     
     func lickRecipe (recipe: Recipe, user: PFUser, completionBlock:(success: Bool) -> Void){
         
-        var lickers = recipe.parseObject?.relationForKey("lickers")
+        var lickers = recipe.parseObject?.relationForKey("lickers") as PFRelation?
         lickers?.addObject(user)
-        recipe.parseObject?.saveInBackgroundWithBlock({ (successfullyGotObjectInParse, error) -> Void in
-            
-            completionBlock(success: successfullyGotObjectInParse)
-        })
+//        recipe.parseObject?.saveInBackgroundWithBlock({ (successfullyGotObjectInParse, error) -> Void in
+//        
+//            completionBlock(success: successfullyGotObjectInParse)
+//        })
+       // recipe.parseObject?.setObject(lickers!, forKey: "lickers")
+        recipe.parseObject?.saveInBackground()
         
+        completionBlock(success: true)
     }
     
     func addRecipeToParse (recipe: Recipe, completionBlock:(success: Bool) -> Void){

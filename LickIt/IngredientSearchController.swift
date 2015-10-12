@@ -19,15 +19,13 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     var chooseIngr = [Ingredient]()
     var foundRecipes = [Recipe]()
     var arrivedRecipesCheck = Int()
-    //    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-    //        touches
-    //    }
+
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         touches
     }
     
     @IBAction func searchButtonPressed(sender: AnyObject) {
-        if( self.selectedIngr.count == self.arrivedRecipesCheck){
+      //  if( self.selectedIngr.count == self.arrivedRecipesCheck){
             
             var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResultController") as! IngredientSearchResultController
@@ -36,7 +34,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
             
             
             self.navigationController?.pushViewController(viewController, animated: true)
-        }
+     //   }
     }
     
     override func viewDidLoad() {
@@ -49,7 +47,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         }
         
         var searchButton = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
-        var buttonImage = UIImage(named: "MenuButton")
+        var buttonImage = UIImage(named: "search-2-xxl")
         searchButton.setImage(buttonImage, forState: UIControlState.Normal)
         
         searchButton.addTarget(self, action: "searchButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)

@@ -8,7 +8,9 @@
 
 import UIKit
 
-class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate {
+
+
+class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate, RecipeControllerDelegate {
     
     var recipes: [Recipe] = [Recipe]()
     var numberOfControllerToShow = -1
@@ -71,6 +73,14 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         checkForInternetConnection()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func refresh(){
+        self.collectionView.reloadData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        println(self.title)
     }
     
     func checkForInternetConnection(){

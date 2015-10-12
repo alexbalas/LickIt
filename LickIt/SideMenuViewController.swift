@@ -58,6 +58,36 @@ class SideMenuViewController: UITableViewController{
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
+        var whatNextMenuItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
+            
+            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
+            
+            viewController.img = UIImage(named: "what-next")
+            viewController.nume = ""
+            viewController.title = "this is just v1.0!"
+            viewController.isThankYouControllerOrNot = true
+            
+            self.sideMenuViewController.hideMenuViewController()
+            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+        }
+        
+        var thankYouMenuItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
+            
+            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
+            
+            viewController.img = UIImage(named: "thankyou")
+            viewController.nume = "thank you!"
+            viewController.title = "u're the real MVP"
+            viewController.isThankYouControllerOrNot = true
+
+            self.sideMenuViewController.hideMenuViewController()
+            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+        }
+        
 //        var searchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
 //            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
 //            
@@ -105,6 +135,8 @@ class SideMenuViewController: UITableViewController{
         self.dataSource.append(ingredientSearchMenuItem)
         self.dataSource.append(newSearchMenuItem)
         self.dataSource.append(bookmarkedTableViewControllerItem)
+//        self.dataSource.append(whatNextMenuItem)
+ //       self.dataSource.append(thankYouMenuItem)
 //        self.dataSource.append(searchMenuItem)
 //        self.dataSource.append(bookmarkedRecipesMenuItem)
 //        self.dataSource.append(addNewRecipeMenuItem)

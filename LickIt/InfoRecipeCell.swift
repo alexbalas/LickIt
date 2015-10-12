@@ -35,17 +35,23 @@ class InfoRecipeCell: UITableViewCell {
             delegate?.loginControllerShouldAppear()
         }
         else{
+            if(self.lickedOrNot == false){
             println("lick")
             var recipeManager = RecipeManager()
             recipeManager.lickRecipe(self.recipe, user: PFUser.currentUser()!) { (success) -> Void in
                 if(success){
                     println("Liked")
-                    var nrOfLicks = self.licks.text!.toInt()! + 1
-                    self.licks.text = "\(nrOfLicks)"
-                    self.lickButton.titleLabel?.text = "Licked :P"
+                }
+                else{
+                    println("Not Licked")
                 }
             }
+            var nrOfLicks = self.licks.text!.toInt()! + 1
+            self.licks.text = "\(nrOfLicks)"
+            self.lickButton.setTitle("Licked :P", forState: UIControlState.Normal)
             
+            self.lickedOrNot = true
+            }
         }
         
     }
@@ -67,20 +73,21 @@ class InfoRecipeCell: UITableViewCell {
     }
     
     func initialize() {
-        self.recipe.parseObject = self.recipe.toPFObject()
         // Initialization code
         //check if licked or not
         if PFUser.currentUser() != nil{
             println("step 2")
             var manager = RecipeManager()
-            manager.didLikeRecipe(self.recipe,user: PFUser.currentUser()!, completionBlock: { [weak self] (usser) -> Void in
+            manager.didLikeRecipe(self.recipe,user: PFUser.currentUser()!, completionBlock: { [weak self] (uzer) -> Void in
                 println("step 3")
-                var uzer = usser as PFUser!
-                if uzer != nil {
+                //var uzer = usser as PFUser!
+                if uzer == 1 {
                     self?.lickButton.setTitle("Licked :P", forState: UIControlState.Normal)
+                    self?.lickedOrNot = true
                 }
                 else{
                     self?.lickButton.setTitle("Give it a lick!", forState: UIControlState.Normal)
+                    self?.lickedOrNot = false
                 }
                 self?.reloadInputViews()
                 self?.contentView.reloadInputViews()

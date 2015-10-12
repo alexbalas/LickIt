@@ -8,10 +8,17 @@
 
 import UIKit
 
+
+
 class IngredientsRecipeCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate{
     
     var ingredients = [Ingredient]()
     @IBOutlet weak var collectionView: UICollectionView!
+    var name: String!
+    var delegate : OneIngredientRecipeCellDelegate!
+
+    
+
     
 
     
@@ -30,10 +37,11 @@ class IngredientsRecipeCell: UITableViewCell, UICollectionViewDataSource, UIColl
 //                var img = UIImage(data:imageData!)
 //                
                 cell.image.image = UIImage(data:data!)
-                cell.name = "ing"
+                cell.name = self!.ingredients[indexPath.item].name
+                
             }
         }
-        
+        cell.delegate = self.delegate
         return cell
     }
 

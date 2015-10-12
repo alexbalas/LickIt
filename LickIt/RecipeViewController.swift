@@ -8,18 +8,23 @@
 
 import UIKit
 
-class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate {
+protocol RecipeControllerDelegate {
+    func refresh()
+}
+
+class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate,UIPopoverPresentationControllerDelegate, OneIngredientRecipeCellDelegate {
     
     
     var recipe: Recipe!
     var lickedOrNot: Bool!
     var savedOrNot = false
     var backButtonText: String?
-    
-    // @IBOutlet weak var expand: UIButton!
+    var didInteractWithLickButton = false
+    var delegate: RecipeControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = self.recipe.name
         var recipeManager = RecipeManager()
         recipeManager.getIngredientsForRecipe(self.recipe, completionBlock: { [weak self] (ingredients) -> Void in
@@ -28,13 +33,55 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             self?.tableView.reloadData()
             })
 
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Recipe", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Recipe", style: UIBarButtonItemStyle.Plain, target: nil, action: "setBackButton:")
 
     }
     
+
+
+    
+    func hidePopup()
+    {
+        self.dismissViewControllerAnimated(false, completion: { () -> Void in
+            
+        })
+    }
+    
+    func adaptivePresentationStyleForPresentationController(
+        controller: UIPresentationController) -> UIModalPresentationStyle {
+            return .None
+    }
+    
+    
+    
+    func showPopup(name: String, cell: UIView){
+        
+        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        var _ = menuViewController.view
+        menuViewController.modalPresentationStyle = .Popover
+        menuViewController.preferredContentSize = CGSizeMake(100, 60)
+        menuViewController.name?.text = name
+        
+        
+        let popoverMenuViewController = menuViewController.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Any
+        popoverMenuViewController?.delegate = self
+        popoverMenuViewController?.sourceView = cell
+        popoverMenuViewController?.sourceRect = CGRectMake(0, 0, 100, 60)
+        
+        
+        
+        println(menuViewController.name?.text)
+        
+        presentViewController(
+            menuViewController,
+            animated: true,
+            completion: nil)
+    }
     
     func setBackButton(buton: UIBarButtonItem){
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.delegate.refresh()
             
         })
     }
@@ -73,12 +120,14 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
                 
                 cell.ingredients = ingredients
                 cell.collectionView.reloadData()
+                cell.delegate = self
                 
             }
             return cell
         case 3:
             var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as! HowToDoItCell
             cell.content.text = recipe.recipeDescription!
+            
             return cell
             
             
@@ -177,6 +226,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         //        self.recipe.parseObject?.save()
         //        var query = PFQuery()
         self.recipe.parseObject?.pinInBackgroundWithName(self.recipe.name!)
+  //      println(if(self.recipe.parseObject["pfFile"]))
         
     }
     

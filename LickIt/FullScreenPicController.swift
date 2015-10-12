@@ -14,6 +14,7 @@ class FullScreenPicController: UIViewController {
     
     @IBOutlet weak var name: UILabel!
     
+    var isThankYouControllerOrNot: Bool?
     var nume: String?
     var img: UIImage?
     var imageFile: PFFile?
@@ -41,6 +42,9 @@ class FullScreenPicController: UIViewController {
         if(self.nume != nil){
             self.name.text = self.nume
         }
+        if self.isThankYouControllerOrNot != nil{
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Wait!", style: UIBarButtonItemStyle.Plain, target: nil, action: "setBackButton:")
+        }
         self.view.userInteractionEnabled = true
      //   self.buton.addTarget(self, action: "butonPressed", forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -48,12 +52,21 @@ class FullScreenPicController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.title = "delicious"
+        if !(self.isThankYouControllerOrNot != nil){
+            self.title = "delicious"
+        }
+        else{
+
+        }
     }
     func butonPressed(){
         
     }
 
+    func setBackButton(buton: UIBarButtonItem){
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in            
+        })
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

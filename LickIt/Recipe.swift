@@ -22,7 +22,11 @@ class Recipe: NSObject, NSCoding {
     var recipeDescription : String?
     var comments : [Comment]?
     var ingredientsRelation : PFRelation?
-    var parseObject : PFObject?
+    var parseObject : PFObject? {
+        didSet {
+            println("changed")
+        }
+}
     
     //    init (ID : String){
     //        self.ID = ID
@@ -67,9 +71,9 @@ extension Recipe{
         if let numberOfLicks = self.numberOfLicks {
             object["numberOfLicks"] = numberOfLicks
         }
-        /*       if let ingredients = self.ingredients{
-        object["ingredients"] = ingredients
-        } */
+//               if let ingredients = self.ingredients{
+//        object["ingredients"] = ingredients
+//        }
         if let time = self.time{
             object["time"] = time
         }
@@ -77,7 +81,7 @@ extension Recipe{
         object["categories"] = categories
         } */
         if let image = self.image{
-//            object["image"] = image
+        //   object["image"] = image
         }
         if let description = self.recipeDescription{
             object["recipeDescription"] = description
