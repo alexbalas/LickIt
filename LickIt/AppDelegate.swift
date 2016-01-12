@@ -28,48 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.rootViewController = sideMenu
         
         
+        //parse settings
         
- /*
-        var recipes = [Recipe]()
-        var topRecipes = [Recipe]()
-        
-        var recipeOne = Recipe(ID : "123")
-        recipeOne.name = "Prima Reteta"
-        recipeOne.numberOfLicks = 22
-        recipeOne.image = UIImage(named: "cookingWith")
-        recipeOne.time = 23
-        recipeOne.recipeDescription = "lot of work"
-        
-        var recipeTwo : Recipe = Recipe(ID : "124")
-        recipeTwo.name = "A doua reteta"
-        recipeTwo.numberOfLicks = 44
-        recipeTwo.image = UIImage(named: "2")
-        recipeTwo.time = 55
-        recipeTwo.recipeDescription = "just cook it"
-        
-        
-        var anotherRecipe : Recipe = Recipe(ID : "125")
-        anotherRecipe.numberOfLicks = 33
-        anotherRecipe.name = "A treia reteta"
-        anotherRecipe.image = UIImage(named: "3")
-        anotherRecipe.time = 11
-        anotherRecipe.recipeDescription = "nothing"
-        
-        recipes.append(recipeOne)
-        recipes.append(recipeTwo)
-        recipes.append(anotherRecipe)
-        topRecipes.append(recipeOne)
-        topRecipes.append(recipeTwo)
-        
-        var recipeData = NSKeyedArchiver.archivedDataWithRootObject(recipes)
-        NSUserDefaults.standardUserDefaults().setObject(recipeData, forKey: "recipes")
-        
-        recipeData = NSKeyedArchiver.archivedDataWithRootObject(topRecipes)
-        NSUserDefaults.standardUserDefaults().setObject(recipeData, forKey: "topRecipes")
-        
-        NSUserDefaults.standardUserDefaults().synchronize()
-        */
-        //Recipe.par
         Parse.enableLocalDatastore()
         Parse.setApplicationId("LwxamL5Rx5AOtWuSDhwuVeYPLW7XXwKKBBhvx75g", clientKey: "rNxWpsRBxMuctjLoZ4PcLFa0izmwPl6FxzZuto3W")
         if let options = launchOptions{

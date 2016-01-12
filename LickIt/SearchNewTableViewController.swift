@@ -106,8 +106,15 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
         recipe.image!.getDataInBackgroundWithBlock {
             (imageData: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
-                
-                cell?.imagine.image = UIImage(data:imageData!)
+                //aici se intampla sfanta transormare din imagine in thumbnail
+                var imagine = UIImage(data: imageData!)
+                var destinationSize = cell!.imagine.frame.size
+                UIGraphicsBeginImageContext(destinationSize)
+                imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
+                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                cell?.imagine.image = nouaImagine
+
                 
             }
             

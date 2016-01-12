@@ -8,9 +8,16 @@
 
 import UIKit
 
+protocol LogInViewControllerDelegate {
+    func loginControllerDismissed()
+}
 
 class LogInViewController: PFLogInViewController {
 
+    
+    var counter = 1
+    var del: LogInViewControllerDelegate!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //if( PFLogInSuccessNotification != nil ){
@@ -31,28 +38,36 @@ class LogInViewController: PFLogInViewController {
     }
 
     func didComeToForeGround(){
-        if(( PFUser.currentUser() ) != nil){
-            //self.navigationController?.popViewControllerAnimated(false)
+    //    if( PFUser.currentUser()?.objectId != nil){   ...cand revine prinde userul nil, chiar daca s-a logat cu succes
+       // if(self.counter == 2){
+            
+            self.del.loginControllerDismissed()
+            
             self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                
             })
-        }
-
+    //    }
+     //   self.counter++
+        
+    }
+    
+    func loginControllerDismissed(){
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
             //ar trebui apelata la fiecare fct override
         
-        if(( PFUser.currentUser() ) != nil){
-            //self.navigationController?.popViewControllerAnimated(false)
-            self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                
-            })
-        }
+//        if(( PFUser.currentUser() ) != nil){
+//            //self.navigationController?.popViewControllerAnimated(false)
+//            self.dismissViewControllerAnimated(false, completion: { () -> Void in
+//                
+//            })
+//        }
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        println("5")
        // self.navigationController?.popViewControllerAnimated(true)
 
     }
@@ -65,7 +80,7 @@ class LogInViewController: PFLogInViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 
     
     /*

@@ -58,7 +58,7 @@ class SideMenuViewController: UITableViewController{
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
-        var whatNextMenuItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
+        var whatNextMenuItem = MenuItem(image: UIImage(named: "white")!) { () -> (Void) in
             
             var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
             
@@ -73,7 +73,7 @@ class SideMenuViewController: UITableViewController{
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
-        var thankYouMenuItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
+        var thankYouMenuItem = MenuItem(image: UIImage(named: "white")!) { () -> (Void) in
             
             var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
             
@@ -135,8 +135,8 @@ class SideMenuViewController: UITableViewController{
         self.dataSource.append(ingredientSearchMenuItem)
         self.dataSource.append(newSearchMenuItem)
         self.dataSource.append(bookmarkedTableViewControllerItem)
-//        self.dataSource.append(whatNextMenuItem)
- //       self.dataSource.append(thankYouMenuItem)
+        self.dataSource.append(whatNextMenuItem)
+        self.dataSource.append(thankYouMenuItem)
 //        self.dataSource.append(searchMenuItem)
 //        self.dataSource.append(bookmarkedRecipesMenuItem)
 //        self.dataSource.append(addNewRecipeMenuItem)

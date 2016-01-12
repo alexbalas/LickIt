@@ -36,7 +36,16 @@ class IngredientsRecipeCell: UITableViewCell, UICollectionViewDataSource, UIColl
             if !(error != nil) {
 //                var img = UIImage(data:imageData!)
 //                
-                cell.image.image = UIImage(data:data!)
+                //aici se intampla sfanta transormare din imagine in thumbnail
+                var imagine = UIImage(data: data!)
+                var destinationSize = cell.image.frame.size
+                UIGraphicsBeginImageContext(destinationSize)
+                imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
+                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                cell.image.image = nouaImagine
+
+                
                 cell.name = self!.ingredients[indexPath.item].name
                 
             }

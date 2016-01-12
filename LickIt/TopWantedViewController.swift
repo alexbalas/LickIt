@@ -7,19 +7,24 @@
 //
 
 import UIKit
+import Photos
 
 class TopWantedViewController: BaseTableViewController, UIPopoverPresentationControllerDelegate {
 
     var topRecipes = [Recipe]()
+    var phManager = PHImageManager()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if topRecipes.count < 1{
         var manager = RecipeManager()
         manager.getTopRecipes(20, completionBlock: { (recipes) -> Void in
             self.topRecipes = recipes
             self.tableView.reloadData()
         })
+        }
         checkForInternetConnection()
         
         // Do any additional setup after loading the view.
@@ -31,6 +36,8 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
             showInternetConnectionMessage()
         }
     }
+    
+    
     
     func showInternetConnectionMessage(){
         var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
@@ -93,9 +100,36 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
             topRecipes[indexPath.row].image?.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    cell.recipeImage.image = UIImage(data:imageData!)
+                    //aici se intampla sfanta transormare din imagine in thumbnail
+                    var imagine = UIImage(data: imageData!)
+                    var destinationSize = cell.recipeImage.frame.size
+                    UIGraphicsBeginImageContext(destinationSize)
+                    imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
+                    var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    cell.recipeImage.image = nouaImagine
+//                    UIImage *originalImage = ...;
+//                    CGSize destinationSize = ...;
+//                    UIGraphicsBeginImageContext(destinationSize);
+//                    [originalImage drawInRect:CGRectMake(0,0,destinationSize.width,destinationSize.height)];
+//                    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+//                    UIGraphicsEndImageContext();
                 }
             }
+//        var fetchOptions = PHFetchOptions()
+//
+//        var img = UIImage()
+//        
+//        var asset = PHAsset.fetchAssetsWithMediaType(mediaType: PHAssetMediaType.Image, options: )
+//        var options = PHImageRequestOptions()
+//        options.resizeMode = PHImageRequestOptionsResizeMode.Fast
+//        options.synchronous = true
+//        self.phManager.requestImageForAsset(asset, targetSize: cell.recipeImage.frame.size, contentMode: PHImageContentMode.AspectFit, options: options) { (imagine, info) -> Void in
+//            cell.recipeImage.image = imagine
+        
+        
+        
+//        }
         if(self.topRecipes[indexPath.row].numberOfLicks != nil){
             cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row].numberOfLicks!)"
         }

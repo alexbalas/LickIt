@@ -21,6 +21,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     var backButtonText: String?
     var didInteractWithLickButton = false
     var delegate: RecipeControllerDelegate!
+    var isInTutorial = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +101,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         case 1:
             var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as! InfoRecipeCell
             cell.delegate = self
-            cell.time.text = "\(recipe.time!)"
+            cell.time.text = "\(recipe.time!)"+" min"
             if(recipe.numberOfLicks != nil){
                 cell.licks.text = "\(recipe.numberOfLicks!)"
             }
@@ -136,6 +137,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             
             recipe.image?.getDataInBackgroundWithBlock({ (data, error) -> Void in
                 cell.imagine.image = UIImage(data:data!)
+                
                 
             })
             

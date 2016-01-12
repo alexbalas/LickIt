@@ -35,8 +35,8 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
                 self.recipes.append(recipe)
             }
             self.collectionView?.reloadData()
-
         }
+
 //        query.fromLocalDatastore()
 
 //        var retete = PFObject()

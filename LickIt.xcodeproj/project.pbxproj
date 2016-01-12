@@ -63,6 +63,8 @@
 		10D97A421B32B2B1007F4E80 /* IngredientSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D97A411B32B2B1007F4E80 /* IngredientSearchResultCell.swift */; };
 		10DC3CC41B2A3F0D00745DC8 /* AddNewRecipeControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10DC3CC31B2A3F0D00745DC8 /* AddNewRecipeControllerViewController.swift */; };
 		10E7E1E31B0CE4BF004096E8 /* IngredientSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E7E1E21B0CE4BF004096E8 /* IngredientSearchController.swift */; };
+		10E83F3E1C3B4CC1005D3498 /* CircleMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E83F3D1C3B4CC1005D3498 /* CircleMaskView.swift */; };
+		10E83F401C3EF378005D3498 /* PartialTransparentMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E83F3F1C3EF378005D3498 /* PartialTransparentMaskView.swift */; };
 		10FC0F991B0D1633005F20FF /* ChooseIngredientSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FC0F981B0D1633005F20FF /* ChooseIngredientSearchCell.swift */; };
 		10FC0F9F1B0D1E8D005F20FF /* SelectedColView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FC0F9E1B0D1E8D005F20FF /* SelectedColView.swift */; };
 		10FC0FA11B0D1EA0005F20FF /* ChooseColView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FC0FA01B0D1EA0005F20FF /* ChooseColView.swift */; };
@@ -142,6 +144,8 @@
 		10D97A411B32B2B1007F4E80 /* IngredientSearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientSearchResultCell.swift; sourceTree = "<group>"; };
 		10DC3CC31B2A3F0D00745DC8 /* AddNewRecipeControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewRecipeControllerViewController.swift; sourceTree = "<group>"; };
 		10E7E1E21B0CE4BF004096E8 /* IngredientSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientSearchController.swift; sourceTree = "<group>"; };
+		10E83F3D1C3B4CC1005D3498 /* CircleMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleMaskView.swift; sourceTree = "<group>"; };
+		10E83F3F1C3EF378005D3498 /* PartialTransparentMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartialTransparentMaskView.swift; sourceTree = "<group>"; };
 		10FC0F981B0D1633005F20FF /* ChooseIngredientSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIngredientSearchCell.swift; sourceTree = "<group>"; };
 		10FC0F9E1B0D1E8D005F20FF /* SelectedColView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedColView.swift; sourceTree = "<group>"; };
 		10FC0FA01B0D1EA0005F20FF /* ChooseColView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseColView.swift; sourceTree = "<group>"; };
@@ -257,6 +261,8 @@
 				10FC0F9E1B0D1E8D005F20FF /* SelectedColView.swift */,
 				10FC0FA01B0D1EA0005F20FF /* ChooseColView.swift */,
 				102AF82E1B2F1240008C8F8C /* RecipeModel.xcdatamodeld */,
+				10E83F3D1C3B4CC1005D3498 /* CircleMaskView.swift */,
+				10E83F3F1C3EF378005D3498 /* PartialTransparentMaskView.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -501,6 +507,7 @@
 				104075781B0BB4AB00A39DC8 /* ScrollView.swift in Sources */,
 				109CED631A9CC2EF00D027BD /* CommentsRecipeCell.swift in Sources */,
 				109CED501A9CAEC100D027BD /* RecipeCategory.swift in Sources */,
+				10E83F3E1C3B4CC1005D3498 /* CircleMaskView.swift in Sources */,
 				103D6A601BA8598400E9FB0F /* BookmarkedTableViewCell.swift in Sources */,
 				109CED4C1A9CADDC00D027BD /* Recipe.swift in Sources */,
 				10D18E8B1B305AF100F5E6FB /* RecipeModel.swift in Sources */,
@@ -528,6 +535,7 @@
 				107EBA8A1AA3A2A8000E4D97 /* SearchingTableViewController.swift in Sources */,
 				109CED541A9CB11900D027BD /* User.swift in Sources */,
 				109CED5D1A9CC04A00D027BD /* InfoRecipeCell.swift in Sources */,
+				10E83F401C3EF378005D3498 /* PartialTransparentMaskView.swift in Sources */,
 				103C075D1AA9C7210087EC3C /* TopWantedRecipeCell.swift in Sources */,
 				10D4DAB71B64F1AF008D4D21 /* LogInViewController.swift in Sources */,
 				10760DC61AADE5B60048895E /* AddRecipeTextCell.swift in Sources */,

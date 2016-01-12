@@ -9,7 +9,7 @@
 import UIKit
 import CoreGraphics
 
-class BaseViewController: UIViewController {
+class BaseViewController: UIViewController,LogInViewControllerDelegate {
 
     @IBAction func menuButtonPressed(sender: AnyObject) {
         self.sideMenuViewController.presentLeftMenuViewController()
@@ -45,8 +45,18 @@ class BaseViewController: UIViewController {
         var loginViewController = LogInViewController()
         loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
         
+        loginViewController.del = self
+        
         self.presentViewController(loginViewController, animated: true) { () -> Void in
         }
+
+    }
+    
+    func loginControllerDismissed() {
+        var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainMenuViewController") as! FirstMenuViewController
+        self.sideMenuViewController.hideMenuViewController()
+        var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.mainViewController?.pushViewController(viewController, animated: true)
 
     }
     

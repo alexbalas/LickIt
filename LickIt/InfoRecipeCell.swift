@@ -82,7 +82,7 @@ class InfoRecipeCell: UITableViewCell {
                 println("step 3")
                 //var uzer = usser as PFUser!
                 if uzer == 1 {
-                    self?.lickButton.setTitle("Licked :P", forState: UIControlState.Normal)
+                    self?.lickButton.setTitle("Licked", forState: UIControlState.Normal)
                     self?.lickedOrNot = true
                 }
                 else{

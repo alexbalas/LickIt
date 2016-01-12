@@ -121,9 +121,15 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
             selectedIngr[indexPath.item].image?.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData!)
-                    
-                    cell.image.image = img!
+                    //aici se intampla sfanta transormare din imagine in thumbnail
+                    var imagine = UIImage(data: imageData!)
+                    var destinationSize = cell.image.frame.size
+                    UIGraphicsBeginImageContext(destinationSize)
+                    imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
+                    var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    cell.image.image = nouaImagine
+
                     cell.name = self.selectedIngr[indexPath.item].name
                 }
             }
@@ -135,9 +141,15 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
             chooseIngr[indexPath.item].image?.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData!)
+                    //aici se intampla sfanta transormare din imagine in thumbnail
+                    var imagine = UIImage(data: imageData!)
+                    var destinationSize = cell.image.frame.size
+                    UIGraphicsBeginImageContext(destinationSize)
+                    imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
+                    var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    cell.image.image = nouaImagine
                     
-                    cell.image.image = img!
                     cell.name = self.chooseIngr[indexPath.item].name
                 }
                 
