@@ -14,6 +14,7 @@ class Ingredient: NSObject {
     var name : String?
     var image : PFFile?
     var parseObject : PFObject?
+    var category: Int?
 }
 extension Ingredient{
     func toPFObject() -> PFObject{
@@ -25,6 +26,9 @@ extension Ingredient{
         if let image = self.image{
             object["image"] = image
         }
+        if let categ = self.category{
+            object["category"] = self.category
+        }
         return object
 }
     convenience init(object: PFObject){
@@ -34,6 +38,9 @@ extension Ingredient{
         }
         if let image = object["image"] as? PFFile{
             self.image = image
+        }
+        if let categ = object["category"] as? Int{
+            self.category = categ
         }
         self.parseObject = object
     }

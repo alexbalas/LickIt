@@ -8,18 +8,27 @@
 
 import UIKit
 
-class IngredientSearchController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, ChooseIngredientSearchCellDelegate {
+class IngredientSearchController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, ChooseIngredientSearchCellDelegate, AKPickerViewDelegate, AKPickerViewDataSource {
     
     
     
     
     @IBOutlet weak var selectedCV: SelectedColView!
     @IBOutlet weak var chooseCV: ChooseColView!
+    @IBOutlet weak var chooseIngredientsLabel: UILabel!
+    weak var pickerView = AKPickerView()
     var selectedIngr = [Ingredient]()
     var chooseIngr = [Ingredient]()
     var foundRecipes = [Recipe]()
     var arrivedRecipesCheck = Int()
-
+    var ingredientCategories = [String]()
+    var categoriesColor = [UIColor]()
+    var categ1 = [Ingredient]()
+    var categ2 = [Ingredient]()
+    var categ3 = [Ingredient]()
+    var categ4 = [Ingredient]()
+    var categ5 = [Ingredient]()
+    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         touches
     }
@@ -40,9 +49,31 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        populateIngrCategArray()
+        self.pickerView = AKPickerView(frame: self.chooseIngredientsLabel.frame)
+        self.pickerView!.delegate = self
+        self.pickerView!.dataSource = self
+        self.pickerView?.interitemSpacing = 10.0
+        self.pickerView?.selectItem(1, animated: false)
+        self.view.addSubview(self.pickerView!)
+        
         var recipeManager = RecipeManager()
         recipeManager.getAllIngredients { (ingredients) -> Void in
-            self.chooseIngr = ingredients
+            for ingr in ingredients{
+                switch ingr.category! {
+                case 1:
+                    self.categ1.append(ingr)
+                case 2:
+                    self.categ2.append(ingr)
+                case 3:
+                    self.categ3.append(ingr)
+                case 4:
+                    self.categ4.append(ingr)
+                default:
+                    self.categ5.append(ingr)
+                }
+            }
+            self.chooseIngr = self.categ1
             self.chooseCV.reloadData()
         }
         
@@ -57,6 +88,19 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         checkForInternetConnection()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func populateIngrCategArray(){
+        self.ingredientCategories.append("?")
+        self.categoriesColor.append(UIColor.redColor())//(red: 46, green: 204, blue: 113, alpha: 1))
+        self.ingredientCategories.append("obj2")
+        self.categoriesColor.append(UIColor.greenColor())//(red: 241, green: 196, blue: 15, alpha: 1))
+        self.ingredientCategories.append("fainoase")
+        self.categoriesColor.append(UIColor.yellowColor())//(red: 230, green: 126, blue: 34, alpha: 1))
+        self.ingredientCategories.append("fructe")
+        self.categoriesColor.append(UIColor.blueColor())//(red: 231, green: 76, blue: 60, alpha: 1))
+        self.ingredientCategories.append("legume")
+        self.categoriesColor.append(UIColor.orangeColor())//(red: 155, green: 89, blue: 182, alpha: 1))
     }
     
     func checkForInternetConnection(){
@@ -101,6 +145,30 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         self.selectedCV.userInteractionEnabled = true
         self.chooseCV.userInteractionEnabled = true;
         // Dispose of any resources that can be recreated.
+    }
+    
+    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
+        return self.ingredientCategories.count
+    }
+    
+    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
+        return self.ingredientCategories[item]
+    }
+    
+    func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
+        self.pickerView?.backgroundColor = self.categoriesColor[item]
+        println(item)
+        switch item {
+        case 1:
+            self.chooseIngr = self.categ1
+        case 2:
+            self.chooseIngr = self.categ2
+        case 3:
+            self.chooseIngr = self.categ3
+        default:
+            self.chooseIngr = self.categ4
+        }
+        self.chooseCV.reloadData()
     }
     
     

@@ -21,6 +21,7 @@ class IngredientSearchResultController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "backButtonPressed:")
         self.title = "Results"
         self.collectionView?.backgroundColor = UIColor(patternImage: (UIImage(named: "clouds2"))!)
 //        var recipeManager = RecipeManager()
@@ -29,17 +30,11 @@ class IngredientSearchResultController: UICollectionViewController {
 //            self.collectionView?.reloadData()
 //            println(recipes)
 //        })
-        let backButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "backButtonPressed")
-      //  self.navigationItem.leftBarButtonItem = backButton
         
     }
     
     func backButtonPressed(){
-   
-        self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-            
-        })
-    
+        self.navigationController?.popViewControllerAnimated(true)
 }
 
     override func didReceiveMemoryWarning() {

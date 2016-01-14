@@ -8,21 +8,23 @@
 
 import UIKit
 
-protocol LogInViewControllerDelegate {
-    func loginControllerDismissed()
-}
+//protocol LogInViewControllerDelegate {
+//    func loginControllerDismissed()
+//}
 
 class LogInViewController: PFLogInViewController {
 
     
     var counter = 1
-    var del: LogInViewControllerDelegate!
+  //  var del: LogInViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "backButtonPressed") //= UIBarButtonItem(title:"Back", style:.Plain, target:nil, action:"backButtonPressed:")
         //if( PFLogInSuccessNotification != nil ){
        //     self.dismissViewControllerAnimated(true, completion: { () -> Void in})
-            self.navigationController?.popViewControllerAnimated(true)
+ //           self.navigationController?.popViewControllerAnimated(true)
         //}
         println("l=o deschis")
         var allTaps = UIEvent()
@@ -31,39 +33,38 @@ class LogInViewController: PFLogInViewController {
         //    self.dismissViewControllerAnimated(true, completion: { () -> Void in})
         //self.navigationController?.popViewControllerAnimated(true)
     
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didComeToForeGround", name: UIApplicationDidBecomeActiveNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didComeToForeGround", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         //  }
         // Do any additional setup after loading the view.
     }
 
-    func didComeToForeGround(){
-    //    if( PFUser.currentUser()?.objectId != nil){   ...cand revine prinde userul nil, chiar daca s-a logat cu succes
-       // if(self.counter == 2){
-            
-            self.del.loginControllerDismissed()
-            
-            self.dismissViewControllerAnimated(false, completion: { () -> Void in
-            })
-    //    }
-     //   self.counter++
-        
-    }
+//    func didComeToForeGround(){
+//    //    if( PFUser.currentUser()?.objectId != nil){   ...cand revine prinde userul nil, chiar daca s-a logat cu succes
+//       // if(self.counter == 2){
+//            
+////            self.del.loginControllerDismissed()
+//            
+////            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+////            })
+//    //    }
+//     //   self.counter++
+//        
+//    }
     
-    func loginControllerDismissed(){
+
+    func backButtonPressed(){
         
+        if (PFUser.currentUser() != nil){
+            self.navigationItem.rightBarButtonItem = nil
+        }
+        
+        self.navigationController?.popViewControllerAnimated(true)
+
     }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-            //ar trebui apelata la fiecare fct override
-        
-//        if(( PFUser.currentUser() ) != nil){
-//            //self.navigationController?.popViewControllerAnimated(false)
-//            self.dismissViewControllerAnimated(false, completion: { () -> Void in
-//                
-//            })
-//        }
+
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -74,13 +75,17 @@ class LogInViewController: PFLogInViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    
+ //       NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
+    deinit{
+        self
+    }
 
     
     /*

@@ -9,10 +9,11 @@
 import UIKit
 
 protocol RecipeControllerDelegate {
-    func refresh()
+    func refresh(indexPath: NSIndexPath)
+    func revineInTutorial()
 }
 
-class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate,UIPopoverPresentationControllerDelegate, OneIngredientRecipeCellDelegate {
+class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate,UIPopoverPresentationControllerDelegate, OneIngredientRecipeCellDelegate, PFLogInViewControllerDelegate {
     
     
     var recipe: Recipe!
@@ -20,8 +21,11 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     var savedOrNot = false
     var backButtonText: String?
     var didInteractWithLickButton = false
-    var delegate: RecipeControllerDelegate!
+    var delegate: RecipeControllerDelegate?
     var isInTutorial = false
+    var indexPath: NSIndexPath?
+    weak var currentMaskView = UIView()
+    var rects = [CGRect]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +37,96 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             
             self?.tableView.reloadData()
             })
-
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Recipe", style: UIBarButtonItemStyle.Plain, target: nil, action: "setBackButton:")
+        var img = UIImage(named: "back")
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "settedBackButtonPressed:")
+        
+        if self.isInTutorial{
+            createMaskForCell(0,message: "The big pic!")
+        }
 
     }
-    
+  
+    func createMaskForCell(nrCell: Int, message: String){
+        var indexPath = NSIndexPath(forRow: nrCell, inSection: 0)
+        var cell = UITableViewCell()
+        switch nrCell {
+        case 1:
+            cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as! InfoRecipeCell
+            
+        case 2:
+            cell = tableView.dequeueReusableCellWithIdentifier("IngredientsRecipeCell", forIndexPath: indexPath) as! IngredientsRecipeCell
+        case 3:
+            cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as! HowToDoItCell
+        default:
+            cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as! ImageRecipeCell
 
+            
+            
+        }
+
+//        var cellRect = self.rects[nrCell]//cellForRowAtIndexPath(NSIndexPath(forRow: nrCell+1, inSection: 1))!.frame
+//        println(self.tableView.rectForRowAtIndexPath(NSIndexPath(forRow: nrCell+1, inSection: 1)))
+//        cellRect = CGRectMake(cellRect.origin.x - tableView.contentOffset.x, cellRect.origin.y - tableView.contentOffset.y, cellRect.size.width, cellRect.size.height)
+   //     var height = self.tableView(self.tableView, heightForRowAtIndexPath: indexPath)
+   //     var circleRekt = CGRect(x: cell.frame.origin.x, y: 174, width: cell.frame.width, height: cell.frame.height)
+        creazaGauraCuImagine(cell, circleRekt: cell.frame)
+        showPopup(message, sourceViewRekt: cell.frame, width: 100, height: 60)
+    }
+    
+    func creazaGauraCuImagine(viu: UIView, circleRekt: CGRect){
+        
+        var currentWindow = UIApplication.sharedApplication().keyWindow
+        
+        var mapView = viu
+        mapView.clipsToBounds = false
+        
+        let frame = mapView.frame
+        
+        // Add the mask view
+        
+        var circleArray = [CGRect]()
+        //to change the circle customize next line
+        circleArray.append(circleRekt)
+        
+        
+        let maskColor = UIColor(white: 0.2, alpha: 0.65)        //UIColor(red: 0.9, green: 0.5, blue: 0.9, alpha: 0.5)
+        let parentView = currentWindow//mapView.superview
+        let pFrame = parentView!.frame
+        var maskView = PartialTransparentMaskView(frame: CGRectMake(0, 0, pFrame.width, pFrame.height), backgroundColor: maskColor, transparentRects: nil, transparentCircles:circleArray, targetView: mapView)
+        //pana aici s-a creat ecranul negru cu gauri
+        //de aici pui imaginea peste ecranul negru
+        
+        self.currentMaskView = maskView
+        parentView!.insertSubview(maskView, aboveSubview: mapView)
+        
+    }
+
+    
+    func showPopup(name: String, sourceViewRekt: CGRect, width: CGFloat, height: CGFloat){
+        
+        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        var _ = menuViewController.view
+        menuViewController.modalPresentationStyle = .Popover
+        menuViewController.preferredContentSize = CGSizeMake(width, height)
+        menuViewController.name?.text = name
+        
+        let popoverMenuViewController = menuViewController.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Any
+        popoverMenuViewController?.delegate = self
+        let sourceView = UIView(frame: sourceViewRekt)
+        self.view.addSubview(sourceView)
+        popoverMenuViewController?.sourceView = sourceView
+        popoverMenuViewController?.sourceRect = CGRectMake(0, 0, width, height)
+        
+        
+        
+        println(menuViewController.name?.text)
+        presentViewController(
+            menuViewController,
+            animated: true,
+            completion: nil)
+    }
 
     
     func hidePopup()
@@ -53,50 +141,31 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             return .None
     }
     
+
     
+    func settedBackButtonPressed(buton: UIBarButtonItem){
+        self.navigationController?.popViewControllerAnimated(true)
     
-    func showPopup(name: String, cell: UIView){
-        
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
-        var _ = menuViewController.view
-        menuViewController.modalPresentationStyle = .Popover
-        menuViewController.preferredContentSize = CGSizeMake(100, 60)
-        menuViewController.name?.text = name
-        
-        
-        let popoverMenuViewController = menuViewController.popoverPresentationController
-        popoverMenuViewController?.permittedArrowDirections = .Any
-        popoverMenuViewController?.delegate = self
-        popoverMenuViewController?.sourceView = cell
-        popoverMenuViewController?.sourceRect = CGRectMake(0, 0, 100, 60)
-        
-        
-        
-        println(menuViewController.name?.text)
-        
-        presentViewController(
-            menuViewController,
-            animated: true,
-            completion: nil)
+        if self.delegate != nil{
+            self.delegate?.refresh(self.indexPath!)
+            self.delegate?.revineInTutorial()
+        }
     }
     
-    func setBackButton(buton: UIBarButtonItem){
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
-            self.delegate.refresh()
-            
-        })
-    }
-    func expandButtonPressed(){
+    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
+        
+        self.navigationItem.rightBarButtonItem = nil
+        self.navigationController?.popViewControllerAnimated(true)
+        // self.dismissViewControllerAnimated( true, completion: nil)
         
     }
     
-    
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         switch indexPath.row {
         case 1:
             var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as! InfoRecipeCell
@@ -113,6 +182,9 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             }
             
             cell.setParseRecipe(recipe)
+            self.rects.append(cell.frame)
+
+            
             return cell
             
         case 2:
@@ -124,11 +196,14 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
                 cell.delegate = self
                 
             }
+            self.rects.append(cell.frame)
+
             return cell
         case 3:
             var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as! HowToDoItCell
             cell.content.text = recipe.recipeDescription!
-            
+            self.rects.append(cell.frame)
+
             return cell
             
             
@@ -144,7 +219,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             self.tableView.rowHeight = 110.0
             //      cell.imagine.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
             //      cell.imagine.sizeToFit()
-            
+            self.rects.append(cell.frame)
             return cell
             
         }
@@ -241,6 +316,11 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             viewController.imageFile = self.recipe.image
             viewController.nume = self.recipe.name
             
+            if(self.isInTutorial){
+                hidePopup()
+                self.currentMaskView!.removeFromSuperview()
+            }
+            
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -248,8 +328,8 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     func loginControllerShouldAppear() {
         var loginViewController = LogInViewController()
         loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
-        self.presentViewController(loginViewController, animated: true) { () -> Void in
-        }
+        
+        self.navigationController?.pushViewController(loginViewController, animated: true)
     }
     
     

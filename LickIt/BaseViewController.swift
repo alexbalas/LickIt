@@ -9,7 +9,7 @@
 import UIKit
 import CoreGraphics
 
-class BaseViewController: UIViewController,LogInViewControllerDelegate {
+class BaseViewController: UIViewController{//,LogInViewControllerDelegate {
 
     @IBAction func menuButtonPressed(sender: AnyObject) {
         self.sideMenuViewController.presentLeftMenuViewController()
@@ -28,37 +28,26 @@ class BaseViewController: UIViewController,LogInViewControllerDelegate {
         
         self.navigationItem.leftBarButtonItem = menuButtonItem
         
-    //butonul drept
-        if(PFUser.currentUser() == nil){
-        var rightMenuButton = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
-        var image = UIImage(named: "key")
-        rightMenuButton.setImage(image, forState: UIControlState.Normal)
-        rightMenuButton.addTarget(self, action: "rightMenuButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        var rightMenuButtonItem = UIBarButtonItem(customView: rightMenuButton)
-        self.navigationItem.rightBarButtonItem = rightMenuButtonItem
-        }
+        //aici era setat intitial butonul de login din dreapta sus
+        
+        
+        
+        
         // Do any additional setup after loading the view.
     }
 
-    func rightMenuButtonPressed(){
-        println("apasat")
-        var loginViewController = LogInViewController()
-        loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
-        
-        loginViewController.del = self
-        
-        self.presentViewController(loginViewController, animated: true) { () -> Void in
-        }
 
-    }
     
-    func loginControllerDismissed() {
-        var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainMenuViewController") as! FirstMenuViewController
-        self.sideMenuViewController.hideMenuViewController()
-        var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.mainViewController?.pushViewController(viewController, animated: true)
-
-    }
+//    func loginControllerDismissed() {
+////        var viewController = sideMenuViewController
+////        var ll = SideMenuViewController()
+//   //     ll.tableView(ll.tableView, didSelectRowAtIndexPath: NSIndexPath(forItem: 0, inSection: 1))
+//        //viewController.presentViewController(<#viewControllerToPresent: UIViewController#>, animated: <#Bool#>, completion: <#(() -> Void)?##() -> Void#>)
+//   //     self.dismissViewControllerAnimated(false, completion: { () -> Void in
+//            
+//  //      })
+//
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

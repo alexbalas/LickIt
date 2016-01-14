@@ -21,7 +21,7 @@ class FullScreenPicController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // self.buton.backgroundImageForState(state: UIControlState.Normal) = self.img
+        
         if( img != nil ){
           //  self.buton.setBackgroundImage(img, forState: UIControlState.Normal)
             //self.buton.setImage(img, forState: UIControlState.Normal)

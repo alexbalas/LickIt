@@ -9,7 +9,7 @@
 import UIKit
 
 protocol OneIngredientRecipeCellDelegate {
-    func showPopup(name: String, cell: UIView)
+    func showPopup(name: String, sourceViewRekt: CGRect, width: CGFloat, height: CGFloat)
     func hidePopup()
 }
 
@@ -40,7 +40,7 @@ class OneIngredientCollectionViewCell: UICollectionViewCell{
             //Do Whatever You want on Began of Gesture
             println("BEGeeeeeN")
             
-            delegate!.showPopup(self.name!, cell: self)
+            delegate!.showPopup(self.name!, sourceViewRekt: self.frame, width: 100, height: 60)
             
             
         }

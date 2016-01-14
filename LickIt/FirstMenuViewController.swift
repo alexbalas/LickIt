@@ -10,15 +10,16 @@ import UIKit
 
 
 
-class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate, RecipeControllerDelegate {
+class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate, RecipeControllerDelegate, PFLogInViewControllerDelegate {
     
     var recipes: [Recipe] = [Recipe]()
     var numberOfControllerToShow = -1
     var news = [PFFile]()
     var count = Int()
     var enteredInTutorial = false
-    var currentMaskView = UIView()
-        
+    weak var tapRecognizerOnCells: UITapGestureRecognizer?
+    weak var currentMaskView = UIView()
+    
     @IBOutlet weak var newsImages: UIImageView!
     
     @IBOutlet weak var forwardNewsButton: UIButton!
@@ -31,7 +32,8 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didComeToForeGround", name: UIApplicationDidBecomeActiveNotification, object: nil)
 //        var swipeRight = UISwipeGestureRecognizer(target: self, action: "collectionViewSwipe:")
 //        swipeRight.numberOfTouchesRequired = 1
 //        swipeRight.direction = .Left
@@ -39,28 +41,60 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
 //       // self.collectionView.dataSource = self
 //        self.collectionView.addGestureRecognizer(swipeRight)
 //        
-
-        
-        
-        
-        if(NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce"))
-        {
-            // app already launched
-            // open login view controller
-            if(PFUser.currentUser() == nil){
-                var loginViewController = LogInViewController()
-                loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
-                loginViewController.del = self
-                self.presentViewController(loginViewController, animated: true) { () -> Void in
+        //butonul drept
+        if(PFUser.currentUser() == nil){
+            var rightMenuButton = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
+            var image = UIImage(named: "key")
+            rightMenuButton.setImage(image, forState: UIControlState.Normal)
+            rightMenuButton.addTarget(self, action: "rightMenuButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+            var rightMenuButtonItem = UIBarButtonItem(customView: rightMenuButton)
+            self.navigationItem.rightBarButtonItem = rightMenuButtonItem
+            
+            //numai daca nu e logat se poate sa nu fi trecut prin tutorial
+            if(!(NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce")))
+            {
+                //first launch ever
+                startTutorial()
+            }
+            else{
+                
+                if(NSUserDefaults.standardUserDefaults().boolForKey("WasClosed")){
+                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "WasClosed")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    rightMenuButtonPressed()
                 }
+                //functia care porneste login view controller
             }
         }
-        else
-        {
-            // This is the first launch ever
-            startTutorial()
-
+        else{
+//            var butonCareNuFaceNimic = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
+//            var rightBarItem = UIBarButtonItem(customView: butonCareNuFaceNimic)
+//            self.navigationItem.rightBarButtonItem = rightBarItem
+//            println("o fost pus butonul ce nu face nimic")
         }
+    
+
+        
+        
+        
+//        if(NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce"))
+//        {
+//            // app already launched
+//            // open login view controller
+//            if(PFUser.currentUser() == nil){
+//                var loginViewController = LogInViewController()
+//                loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
+//                loginViewController.delegate = self
+//                self.presentViewController(loginViewController, animated: true) { () -> Void in
+//                }
+//            }
+//        }
+//        else
+//        {
+//            // This is the first launch ever
+//            
+//
+//        }
 
         
         
@@ -105,10 +139,41 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         // Do any additional setup after loading the view.
     }
     
-    func startTutorial(){
-        self.enteredInTutorial = true
+    override func menuButtonPressed(sender: AnyObject) {
+        super.menuButtonPressed(sender)
+        if self.enteredInTutorial{
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasLaunchedOnce")
         NSUserDefaults.standardUserDefaults().synchronize()
+        self.enteredInTutorial = false
+        hidePopup()
+        self.currentMaskView!.removeFromSuperview()
+        }
+        
+    }
+    
+    func rightMenuButtonPressed(){
+        println("apasat")
+        var loginViewController = LogInViewController()
+        loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
+        
+        loginViewController.delegate = self
+
+        self.navigationController?.pushViewController(loginViewController, animated: true)
+
+    }
+    
+    
+    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
+        
+        self.navigationItem.rightBarButtonItem = nil
+        self.navigationController?.popViewControllerAnimated(true)
+       // self.dismissViewControllerAnimated( true, completion: nil)
+        
+    }
+    
+    func startTutorial(){
+        self.enteredInTutorial = true
+        
         
         var currentWindow = UIApplication.sharedApplication().keyWindow
         let rektImageView = CGRect(x: self.forwardNewsButton.frame.origin.x-currentWindow!.frame.width/2+50, y: self.forwardNewsButton.frame.origin.y+self.forwardNewsButton.frame.height/2+self.forwardNewsButton.frame.width/2-50, width: currentWindow!.frame.width/2, height: currentWindow!.frame.width/2)
@@ -182,17 +247,48 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         })
     }
     
-    override func loginControllerDismissed(){
-        self.navigationItem.rightBarButtonItem = nil
-        println("o iesit din login si trrebe sa-si de refresh")
+    
+    func refresh(indexPath: NSIndexPath){
+        self.recipes[indexPath.item].numberOfLicks!++
+        self.collectionView.reloadData()
+        self.collectionView.reloadInputViews()
+//        var array = [NSIndexPath]()
+//        var indexCells = self.collectionView.visibleCells()
+//        for indexCell in indexCells{
+//            var indexPath = indexCell.indexPath
+//            array.append(indexPath)
+//        }
+//        self.collectionView.reloadItemsAtIndexPaths(array)
     }
     
-    func refresh(){
-        self.collectionView.reloadData()
+    func revineInTutorial() {
+        //aici revii din recipe in cadrul tutorialului
+        //pui mask cu gaura pe menuButton
+        if self.enteredInTutorial{
+        var viu = self.navigationItem.leftBarButtonItem!.customView//UIView(frame: CGRect(x: 100, y: 100, width: 64,height: 64))//self.navigationItem.leftBarButtonItem!.width, height: self.navigationController!.navigationBar.frame.height))
+       // self.view.addSubview(viu)
+        println(viu)
+        creazaGauraCuImagine(viu!, circleRekt: CGRect(x: 0, y: 10, width: 70, height: 70))
+        showPopup("the magic "+"MENU-BUTTON", sourceViewRekt: viu!.frame, width: 125, height: 65)
+//        var tap = UITapGestureRecognizer(target: self, action: "menuButtonPressed:")
+//        self.navigationController?.navigationBar.addGestureRecognizer(tap)
+//        self.tapRecognizerOnNavigatioBar = tap
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
-        println(self.title)
+
+    }
+    
+    func cellTappedInTutorial(sender: UITapGestureRecognizer){
+        if self.enteredInTutorial == true{
+        hidePopup()
+        self.currentMaskView!.removeFromSuperview()
+        self.collectionView.removeGestureRecognizer(self.tapRecognizerOnCells!)
+        
+        var punct = self.collectionView.indexPathForItemAtPoint(sender.locationOfTouch(0, inView: self.collectionView))
+        collectionView(self.collectionView, didSelectItemAtIndexPath: punct!)
+        }
     }
     
     func checkForInternetConnection(){
@@ -231,7 +327,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             animated: true,
             completion: nil)
     }
-    
+
     func adaptivePresentationStyleForPresentationController(
         controller: UIPresentationController) -> UIModalPresentationStyle {
             return .None
@@ -251,22 +347,14 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         println("o fost apasat")
         if self.enteredInTutorial == true{
             hidePopup()
-            self.currentMaskView.removeFromSuperview()
+            self.currentMaskView!.removeFromSuperview()
             creazaGauraCuImagine(self.collectionView, circleRekt: self.collectionView.frame)
             showPopup("check recipes -swipe "+"&choose one", sourceViewRekt: self.weRecommandLabel.frame, width: 125, height: 65)
             var tap = UITapGestureRecognizer(target: self, action: "cellTappedInTutorial:")
             self.collectionView.addGestureRecognizer(tap)
+            self.tapRecognizerOnCells = tap
         }
 
-    }
-    
-    func cellTappedInTutorial(sender: UITapGestureRecognizer){
-        
-        hidePopup()
-        self.currentMaskView.removeFromSuperview()
-        
-        var punct = self.collectionView.indexPathForItemAtPoint(sender.locationOfTouch(0, inView: self.collectionView))
-        collectionView(self.collectionView, didSelectItemAtIndexPath: punct!)
     }
     
     func previousNewsButtonPressed(){
@@ -280,14 +368,6 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
                 }
             }
         }
-    }
-    
-    func collectionViewSwipe(){
-        
-        
-        hidePopup()
-        self.currentMaskView.removeFromSuperview()
-        
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -332,7 +412,8 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         if self.enteredInTutorial == true{
             viewController.isInTutorial = true
         }
-        
+        viewController.delegate = self
+        viewController.indexPath = indexPath
         self.navigationController?.pushViewController(viewController, animated: true)
         
         println(self.navigationController?.viewControllers)
@@ -348,6 +429,15 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
     }
     
+    func didComeToForeGround(){
+        if(self.enteredInTutorial){
+        
+        }
+    }
+    
+    deinit{
+        self
+    }
     /*
     // MARK: - Navigation
     
