@@ -10,6 +10,7 @@ import UIKit
 
 class AddRecipeButtonCell: UITableViewCell {
 
+    @IBOutlet weak var descriere: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

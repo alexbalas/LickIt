@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import WebKit
+import iAd
+
 
 protocol RecipeControllerDelegate {
     func refresh(indexPath: NSIndexPath)
     func revineInTutorial()
 }
 
-class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate,UIPopoverPresentationControllerDelegate, OneIngredientRecipeCellDelegate, PFLogInViewControllerDelegate {
+class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate,UIPopoverPresentationControllerDelegate, OneIngredientRecipeCellDelegate, PFLogInViewControllerDelegate, ADBannerViewDelegate, WebViewDelegate, UIScrollViewDelegate {
     
+    var bannerView: ADBannerView!
     
     var recipe: Recipe!
     var lickedOrNot: Bool!
@@ -23,12 +27,20 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     var didInteractWithLickButton = false
     var delegate: RecipeControllerDelegate?
     var isInTutorial = false
+    var isSavedRecipe = false
     var indexPath: NSIndexPath?
     weak var currentMaskView = UIView()
     var rects = [CGRect]()
+    weak var upButton = UIButton()
+
+    var screenShotOfRecipe = UIImage()
+    var timerForScreenShot = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       // self.tableView.scrollEnabled = false
+        self.canDisplayBannerAds = true
         
         self.title = self.recipe.name
         var recipeManager = RecipeManager()
@@ -45,8 +57,24 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             createMaskForCell(0,message: "The big pic!")
         }
 
+        self.tableView.bounces = false
     }
   
+    func createAdBanner(){
+//        bannerView = ADBannerView(adType: .Banner)
+// //       bannerView.translatesAutoresizingMaskIntoConstraints = false
+//   //     bannerView.translatesAutoresizingMaskIntoConstraints() = false
+//     //   bannerView.autoresizingMas
+//        bannerView.delegate = self
+//        bannerView.delegate = self
+//        bannerView.hidden = true
+//        view.addSubview(bannerView)
+//        
+//        let viewsDictionary = ["bannerView": bannerView]
+//        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[bannerView]|", options: [], metrics: nil, views: viewsDictionary))
+//        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bannerView]|", options: [], metrics: nil, views: viewsDictionary))
+    }
+    
     func createMaskForCell(nrCell: Int, message: String){
         var indexPath = NSIndexPath(forRow: nrCell, inSection: 0)
         var cell = UITableViewCell()
@@ -200,22 +228,28 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
 
             return cell
         case 3:
-            var cell = tableView.dequeueReusableCellWithIdentifier("HowToDoItCell", forIndexPath: indexPath) as! HowToDoItCell
-            cell.content.text = recipe.recipeDescription!
-            self.rects.append(cell.frame)
-
+//
+            var cell = tableView.dequeueReusableCellWithIdentifier("WebView", forIndexPath: indexPath) as! WebViewTableViewCell
+            if hasInternetConnection(){
+                cell.site = self.recipe.recipeDescription!
+            }
+            else{
+      //          cell.site = self.recipe.htmlString!
+            }
+            if self.isSavedRecipe == true{
+                cell.isSavedRecipe = true
+            }
+            cell.delegate = self
+            cell.loadWebsite(self.recipe.name!)
             return cell
-            
             
         default:
             var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as! ImageRecipeCell
             
-            recipe.image?.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                cell.imagine.image = UIImage(data:data!)
-                
-                
-            })
-            
+//            recipe.image?.getDataInBackgroundWithBlock({ (data, error) -> Void in
+//                cell.imagine.image = UIImage(data:data!)
+//            })
+            cell.imagine.image = UIImage(named: "lick.gif")
             self.tableView.rowHeight = 110.0
             //      cell.imagine.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
             //      cell.imagine.sizeToFit()
@@ -223,6 +257,14 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             return cell
             
         }
+    }
+    
+    func hasInternetConnection() -> Bool {
+        var checker = Reachability.isConnectedToNetwork()
+        if checker == false{
+            return false
+        }
+        return true
     }
     
     //    func didAlreadyLikeRecipe(user: PFUser) -> Bool{
@@ -255,16 +297,18 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 3 {
-            var atribute = [
-                NSFontAttributeName : UIFont.systemFontOfSize(14)]
-            if (self.recipe.recipeDescription != nil){
-                var dimensions = (self.recipe.recipeDescription! as NSString).boundingRectWithSize(CGSize(width: self.view.frame.size.width, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: atribute, context: nil)
-                return 1.3*dimensions.height
-            }
-            else{
-                return 100
-            }
+//            var atribute = [
+//                NSFontAttributeName : UIFont.systemFontOfSize(14)]
+//            if (self.recipe.recipeDescription != nil){
+//                var dimensions = (self.recipe.recipeDescription! as NSString).boundingRectWithSize(CGSize(width: self.view.frame.size.width, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: atribute, context: nil)
+//                return 1.3*dimensions.height
+            
+            return UIScreen.mainScreen().bounds.height-84
         }
+  //          else{
+ //               return 100
+  //          }
+    //    }
         else if indexPath.row == 2 {
             return 70
         }
@@ -282,30 +326,46 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     
     
     func infoRecipeCellSaveButtonPressed() {
-        //        var savedRecipesIDs = NSUserDefaults.standardUserDefaults().arrayForKey("savedRecipes") as [String]?
-        //        if(savedRecipesIDs==nil){
-        //            savedRecipesIDs = [String]()
-        //        }
-        //
-        //        savedRecipesIDs!.append(self.recipe.ID)
-        //        NSUserDefaults.standardUserDefaults().setObject(savedRecipesIDs, forKey: "savedRecipes")
-        //        NSUserDefaults.standardUserDefaults().synchronize()
-        //
-        //
-        //
+        var cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
+        cell.saveRecipe(self.recipe)
+    }
+    
+    func showSavingErrorAlert(cell: WebViewTableViewCell){
+        var alert = UIAlertController(title: "Error", message: "Something went wrong. Please try again", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Cancel, handler:{ (ACTION :UIAlertAction!)in
+            println("User click Close button")
+           // alert.removeFromParentViewController()
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler:{ (ACTION :UIAlertAction!)in
+            println("User click Ok button")
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            cell.saveRecipe(self.recipe)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func makeScreenShot(){
+
+//        self.tableView(self.tableView, didSelectRowAtIndexPath: NSIndexPath(forRow: 3, inSection: 0))
+//        self.timerForScreenShot.invalidate()
+//        self.timerForScreenShot = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "updateScreenShotCount", userInfo: nil, repeats: true)
+
         
-        //        var recipeToSave = self.recipe.toManagedObject()
-        //        CoreDataManager.sharedInstance.saveObject(recipeToSave)
-        //        println(44)
-        
-        //self.recipe.parseObject?.pinInBackgroundWithName("44")
-        //         self.recipe.parseObject?.pin()
-        //        self.recipe.parseObject?.save()
-        //        var query = PFQuery()
-        self.recipe.parseObject?.pinInBackgroundWithName(self.recipe.name!)
-  //      println(if(self.recipe.parseObject["pfFile"]))
+        //  hideRecipeWebView()
         
     }
+    
+    func updateScreenShotCount(){
+        var cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
+        if cell.hasFinishedNavigation == true{
+            self.timerForScreenShot.invalidate()
+            cell.saveRecipe(self.recipe)
+        }
+        
+    }
+    
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
@@ -323,6 +383,54 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             
             self.navigationController?.pushViewController(viewController, animated: true)
         }
+        if(indexPath.row==3){
+          //  self.canDisplayBannerAds = false
+            var cell = self.tableView.cellForRowAtIndexPath(indexPath) as! WebViewTableViewCell
+            //arata webview
+            cell.showRecipeWebsite()
+            //cell.loadWebsite()
+            //ascunde navigation bar
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+            //auto scroll la nivelul dorit
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            //add button
+            var rect = UIScreen.mainScreen().bounds
+           // var ingredientCellOriginY = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0))?.frame.origin.y
+            var button = UIButton(frame: CGRect(x: rect.width-35, y: rect.height-45+200-25, width: 35, height: 45))
+            button.addTarget(self, action: "hideRecipeWebView", forControlEvents: UIControlEvents.TouchUpInside)
+            button.setBackgroundImage(UIImage(named: "up"), forState: UIControlState.Normal)
+            self.upButton = button
+            self.view.addSubview(self.upButton!)
+            if self.isSavedRecipe == true{
+                cell.isSavedRecipe = true
+            }
+            
+            println(rect.height)
+            println(self.upButton?.frame.origin.y)
+            println(cell.frame.origin.y)
+          //  self.tableView.reloadInputViews()
+            
+        }
+    }
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if self.tableView.visibleCells().count > 3 {
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+        }
+        else{
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+        
+    }
+    
+    func hideRecipeWebView(){
+        
+        var cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
+        cell.hideRecipeWebsite()
+        self.upButton?.removeFromSuperview()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        
     }
     
     func loginControllerShouldAppear() {

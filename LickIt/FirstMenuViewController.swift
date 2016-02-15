@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate, RecipeControllerDelegate, PFLogInViewControllerDelegate {
+class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate, RecipeControllerDelegate, PFLogInViewControllerDelegate, UISearchBarDelegate, SearchTableViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     var recipes: [Recipe] = [Recipe]()
     var numberOfControllerToShow = -1
@@ -19,6 +19,13 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     var enteredInTutorial = false
     weak var tapRecognizerOnCells: UITapGestureRecognizer?
     weak var currentMaskView = UIView()
+
+    
+    var searchBar : UISearchBar?
+    var searchResultTableView : UITableView?
+    var searchResultRecipes = [Recipe]()
+    var isFirstCharacterInSearch = true
+    var retete = [Recipe]()
     
     @IBOutlet weak var newsImages: UIImageView!
     
@@ -33,6 +40,9 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
 
+  //      UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+
+        
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didComeToForeGround", name: UIApplicationDidBecomeActiveNotification, object: nil)
 //        var swipeRight = UISwipeGestureRecognizer(target: self, action: "collectionViewSwipe:")
 //        swipeRight.numberOfTouchesRequired = 1
@@ -41,6 +51,8 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
 //       // self.collectionView.dataSource = self
 //        self.collectionView.addGestureRecognizer(swipeRight)
 //        
+        
+        addSearchBar()
         //butonul drept
         if(PFUser.currentUser() == nil){
             var rightMenuButton = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
@@ -137,6 +149,14 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         checkForInternetConnection()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func addSearchBar(){
+        var fraim = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 30)
+        var searchBar = UISearchBar(frame: fraim)
+        searchBar.delegate = self
+        self.searchBar = searchBar
+        self.view.addSubview(searchBar)
     }
     
     override func menuButtonPressed(sender: AnyObject) {
@@ -410,13 +430,15 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         viewController.recipe = recipes[indexPath.item]
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         if self.enteredInTutorial == true{
-            viewController.isInTutorial = true
+       //     viewController.isInTutorial = true
         }
         viewController.delegate = self
         viewController.indexPath = indexPath
         self.navigationController?.pushViewController(viewController, animated: true)
         
-        println(self.navigationController?.viewControllers)
+//        var viewController = storyboard!.instantiateViewControllerWithIdentifier("WebViewTableController") as! WebViewTableController
+//        self.navigationController?.pushViewController(viewController, animated: true)
+//        println(self.navigationController?.viewControllers)
     }
     
     
@@ -434,6 +456,145 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         }
     }
+    
+    func openRecipe(recipe: Recipe){
+        //        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var viewController = storyboard!.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+        viewController.recipe = recipe
+
+        
+        self.searchBar!.resignFirstResponder()
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func createTableViewWithResults(retete: [Recipe]){
+        var tableViu = UITableView(frame: CGRect(x: 0, y: 60+30, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height-90))
+        tableViu.delegate = self
+        tableViu.dataSource = self
+    //    tableViu.retete = retete
+        self.searchResultTableView = tableViu
+        self.view.addSubview(self.searchResultTableView!)
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if self.searchResultTableView == nil{
+            var ret = [Recipe]()
+            createTableViewWithResults(ret)
+        }
+        if searchText == ""{
+                self.searchResultTableView?.removeFromSuperview()
+                self.isFirstCharacterInSearch = true
+            }
+            else{
+                var manager = RecipeManager()
+                manager.getSearchedRecipes(searchText, completionBlock: { (retete) -> Void in
+                    var resipiz = [Recipe]()
+                    println("found these")
+                    println(retete)
+//                    for reteta in retete{
+//                        resipiz.append(reteta)
+//                    }
+                  //  self.searchResultTableView?.removeFromSuperview()
+                  //  self.createTableViewWithResults(retete)
+                    self.retete = retete
+                    self.searchResultTableView!.reloadData()
+                    self.searchResultTableView!.reloadInputViews()
+                })
+                if self.isFirstCharacterInSearch{
+                    self.isFirstCharacterInSearch = false
+                    self.view.addSubview(self.searchResultTableView!)
+                }
+            }
+    }
+    
+    
+    
+    //de aici incepe customizare table-viewului din first page
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.retete.count
+    }
+    
+    //    override func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell? {
+    //        var cell = UITableViewCell(frame: CGRect(x: 0, y: CGFloat(indexPath.row) * (self.frame.height/6), width: self.frame.width, height: self.frame.height/6))
+    //        var imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.height, height: cell.frame.height))
+    //        println("recipiz din cellforrow")
+    //        println(self.retete)
+    //        retete[indexPath.row].image?.getDataInBackgroundWithBlock {
+    //            (imageData: NSData?, error: NSError?) -> Void in
+    //            if !(error != nil) {
+    //                //aici se intampla sfanta transormare din imagine in thumbnail
+    //                var imagine = UIImage(data: imageData!)
+    //                var destinationSize = CGSize(width: imgView.frame.width, height: imgView.frame.height)
+    //                UIGraphicsBeginImageContext(destinationSize)
+    //                imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
+    //                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+    //                UIGraphicsEndImageContext()
+    //                imgView.image = nouaImagine
+    //            }
+    //
+    //        }
+    //
+    //        var label = UILabel(frame: CGRect(x: imgView.frame.width+10, y: 15, width: self.frame.width - imgView.frame.width - 20, height: cell.frame.height - 30))
+    //        label.numberOfLines = 2
+    //        label.adjustsFontSizeToFitWidth = true
+    //        label.font = UIFont(name: "Zapfino", size: 16)
+    //        label.text = self.retete[indexPath.row].name
+    //
+    //
+    //        cell.addSubview(imgView)
+    //        cell.addSubview(label)
+    //
+    //        return cell
+    //    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = UITableViewCell(frame: CGRect(x: 0, y: CGFloat(indexPath.row) * (UIScreen.mainScreen().bounds.height/6), width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height/6))
+        var imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.height, height: cell.frame.height))
+        println("recipiz din cellforrow")
+        println(self.retete)
+        retete[indexPath.row].image?.getDataInBackgroundWithBlock {
+            (imageData: NSData?, error: NSError?) -> Void in
+            if !(error != nil) {
+                //aici se intampla sfanta transormare din imagine in thumbnail
+                var imagine = UIImage(data: imageData!)
+                var destinationSize = CGSize(width: imgView.frame.width, height: imgView.frame.height)
+                UIGraphicsBeginImageContext(destinationSize)
+                imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
+                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                imgView.image = nouaImagine
+            }
+            
+        }
+        
+        var label = UILabel(frame: CGRect(x: imgView.frame.width+10, y: 15, width: UIScreen.mainScreen().bounds.width - imgView.frame.width - 20, height: cell.frame.height - 30))
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
+        label.font = UIFont(name: "Zapfino", size: 16)
+        label.text = self.retete[indexPath.row].name
+        
+        
+        cell.addSubview(imgView)
+        cell.addSubview(label)
+        
+        return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+        //        viewController.recipe = self.retete[indexPath.row]
+        openRecipe(self.retete[indexPath.row])
+        
+        //        self.resultSearchController.searchBar.resignFirstResponder()
+        //        self.resultSearchController.active = false
+        //
+        //        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     
     deinit{
         self

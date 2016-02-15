@@ -22,6 +22,11 @@ class FullScreenPicController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        var img = UIImage.gifWithName("lick")
+//        var imgViu = UIImageView(image: img)
+//        imgViu.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+//        self.view.addSubview(imgViu)
+        
         if( img != nil ){
           //  self.buton.setBackgroundImage(img, forState: UIControlState.Normal)
             //self.buton.setImage(img, forState: UIControlState.Normal)
@@ -43,12 +48,20 @@ class FullScreenPicController: UIViewController {
             self.name.text = self.nume
         }
         if self.isThankYouControllerOrNot != nil{
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Wait!", style: UIBarButtonItemStyle.Plain, target: nil, action: "setBackButton:")
+            self.name.numberOfLines = 1
         }
         self.view.userInteractionEnabled = true
-     //   self.buton.addTarget(self, action: "butonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "settedBackButtonPressed:")
+
+        
+     //  self.buton.addTarget(self, action: "butonPressed", forControlEvents: UIControlEvents.TouchUpInside)
         
         // Do any additional setup after loading the view.
+    }
+    
+    func settedBackButtonPressed(buton: UIBarButtonItem){
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -56,7 +69,7 @@ class FullScreenPicController: UIViewController {
             self.title = "delicious"
         }
         else{
-
+            self.title = "Thank you master!"
         }
     }
     func butonPressed(){

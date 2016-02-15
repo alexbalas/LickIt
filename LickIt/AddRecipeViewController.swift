@@ -8,11 +8,12 @@
 
 import UIKit
 
-class AddRecipeViewController: UITableViewController {
+class AddRecipeViewController: BaseTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "Help us"
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -30,24 +31,42 @@ class AddRecipeViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return 3
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("AddRecipeCell", forIndexPath: indexPath) as! AddRecipeButtonCell
+        
+        cell.descriere.text = textForCell(indexPath.row)
         // Configure the cell...
 
         return cell
     }
-    */
+
+    func textForCell(caz: Int) -> String{
+        switch caz{
+        case 1: return "give a missing recipe name"
+        case 2: return "give a missing ingredient name"
+        default: return "insert link/webstie to recipe"
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var viewController = storyboard!.instantiateViewControllerWithIdentifier("AddNewRecipeControllerViewController") as! AddNewRecipeControllerViewController
+        
+    //    viewController.titlu.text = textForCell(indexPath.row)
+        viewController.caz = indexPath.row
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
+
+    }
 
     /*
     // Override to support conditional editing of the table view.

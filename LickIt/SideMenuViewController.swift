@@ -11,7 +11,7 @@ import UIKit
 class SideMenuViewController: UITableViewController{
     
     var dataSource = [MenuItem]()
-    
+    var cellSize = CGRect()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,36 +58,16 @@ class SideMenuViewController: UITableViewController{
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
-        var whatNextMenuItem = MenuItem(image: UIImage(named: "white")!) { () -> (Void) in
-            
-            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
-            
-            viewController.img = UIImage(named: "what-next")
-            viewController.nume = ""
-            viewController.title = "this is just v1.0!"
-            viewController.isThankYouControllerOrNot = true
-            
+        var addRecipeItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
+            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("AddRecipeViewController") as! AddRecipeViewController
             self.sideMenuViewController.hideMenuViewController()
             var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
             appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
-        
-        var thankYouMenuItem = MenuItem(image: UIImage(named: "white")!) { () -> (Void) in
-            
-            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
-            
-            viewController.img = UIImage(named: "thankyou")
-            viewController.nume = "thank you!"
-            viewController.title = "u're the real MVP"
-            viewController.isThankYouControllerOrNot = true
-
-            self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
-        }
-        
+        println("in view did load marimea e")
+        println(self.cellSize)
+        println(UIScreen.mainScreen().bounds)
 //        var searchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
 //            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
 //            
@@ -135,8 +115,7 @@ class SideMenuViewController: UITableViewController{
         self.dataSource.append(ingredientSearchMenuItem)
         self.dataSource.append(newSearchMenuItem)
         self.dataSource.append(bookmarkedTableViewControllerItem)
-        self.dataSource.append(whatNextMenuItem)
-        self.dataSource.append(thankYouMenuItem)
+        self.dataSource.append(addRecipeItem)
 //        self.dataSource.append(searchMenuItem)
 //        self.dataSource.append(bookmarkedRecipesMenuItem)
 //        self.dataSource.append(addNewRecipeMenuItem)
@@ -174,7 +153,9 @@ class SideMenuViewController: UITableViewController{
         cell.imagine.frame = CGRect(x: 0, y: 0, width: 320, height: 81)
         cell.imagine.image = currentMenuItem.image
         
-        
+        self.cellSize = cell.frame
+        println("ar trebui sa fie")
+        println(self.cellSize)
 
     return cell
 }
@@ -182,6 +163,13 @@ class SideMenuViewController: UITableViewController{
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var currentMenuItem = self.dataSource[indexPath.row]
         currentMenuItem.selectionBlock()
+        var cell = self.tableView.cellForRowAtIndexPath(indexPath)
+        println("marimea este")
+        println(cell?.frame)
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UIScreen.mainScreen().bounds.height/7
     }
     /*
     // Override to support conditional editing of the table view.

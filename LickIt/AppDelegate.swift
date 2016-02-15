@@ -39,6 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(Dictionary())
         }
         PFTwitterUtils.initializeWithConsumerKey("wdtgoD0ZuXk6HjGntWB3MsmMl", consumerSecret: "YlMd3Ua47psUKObrvdhCBj7wyzuPakMGbNczQKgBjyAAHqp2Og")
+        
+        
+        var img = UIImage(named: "search")
+        println("initial size is")
+        println(img?.size)
         return true
     }
 

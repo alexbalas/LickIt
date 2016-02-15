@@ -11,6 +11,8 @@ import CoreData
 
 class Recipe: NSObject, NSCoding {
     
+    var htmlString : String?
+    
     var ID : String?
     var name : String?
     var numberOfLicks : Int?
@@ -93,6 +95,11 @@ extension Recipe{
         if let categs = self.categorieString{
             object["categories"] = categs
         }
+        
+        if let html = self.htmlString{
+            object["htmlString"] = html
+        }
+        
         return object
     }
     
@@ -132,6 +139,9 @@ extension Recipe{
         }
         if let categs = object["categories"] as? String{
             self.categorieString = categs
+        }
+        if let html = object["htmlString"] as? String{
+            self.htmlString = html
         }
         self.parseObject = object
     }

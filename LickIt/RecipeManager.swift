@@ -42,18 +42,26 @@ class RecipeManager: NSObject {
         }
     }
     
-    func didLikeRecipe(recipe: Recipe,user: PFUser, completionBlock:(Int) -> Void){
+    func didLikeRecipe(recipe: Recipe,user: PFUser, completionBlock:(Int32) -> Void){
         println("step 2.5")
         var lickers = recipe.parseObject?.relationForKey("lickers") as PFRelation?
         var relationQuery = lickers!.query()!.whereKey("objectId", equalTo: user.objectId!)
         println("2.555")
-  //      relationQuery.countObjectsInBackgroundWithBlock { (countt: Int?, error: NSError) -> Void in
-    //        completionBlock(countt)
-      //  }
-        
-        relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            var _ = completionBlock(result!.count)
+//        relationQuery.countObjectsInBackgroundWithBlock { (countt: Int?, error: NSError) -> Void in
+//            completionBlock(countt)
+//        }
+        relationQuery.countObjectsInBackgroundWithBlock { (countt, error) -> Void in
+            completionBlock(countt)
         }
+//        relationQuery.countObjectsInBackgroundWithBlock { (caunt, eroare) -> Void in
+//            
+//        }
+        
+        //cred ca fct urmat era de la Marius
+        
+//        relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+//    //        var _ = completionBlock(result!.count)
+//        }
 //        relationQuery.getObjectInBackgroundWithId(user.objectId!) { (object, error) -> Void in
 //            println("step 2.6")
 //            if (object!.objectId == PFUser.currentUser()?.objectId) {

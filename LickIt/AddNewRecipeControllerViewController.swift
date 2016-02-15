@@ -8,66 +8,99 @@
 
 import UIKit
 
-class AddNewRecipeControllerViewController: BaseViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddNewRecipeControllerViewController: UIViewController{
 
-    var recipe: Recipe?
-    
+    var caz = -1
+    @IBOutlet weak var titlu: UILabel!
     @IBOutlet weak var name: UITextField!
-    @IBOutlet weak var time: UITextField!
-    @IBOutlet weak var categories: UITextField!
-    @IBOutlet weak var chooseIngredientsButton: UIButton!
     @IBOutlet weak var cameraPicture: UIButton!
+    //cameraPicture e defapt butonul de ENTER
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //done button
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "doneButtonPressed")
-        self.navigationItem.rightBarButtonItem = doneButton
-        //camera button
-        self.cameraPicture.addTarget(self, action: "showCamera", forControlEvents: UIControlEvents.TouchUpInside)
-        //ingredient button
-        self.chooseIngredientsButton.addTarget(self, action: "chooseButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        self.cameraPicture.addTarget(self, action: "enterButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        self.title = "almost done"
+        self.titlu.text = textForCell(caz)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "settedBackButtonPressed:")
+//        var rectTitlu = CGRect(x: 0, y: self.titlu.frame.origin.y+20, width: UIScreen.mainScreen().bounds.width, height: self.titlu.bounds.height)
+//        self.titlu.frame = rectTitlu
+//        
+//        
+//        
+//        rectTitlu = CGRect(x: 15, y: self.name.frame.origin.y+20, width: UIScreen.mainScreen().bounds.width-30, height: self.name.frame.height)
+//        self.name.frame = rectTitlu
+//        
+//        
+//        self.view.reloadInputViews()
         // Do any additional setup after loading the view.
     }
 
-    func doneButtonPressed(){
-        self.recipe?.name = self.name.text
-        self.recipe?.time = self.time.text.toInt()
-        self.recipe?.categorieString = self.categories.text
+    func settedBackButtonPressed(buton: UIBarButtonItem){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
-        var controller = ThankYouViewController()
-        controller.recipe = self.recipe
-        controller.view.backgroundColor = UIColor.blueColor()
-        self.presentViewController(controller, animated: true) { () -> Void in
-            
+    func textForCell(caz: Int) -> String{
+        switch caz{
+        case 1: return "give a missing recipe name"
+        case 2: return "give a missing ingredient name"
+        default: return "insert link/webstie to recipe"
         }
     }
     
-    func chooseButtonPressed(){
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchController") as! IngredientSearchController
-        viewController.view.backgroundColor = UIColor.yellowColor()
-        viewController.navigationItem.title = "Recipe ingredients"
-        //trebuie acoperit butonul de meniuri laterale
-                self.navigationController?.pushViewController(viewController, animated: true)
+    func enterButtonPressed(){
+        if self.name.text != nil{
+            sendObjectToParse()
+        }
+        else{
+            showError()
+        }
     }
     
+    func showError(){
+            var alert = UIAlertController(title: "Error", message: "The field can't be empty", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Cancel, handler:{ (ACTION :UIAlertAction!)in
+                println("User click Close button")
+                alert.dismissViewControllerAnimated(true, completion: nil)
+                
+            }))
         
-    func showCamera (){
-        var camera = UIImagePickerController ()
-        camera.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        camera.delegate = self
-        presentViewController(camera, animated: true, completion: nil)
-    }
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        println("a ajuns aici")
-        self.recipe?.image = PFFile(data: NSData(contentsOfFile: "image")!)
+    func sendObjectToParse(){
         
-        self.dismissViewControllerAnimated(true, completion: nil)
-        
-    }
+        // Create PFObject with recipe information
 
+        var mesaj = PFObject(className: "UserMessage")
+        mesaj.setObject(self.titlu.text!, forKey: "message")
+        mesaj.setObject(self.caz, forKey: "type")
+
+        
+//        // Show progress
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        hud.mode = MBProgressHUDModeIndeterminate;
+//        hud.labelText = @"Uploading";
+//        [hud show:YES];
+        
+        mesaj.saveInBackgroundWithBlock { (succeeded, error) -> Void in
+            if !(error != nil){
+                // Show success message
+                println("succes")
+                var viewController = self.storyboard!.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
+                viewController.img = UIImage(named: "thankyou")
+                viewController.nume = "We will make it available soon :)"
+                viewController.isThankYouControllerOrNot = true
+                //    viewController.titlu.text = textForCell(indexPath.row)
+                
+                self.navigationController?.pushViewController(viewController, animated: true)
+
+            }
+            else{
+                println("failure")
+            }
+        }
+        
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

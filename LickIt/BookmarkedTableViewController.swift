@@ -21,7 +21,6 @@ class BookmarkedTableViewController: BaseTableViewController {
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             for object in objects!{
                 var recipe = Recipe(object: object as! PFObject)
-                println(recipe.name)
                 self.recipes.append(recipe)
             }
             self.tableView.reloadData()
@@ -107,6 +106,7 @@ class BookmarkedTableViewController: BaseTableViewController {
         var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
         viewController.recipe = recipes[indexPath.item]
+        viewController.isSavedRecipe = true
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

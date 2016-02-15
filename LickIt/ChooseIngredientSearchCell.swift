@@ -11,6 +11,7 @@ import UIKit
 protocol ChooseIngredientSearchCellDelegate {
     func showPopup(name: String, cell: UIView)
     func hidePopup()
+    func selectCell(cell: ChooseIngredientSearchCell)
 }
 
 class ChooseIngredientSearchCell: UICollectionViewCell, UIPopoverPresentationControllerDelegate {
@@ -18,6 +19,9 @@ class ChooseIngredientSearchCell: UICollectionViewCell, UIPopoverPresentationCon
     @IBOutlet weak var image: UIImageView!
     var name: String!
     var delegate : ChooseIngredientSearchCellDelegate!
+    var selectedOrNot: Bool = false
+    var viu: UIImageView?
+    var visualEffect: UIVisualEffectView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,8 +30,46 @@ class ChooseIngredientSearchCell: UICollectionViewCell, UIPopoverPresentationCon
         longTapRecognizer.minimumPressDuration = 0.5
         
         self.addGestureRecognizer(longTapRecognizer)
-
+        
+        }
+    
+    func tapped(){
+        self.delegate.selectCell(self)
+        
+//        var array = [String]()
+//        array.append(self.name)
+//        let segmentedControl = UISegmentedControl(items: array)
+//        segmentedControl.sizeToFit()
+//        segmentedControl.center = self.contentView.center
+//        let visualBlur = UIBlurEffect(style: .Light)
+//        var visualEffectView = UIVisualEffectView(effect: visualBlur) as UIVisualEffectView
+//        self.addSubview(visualEffectView)
+//        var vibrancy = UIVisualEffectView(effect: UIVibrancyEffect(forBlurEffect: visualBlur))
+//        vibrancy.frame = self.frame
+//        
+//        vibrancy.contentView.addSubview(segmentedControl)
+//        
+//        self.addSubview(vibrancy)
+//        visualEffectView.contentView.addSubview(vibrancy)
+//        self.visualEffect = visualEffectView
+//
+//        
+//        self.visualEffect.hidden = false
+//        self.reloadInputViews()
+//        if !self.selectedOrNot{
+//            var img = UIView(frame: self.frame)
+//            img.backgroundColor = UIColor.greenColor()//(red: 100, green: 100, blue: 100, alpha: 0.7)
+//            println(img.backgroundColor)
+//            self.viu = img
+//            self.addSubview(img)
+//            self.selectedOrNot = true
+//        }
+//        else{
+//            self.viu?.removeFromSuperview()
+//            self.selectedOrNot = false
+//        }
     }
+
     
     func didLongTap(gestureRecognizer: UILongPressGestureRecognizer){
         if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {

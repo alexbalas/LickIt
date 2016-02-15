@@ -12,7 +12,6 @@ import UIKit
 class IngredientSearchResultController: UICollectionViewController {
 
     
-    
     let reuseIdentifier = "IngrSearchResultCell"
     var foundRecipes = [Recipe]()
     var ingredients : [Ingredient]!
@@ -23,7 +22,14 @@ class IngredientSearchResultController: UICollectionViewController {
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "backButtonPressed:")
         self.title = "Results"
+        println(self.ingredients)
         self.collectionView?.backgroundColor = UIColor(patternImage: (UIImage(named: "clouds2"))!)
+        var recipeManager = RecipeManager()
+        recipeManager.getRecipesForIngredients(self.ingredients, completionBlock: { (recipes) -> Void in
+            self.foundRecipes = recipes
+            self.collectionView?.reloadData()
+        })
+
 //        var recipeManager = RecipeManager()
 //        recipeManager.getRecipesForIngredients(ingredients, completionBlock: { (recipes) -> Void in
 //            self.foundRecipes = recipes
@@ -33,7 +39,7 @@ class IngredientSearchResultController: UICollectionViewController {
         
     }
     
-    func backButtonPressed(){
+    func backButtonPressed(sender: UIBarButtonItem){
         self.navigationController?.popViewControllerAnimated(true)
 }
 

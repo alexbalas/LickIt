@@ -17,14 +17,17 @@ class BaseViewController: UIViewController{//,LogInViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        var buttonImage = UIImage(named: "MenuButton")
+        
+        var menuButton = UIButton(frame: CGRect(x: 3, y: 7, width: 50, height: 50))
+        var buttonImage = UIImage(named: "chef")
         menuButton.setImage(buttonImage, forState: UIControlState.Normal)
         
         menuButton.addTarget(self, action: "menuButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-        var menuButtonItem = UIBarButtonItem(customView: menuButton)
-        menuButton.layer.borderWidth = 2.0
-        menuButton.layer.borderColor = UIColor.blackColor().CGColor
+        var backButtonView = UIView(frame: menuButton.frame)
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 13, 11)
+        backButtonView.addSubview(menuButton)
+         var menuButtonItem = UIBarButtonItem(customView: backButtonView)
+
         
         self.navigationItem.leftBarButtonItem = menuButtonItem
         

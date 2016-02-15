@@ -15,6 +15,8 @@ class Ingredient: NSObject {
     var image : PFFile?
     var parseObject : PFObject?
     var category: Int?
+    var isSelected = false
+    var indexPathInIngredientSearch = -1
 }
 extension Ingredient{
     func toPFObject() -> PFObject{
@@ -29,12 +31,14 @@ extension Ingredient{
         if let categ = self.category{
             object["category"] = self.category
         }
+        
         return object
 }
     convenience init(object: PFObject){
         self.init()
         if let name = object["name"] as? String{
             self.name = name
+            
         }
         if let image = object["image"] as? PFFile{
             self.image = image

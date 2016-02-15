@@ -19,13 +19,15 @@ class InfoRecipeCell: UITableViewCell {
     private var recipe : Recipe!
     var lickedOrNot: Bool!
     var savedOrNot: Bool!
+    var initializedOrNot = false
     
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var licks: UILabel!
     
+    @IBOutlet weak var lickImageView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var lickButton: UIButton!
-    
+ //@IBOutlet weak var lickButton: UIButton!
+    var lickButton: UIButton!
     weak var delegate : InfoRecipeCellDelegate?
     
     @IBAction func lickButtonPressed(sender: AnyObject) {
@@ -58,7 +60,21 @@ class InfoRecipeCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        var buton = UIButton(frame: CGRect(x: 126, y: 0, width: 100, height: 100))
+        
+        self.lickButton = buton
         println("step 1")
+             //   var img = UIImage.gifWithName("lick")
+                self.lickImageView.image = UIImage.animatedImageNamed("lick.gif", duration: 1)
+               // var imgViu = UIImageView(image: img)
+               // imgViu.frame = CGRect(x: UIScreen.mainScreen().bounds.width/2, y: self.frame.origin.y, width: 40, height: 40)
+              //  self.addSubview(imgViu)
+               // self.contentView.addSubview(imgViu)
+                //println(imgViu.frame)
+                //println(self.lickButton.frame)
+        
+        //self.lickButton.frame = CGRectMake(self.frame.width/2, 0, 50, self.frame.height)
+        //self.lickButton.setImage(UIImage.gifWithName("lick"), forState: UIControlState.Normal)
         if PFUser.currentUser() == nil{
             self.lickButton.setTitle("Log on to lick", forState: UIControlState.Normal)
         }
@@ -73,6 +89,7 @@ class InfoRecipeCell: UITableViewCell {
     }
     
     func initialize() {
+        if self.initializedOrNot == false{
         // Initialization code
         //check if licked or not
         if PFUser.currentUser() != nil{
@@ -82,20 +99,22 @@ class InfoRecipeCell: UITableViewCell {
                 println("step 3")
                 //var uzer = usser as PFUser!
                 if uzer == 1 {
-                    self?.lickButton.setTitle("Licked", forState: UIControlState.Normal)
-                    self?.lickedOrNot = true
+     //               self?.lickButton.setTitle("Licked", forState: UIControlState.Normal)
+       //             self?.lickedOrNot = true
                 }
                 else{
                     self?.lickButton.setTitle("Give it a lick!", forState: UIControlState.Normal)
                     self?.lickedOrNot = false
                 }
                 self?.reloadInputViews()
-                self?.contentView.reloadInputViews()
+              //  self?.contentView.reloadInputViews()
                 println("Ar trebui sa se schimbe")
                 })
         }
         
         setSaveButtonTitle()
+        self.initializedOrNot = true
+        }
     }
     
     func setSaveButtonTitle(){
