@@ -20,9 +20,9 @@ class SearchingInputCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var input: UITextField!
     
     @IBAction func butonPressed(sender: AnyObject) {
-    println(input.text)
+    print(input.text)
         
-        self.delegate?.searchingInputCellGotMagicWord(input.text)
+        self.delegate?.searchingInputCellGotMagicWord(input.text!)
     
     }
     
@@ -30,14 +30,14 @@ class SearchingInputCell: UITableViewCell, UITextFieldDelegate {
     
         super.awakeFromNib()
         // Initialization code
-        let buton   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        let buton   = UIButton(type: UIButtonType.System)
         buton.frame = CGRect(x: self.input.frame.maxX, y: self.input.frame.minY, width: 40, height: self.input.frame.height)
         buton.setBackgroundImage(UIImage(named: "lupa"), forState: UIControlState.Normal)
         buton.addTarget(self, action: "butonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(buton)
     }
     
-    internal func configure(#text: String?, placeholder: String) {
+    internal func configure(text text: String?, placeholder: String) {
         input.text = text
         input.placeholder = placeholder
         

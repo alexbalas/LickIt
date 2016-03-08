@@ -11,18 +11,19 @@ import Photos
 
 class TopWantedViewController: BaseTableViewController, UIPopoverPresentationControllerDelegate {
 
-    var topRecipes = [Recipe]()
-    var phManager = PHImageManager()
+    var topRecipes: [Recipe]?
+    weak var phManager: PHImageManager?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if topRecipes.count < 1{
-        var manager = RecipeManager()
+        if topRecipes == nil{
+        let manager = RecipeManager()
         manager.getTopRecipes(20, completionBlock: { (recipes) -> Void in
-            self.topRecipes = recipes
-            self.tableView.reloadData()
+            weak var slf = self
+            slf!.topRecipes = recipes
+            slf!.tableView.reloadData()
         })
         }
         checkForInternetConnection()
@@ -31,7 +32,7 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
     }
     
     func checkForInternetConnection(){
-        var checker = Reachability.isConnectedToNetwork()
+        let checker = Reachability.isConnectedToNetwork()
         if checker == false{
             showInternetConnectionMessage()
         }
@@ -40,7 +41,7 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
     
     
     func showInternetConnectionMessage(){
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
         var _ = menuViewController.view
         menuViewController.modalPresentationStyle = .Popover
         menuViewController.preferredContentSize = CGSize(width: self.view.bounds.width, height: 60)
@@ -61,7 +62,7 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
         
         
         
-        println(menuViewController.name?.text)
+        print(menuViewController.name?.text)
         
         presentViewController(
             menuViewController,
@@ -90,24 +91,32 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return topRecipes.count
+        if (topRecipes != nil){
+            return topRecipes!.count
+        }
+        else{
+            return 0
+        }
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-            var cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as! TopWantedRecipeCell
-            topRecipes[indexPath.row].image?.getDataInBackgroundWithBlock {
+            let cell = tableView.dequeueReusableCellWithIdentifier("TopWantedRecipeCell", forIndexPath: indexPath) as! TopWantedRecipeCell
+            topRecipes![indexPath.row].image?.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
-                if !(error != nil) {
+                if !(error != nil){
+                    autoreleasepool{
                     //aici se intampla sfanta transormare din imagine in thumbnail
-                    var imagine = UIImage(data: imageData!)
-                    var destinationSize = cell.recipeImage.frame.size
+                    let imagine = UIImage(data: imageData!)
+                    let destinationSize = cell.recipeImage.frame.size
                     UIGraphicsBeginImageContext(destinationSize)
                     imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-                    var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                    let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
                     UIGraphicsEndImageContext()
+                    
                     cell.recipeImage.image = nouaImagine
+                    }
 //                    UIImage *originalImage = ...;
 //                    CGSize destinationSize = ...;
 //                    UIGraphicsBeginImageContext(destinationSize);
@@ -115,7 +124,7 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
 //                    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
 //                    UIGraphicsEndImageContext();
                 }
-            }
+        }
 //        var fetchOptions = PHFetchOptions()
 //
 //        var img = UIImage()
@@ -130,13 +139,15 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
         
         
 //        }
-        if(self.topRecipes[indexPath.row].numberOfLicks != nil){
-            cell.nrOfLicks.text = "\(self.topRecipes[indexPath.row].numberOfLicks!)"
+        if(self.topRecipes![indexPath.row].numberOfLicks != nil){
+            
+            cell.nrOfLicks.text = "\(self.topRecipes![indexPath.row].numberOfLicks!)"
         }
         else{
             cell.nrOfLicks.text = "?"
         }
-            cell.recipeName.text = topRecipes[indexPath.row].name!
+        
+            cell.recipeName.text = topRecipes![safe: indexPath.row]!.name!
         
             self.tableView.rowHeight = 90.0
             return cell
@@ -146,14 +157,18 @@ class TopWantedViewController: BaseTableViewController, UIPopoverPresentationCon
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
        
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
-        viewController.recipe = topRecipes[indexPath.row]
+        viewController.recipe = topRecipes![safe: indexPath.row]!
         self.navigationController?.pushViewController(viewController, animated: true)
         
     }
 
+    deinit {
+        self
+        debugPrint("TopRecipes deinitialized...")
+    }
 
     /*
     // Override to support conditional editing of the table view.

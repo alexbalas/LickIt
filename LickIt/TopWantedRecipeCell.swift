@@ -25,5 +25,9 @@ class TopWantedRecipeCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    deinit {
+        self
+        debugPrint("cell deinitialized...")
+    }
 
 }

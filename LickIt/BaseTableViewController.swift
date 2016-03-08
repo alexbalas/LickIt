@@ -15,15 +15,15 @@ class BaseTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var menuButton = UIButton(frame: CGRect(x: 3, y: 7, width: 50, height: 50))
-        var buttonImage = UIImage(named: "chef")
+        let menuButton = UIButton(frame: CGRect(x: 3, y: 7, width: 50, height: 50))
+        let buttonImage = UIImage(named: "chef")
         menuButton.setImage(buttonImage, forState: UIControlState.Normal)
         
         menuButton.addTarget(self, action: "menuButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-        var backButtonView = UIView(frame: menuButton.frame)
+        let backButtonView = UIView(frame: menuButton.frame)
         backButtonView.bounds = CGRectOffset(backButtonView.bounds, 13, 11)
         backButtonView.addSubview(menuButton)
-        var menuButtonItem = UIBarButtonItem(customView: backButtonView)
+        let menuButtonItem = UIBarButtonItem(customView: backButtonView)
         
         
         self.navigationItem.leftBarButtonItem = menuButtonItem
@@ -39,5 +39,8 @@ class BaseTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
    
 }

@@ -62,14 +62,14 @@ class Animator {
     /// - returns: An AnimatedFrame object
     func prepareFrame(index: Int) -> AnimatedFrame {
         if let frameImageRef = CGImageSourceCreateImageAtIndex(imageSource, index, nil){
-            let frameDuration = CGImageSourceGIFFrameDuration(imageSource, index)
+            let frameDuration = CGImageSourceGIFFrameDuration(imageSource, index: index)
             let image = UIImage(CGImage: frameImageRef)
             let scaledImage: UIImage?
             
             switch contentMode {
-            case .ScaleAspectFit: scaledImage = image!.resizeAspectFit(size)
-            case .ScaleAspectFill: scaledImage = image!.resizeAspectFill(size)
-            default: scaledImage = image!.resize(size)
+            case .ScaleAspectFit: scaledImage = image.resizeAspectFit(size)
+            case .ScaleAspectFill: scaledImage = image.resizeAspectFill(size)
+            default: scaledImage = image.resize(size)
             }
             
             return AnimatedFrame(image: scaledImage, duration: frameDuration)

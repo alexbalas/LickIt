@@ -39,16 +39,16 @@ class WebViewTableViewCell: UITableViewCell, WKNavigationDelegate {
     
     func loadWebsite(recipeName: String){
         
-        var rect = UIScreen.mainScreen().bounds
-        self.webView = WKWebView(frame: CGRect(x: UIScreen.mainScreen().bounds.width/2 , y: 0, width: rect.width, height: rect.height-84))
+        let rect = UIScreen.mainScreen().bounds
+        self.webView = WKWebView(frame: CGRect(x: 0 , y: 0, width: rect.width, height: rect.height-84))
         self.webView.navigationDelegate = self
-
+        
         if hasInternetConnection(){
             let url = NSURL(string: self.site)
-            println(self.site)
-            var request = NSURLRequest(URL: url!)
-            println(request)
-       //     self.webView.loadRequest(request)
+            print(self.site)
+            let request = NSURLRequest(URL: url!)
+            print(request)
+            self.webView.loadRequest(request)
         }
         else{//nu are conexiune
             if self.isSavedRecipe{
@@ -62,13 +62,15 @@ class WebViewTableViewCell: UITableViewCell, WKNavigationDelegate {
     }
     
     func hasInternetConnection() -> Bool {
-        var checker = Reachability.isConnectedToNetwork()
+        let checker = Reachability.isConnectedToNetwork()
         if checker == false{
             return false
         }
         return true
     }
     
+    
+     //disable tap
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .LinkActivated{
             
@@ -78,11 +80,13 @@ class WebViewTableViewCell: UITableViewCell, WKNavigationDelegate {
         else{
             decisionHandler(.Allow)
         }
-        
+    
     }
     
     
-    //disable tap
+   
+    
+   
     
     func showRecipeWebsite(){
         hideLabel()
@@ -96,7 +100,7 @@ class WebViewTableViewCell: UITableViewCell, WKNavigationDelegate {
         showLabel()
     }
     func showLabel(){
-        var label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 90))//UILabel(frame: self.contentView.frame)
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 90))//UILabel(frame: self.contentView.frame)
         label.numberOfLines = 3
         if hasInternetConnection(){
             label.text = "-> see recipe info <-"
@@ -112,10 +116,10 @@ class WebViewTableViewCell: UITableViewCell, WKNavigationDelegate {
         self.contentView.addSubview(self.labelOfCell)
         
         //de aici ii testing, de deletat
-        var img = UIImage.gifWithName("lick")
-        var imgViu = UIImageView(image: img)
-        imgViu.frame = CGRectMake(0, 0, 60, 60)
-      //  self.containerView.addSubview(imgViu)
+//        let img = UIImage.gifWithName("lick")
+//        let imgViu = UIImageView(image: img)
+//        imgViu.frame = CGRectMake(0, 0, 60, 60)
+//      //  self.containerView.addSubview(imgViu)
     }
     func hideLabel(){
         self.labelOfCell.removeFromSuperview()
@@ -125,8 +129,8 @@ class WebViewTableViewCell: UITableViewCell, WKNavigationDelegate {
     func saveRecipe(recipe: Recipe){
 
         if let url = NSURL(string: recipe.recipeDescription!) {
-            let content = NSString(contentsOfURL: url, usedEncoding: nil, error: nil)
-            println(content)
+            let content = try? NSString(contentsOfURL: url, usedEncoding: nil)
+            print(content)
             if let html = content{
                 recipe.htmlString = html as String
                 NSUserDefaults.standardUserDefaults().setValue(html, forKey: recipe.name!)
@@ -148,7 +152,7 @@ class WebViewTableViewCell: UITableViewCell, WKNavigationDelegate {
     }
     
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-        println(self.site)
+        print(self.site)
         self.hasFinishedNavigation = true
     }
     
@@ -170,9 +174,9 @@ extension UIView {
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        println(image)
-        println(self)
-        println(self.frame)
+        print(image)
+        print(self)
+        print(self.frame)
         return image
     }
 }

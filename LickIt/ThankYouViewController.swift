@@ -19,7 +19,7 @@ class ThankYouViewController: BaseViewController {
         activityIndicator.startAnimating()
         self.view.addSubview( activityIndicator )
         
-        var manager = RecipeManager()
+        let manager = RecipeManager()
         manager.addRecipeToParse(self.recipe, completionBlock: { (success) -> Void in
             if(success){
                 activityIndicator.stopAnimating()
@@ -34,7 +34,9 @@ class ThankYouViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
     /*
     // MARK: - Navigation
 

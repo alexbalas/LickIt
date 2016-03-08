@@ -17,21 +17,22 @@ class Ingredient: NSObject {
     var category: Int?
     var isSelected = false
     var indexPathInIngredientSearch = -1
+    var objectID : String?
 }
 extension Ingredient{
     func toPFObject() -> PFObject{
         
-        var object = PFObject(className: "Ingredient")
+        let object = PFObject(className: "Ingredient")
         if let name = self.name{
             object["name"] = name
         }
         if let image = self.image{
             object["image"] = image
         }
-        if let categ = self.category{
+        if let _ = self.category{
             object["category"] = self.category
         }
-        
+
         return object
 }
     convenience init(object: PFObject){
@@ -46,13 +47,14 @@ extension Ingredient{
         if let categ = object["category"] as? Int{
             self.category = categ
         }
+        self.objectID = object["objectId"] as? String
         self.parseObject = object
     }
 }
 
 extension Ingredient{
     func toManagedObjects() -> IngredientModel{
-        var managedObject = NSEntityDescription.insertNewObjectForEntityForName("IngredientModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as! IngredientModel
+        let managedObject = NSEntityDescription.insertNewObjectForEntityForName("IngredientModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as! IngredientModel
         if let name = self.name{
             managedObject.name = name
         }
@@ -60,7 +62,7 @@ extension Ingredient{
             imagine.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData!)
+                    let img = UIImage(data:imageData!)
                     managedObject.image = img!
                 }
             }

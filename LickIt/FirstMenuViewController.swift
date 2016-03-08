@@ -39,7 +39,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(self.navigationController?.navigationBar.frame.height)
   //      UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
 
         
@@ -55,18 +55,18 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         addSearchBar()
         //butonul drept
         if(PFUser.currentUser() == nil){
-            var rightMenuButton = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
-            var image = UIImage(named: "key")
+            let rightMenuButton = UIButton(frame: CGRect(x: UIScreen.mainScreen().bounds.width-40, y: 0, width: 40, height: 40))
+            let image = UIImage(named: "key")
             rightMenuButton.setImage(image, forState: UIControlState.Normal)
             rightMenuButton.addTarget(self, action: "rightMenuButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-            var rightMenuButtonItem = UIBarButtonItem(customView: rightMenuButton)
+            let rightMenuButtonItem = UIBarButtonItem(customView: rightMenuButton)
             self.navigationItem.rightBarButtonItem = rightMenuButtonItem
             
             //numai daca nu e logat se poate sa nu fi trecut prin tutorial
             if(!(NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce")))
             {
                 //first launch ever
-                startTutorial()
+               // startTutorial()
             }
             else{
                 
@@ -89,24 +89,19 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         
         
-//        if(NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce"))
-//        {
-//            // app already launched
-//            // open login view controller
-//            if(PFUser.currentUser() == nil){
-//                var loginViewController = LogInViewController()
-//                loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
-//                loginViewController.delegate = self
-//                self.presentViewController(loginViewController, animated: true) { () -> Void in
-//                }
-//            }
-//        }
-//        else
-//        {
-//            // This is the first launch ever
-//            
-//
-//        }
+        if(NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce"))
+        {
+            // app already launched
+            // open login view controller
+            if(PFUser.currentUser() == nil){
+                rightMenuButtonPressed()            }
+        }
+        else
+        {
+            // This is the first launch ever
+            
+
+        }
 
         
         
@@ -117,7 +112,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         
         
-        var manager = RecipeManager()
+        let manager = RecipeManager()
         manager.getRecommendedRecipes(5, completionBlock: { (recipess) -> Void in
             self.recipes = recipess
             self.collectionView.reloadData()
@@ -152,8 +147,8 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     }
     
     func addSearchBar(){
-        var fraim = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 30)
-        var searchBar = UISearchBar(frame: fraim)
+        let fraim = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 30)
+        let searchBar = UISearchBar(frame: fraim)
         searchBar.delegate = self
         self.searchBar = searchBar
         self.view.addSubview(searchBar)
@@ -161,20 +156,20 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     override func menuButtonPressed(sender: AnyObject) {
         super.menuButtonPressed(sender)
-        if self.enteredInTutorial{
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasLaunchedOnce")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.enteredInTutorial = false
-        hidePopup()
-        self.currentMaskView!.removeFromSuperview()
-        }
+//        if self.enteredInTutorial{
+//        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasLaunchedOnce")
+//        NSUserDefaults.standardUserDefaults().synchronize()
+//        self.enteredInTutorial = false
+//        hidePopup()
+//        self.currentMaskView!.removeFromSuperview()
+//        }
         
     }
     
     func rightMenuButtonPressed(){
-        println("apasat")
-        var loginViewController = LogInViewController()
-        loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
+        print("apasat")
+        let loginViewController = LogInViewController()
+        loginViewController.fields = [PFLogInFields.Facebook, PFLogInFields.Twitter, PFLogInFields.DismissButton]
         
         loginViewController.delegate = self
 
@@ -187,16 +182,27 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         self.navigationItem.rightBarButtonItem = nil
         self.navigationController?.popViewControllerAnimated(true)
+        showCongratzMessage()
        // self.dismissViewControllerAnimated( true, completion: nil)
         
+    }
+    
+    func showCongratzMessage(){
+        let alert = UIAlertController(title: "YEEEESSSS", message: "Achievement unlocked!", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Awesome!", style: UIAlertActionStyle.Cancel, handler:{ (ACTION :UIAlertAction)in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func startTutorial(){
         self.enteredInTutorial = true
         
         
-        var currentWindow = UIApplication.sharedApplication().keyWindow
-        let rektImageView = CGRect(x: self.forwardNewsButton.frame.origin.x-currentWindow!.frame.width/2+50, y: self.forwardNewsButton.frame.origin.y+self.forwardNewsButton.frame.height/2+self.forwardNewsButton.frame.width/2-50, width: currentWindow!.frame.width/2, height: currentWindow!.frame.width/2)
+        let currentWindow = UIApplication.sharedApplication().keyWindow
+        _ = CGRect(x: self.forwardNewsButton.frame.origin.x-currentWindow!.frame.width/2+50, y: self.forwardNewsButton.frame.origin.y+self.forwardNewsButton.frame.height/2+self.forwardNewsButton.frame.width/2-50, width: currentWindow!.frame.width/2, height: currentWindow!.frame.width/2)
  //       var imageView = UIImageView(frame: rektImageView)
   //      imageView.image = UIImage(named: "blueM")
         let circleRekt = CGRect(x: self.forwardNewsButton.frame.origin.x, y: self.forwardNewsButton.frame.origin.y+self.forwardNewsButton.frame.height/2-self.forwardNewsButton.frame.width/2, width: self.forwardNewsButton.frame.width, height: self.forwardNewsButton.frame.width)
@@ -208,12 +214,12 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     func creazaGauraCuImagine(viu: UIView, circleRekt: CGRect){
 
-        var currentWindow = UIApplication.sharedApplication().keyWindow
+        let currentWindow = UIApplication.sharedApplication().keyWindow
         
-        var mapView = viu
+        let mapView = viu
         mapView.clipsToBounds = false
         
-        let frame = mapView.frame
+     //   let frame = mapV_
         
         // Add the mask view
         
@@ -225,7 +231,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         let maskColor = UIColor(white: 0.2, alpha: 0.65)        //UIColor(red: 0.9, green: 0.5, blue: 0.9, alpha: 0.5)
         let parentView = currentWindow//mapView.superview
         let pFrame = parentView!.frame
-        var maskView = PartialTransparentMaskView(frame: CGRectMake(0, 0, pFrame.width, pFrame.height), backgroundColor: maskColor, transparentRects: nil, transparentCircles:circleArray, targetView: mapView)
+        let maskView = PartialTransparentMaskView(frame: CGRectMake(0, 0, pFrame.width, pFrame.height), backgroundColor: maskColor, transparentRects: nil, transparentCircles:circleArray, targetView: mapView)
         //pana aici s-a creat ecranul negru cu gauri
         //de aici pui imaginea peste ecranul negru
 
@@ -237,7 +243,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     func showPopup(name: String, sourceViewRekt: CGRect, width: CGFloat, height: CGFloat){
         
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
         var _ = menuViewController.view
         menuViewController.modalPresentationStyle = .Popover
         menuViewController.preferredContentSize = CGSizeMake(width, height)
@@ -253,7 +259,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         
         
-        println(menuViewController.name?.text)
+        print(menuViewController.name?.text)
         presentViewController(
             menuViewController,
             animated: true,
@@ -285,9 +291,9 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         //aici revii din recipe in cadrul tutorialului
         //pui mask cu gaura pe menuButton
         if self.enteredInTutorial{
-        var viu = self.navigationItem.leftBarButtonItem!.customView//UIView(frame: CGRect(x: 100, y: 100, width: 64,height: 64))//self.navigationItem.leftBarButtonItem!.width, height: self.navigationController!.navigationBar.frame.height))
+        let viu = self.navigationItem.leftBarButtonItem!.customView//UIView(frame: CGRect(x: 100, y: 100, width: 64,height: 64))//self.navigationItem.leftBarButtonItem!.width, height: self.navigationController!.navigationBar.frame.height))
        // self.view.addSubview(viu)
-        println(viu)
+        print(viu)
         creazaGauraCuImagine(viu!, circleRekt: CGRect(x: 0, y: 10, width: 70, height: 70))
         showPopup("the magic "+"MENU-BUTTON", sourceViewRekt: viu!.frame, width: 125, height: 65)
 //        var tap = UITapGestureRecognizer(target: self, action: "menuButtonPressed:")
@@ -306,20 +312,20 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         self.currentMaskView!.removeFromSuperview()
         self.collectionView.removeGestureRecognizer(self.tapRecognizerOnCells!)
         
-        var punct = self.collectionView.indexPathForItemAtPoint(sender.locationOfTouch(0, inView: self.collectionView))
+        let punct = self.collectionView.indexPathForItemAtPoint(sender.locationOfTouch(0, inView: self.collectionView))
         collectionView(self.collectionView, didSelectItemAtIndexPath: punct!)
         }
     }
     
     func checkForInternetConnection(){
-        var checker = Reachability.isConnectedToNetwork()
+        let checker = Reachability.isConnectedToNetwork()
         if checker == false{
             showInternetConnectionMessage()
         }
     }
     
     func showInternetConnectionMessage(){
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
         var _ = menuViewController.view
         menuViewController.modalPresentationStyle = .Popover
         menuViewController.preferredContentSize = CGSize(width: self.view.bounds.width, height: 60)
@@ -340,7 +346,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
         
         
         
-        println(menuViewController.name?.text)
+        print(menuViewController.name?.text)
         
         presentViewController(
             menuViewController,
@@ -359,18 +365,18 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             news[self.count].getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData!)
+                    let img = UIImage(data:imageData!)
                     self.newsImages.image = img
                 }
             }
         }
-        println("o fost apasat")
+        print("o fost apasat")
         if self.enteredInTutorial == true{
             hidePopup()
             self.currentMaskView!.removeFromSuperview()
             creazaGauraCuImagine(self.collectionView, circleRekt: self.collectionView.frame)
             showPopup("check recipes -swipe "+"&choose one", sourceViewRekt: self.weRecommandLabel.frame, width: 125, height: 65)
-            var tap = UITapGestureRecognizer(target: self, action: "cellTappedInTutorial:")
+            let tap = UITapGestureRecognizer(target: self, action: "cellTappedInTutorial:")
             self.collectionView.addGestureRecognizer(tap)
             self.tapRecognizerOnCells = tap
         }
@@ -383,7 +389,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             news[self.count].getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData!)
+                    let img = UIImage(data:imageData!)
                     self.newsImages.image = img
                 }
             }
@@ -396,8 +402,8 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var cell : WeRecommandCell = collectionView.dequeueReusableCellWithReuseIdentifier("WeRecommandCell", forIndexPath: indexPath) as! WeRecommandCell
-        var recipe = recipes[indexPath.item]
+        let cell : WeRecommandCell = collectionView.dequeueReusableCellWithReuseIdentifier("WeRecommandCell", forIndexPath: indexPath) as! WeRecommandCell
+        let recipe = recipes[indexPath.item]
         cell.licks.text = "\(recipe.numberOfLicks!)"
         cell.licks.font = UIFont(name: "AmericanTypewriter", size: 14)
         cell.name.text = recipe.name
@@ -412,11 +418,11 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
             (imageData: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
                 //aici se intampla sfanta transormare din imagine in thumbnail
-                var imagine = UIImage(data: imageData!)
-                var destinationSize = cell!.image.frame.size
+                let imagine = UIImage(data: imageData!)
+                let destinationSize = cell!.image.frame.size
                 UIGraphicsBeginImageContext(destinationSize)
                 imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 cell?.image.image = nouaImagine
             }
@@ -425,7 +431,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        var viewController = storyboard!.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+        let viewController = storyboard!.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
         viewController.recipe = recipes[indexPath.item]
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -459,7 +465,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     func openRecipe(recipe: Recipe){
         //        var storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var viewController = storyboard!.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+        let viewController = storyboard!.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         viewController.recipe = recipe
 
         
@@ -469,7 +475,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     }
     
     func createTableViewWithResults(retete: [Recipe]){
-        var tableViu = UITableView(frame: CGRect(x: 0, y: 60+30, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height-90))
+        let tableViu = UITableView(frame: CGRect(x: 0, y: 60+30, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height-90))
         tableViu.delegate = self
         tableViu.dataSource = self
     //    tableViu.retete = retete
@@ -479,7 +485,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if self.searchResultTableView == nil{
-            var ret = [Recipe]()
+            let ret = [Recipe]()
             createTableViewWithResults(ret)
         }
         if searchText == ""{
@@ -487,11 +493,11 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
                 self.isFirstCharacterInSearch = true
             }
             else{
-                var manager = RecipeManager()
+                let manager = RecipeManager()
                 manager.getSearchedRecipes(searchText, completionBlock: { (retete) -> Void in
-                    var resipiz = [Recipe]()
-                    println("found these")
-                    println(retete)
+                    _ = [Recipe]()
+                    print("found these")
+                    print(retete)
 //                    for reteta in retete{
 //                        resipiz.append(reteta)
 //                    }
@@ -514,6 +520,10 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.retete.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
     }
     
     //    override func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell? {
@@ -550,26 +560,26 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     //    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell(frame: CGRect(x: 0, y: CGFloat(indexPath.row) * (UIScreen.mainScreen().bounds.height/6), width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height/6))
-        var imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.height, height: cell.frame.height))
-        println("recipiz din cellforrow")
-        println(self.retete)
+        let cell = UITableViewCell(frame: CGRect(x: 0, y: CGFloat(indexPath.row) * 80, width: UIScreen.mainScreen().bounds.width, height: 80))
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        print("recipiz din cellforrow")
+        print(self.retete)
         retete[indexPath.row].image?.getDataInBackgroundWithBlock {
             (imageData: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
                 //aici se intampla sfanta transormare din imagine in thumbnail
-                var imagine = UIImage(data: imageData!)
-                var destinationSize = CGSize(width: imgView.frame.width, height: imgView.frame.height)
+                let imagine = UIImage(data: imageData!)
+                let destinationSize = CGSize(width: imgView.frame.width, height: imgView.frame.height)
                 UIGraphicsBeginImageContext(destinationSize)
                 imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 imgView.image = nouaImagine
             }
             
         }
         
-        var label = UILabel(frame: CGRect(x: imgView.frame.width+10, y: 15, width: UIScreen.mainScreen().bounds.width - imgView.frame.width - 20, height: cell.frame.height - 30))
+        let label = UILabel(frame: CGRect(x: 80+10, y: 15, width: UIScreen.mainScreen().bounds.width - 80 - 20, height: 80 - 30))
         label.numberOfLines = 2
         label.adjustsFontSizeToFitWidth = true
         label.font = UIFont(name: "Zapfino", size: 16)
@@ -598,6 +608,7 @@ class FirstMenuViewController: BaseViewController, UICollectionViewDataSource, U
     
     deinit{
         self
+        print("deinit called")
     }
     /*
     // MARK: - Navigation

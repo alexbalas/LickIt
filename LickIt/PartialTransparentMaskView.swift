@@ -26,7 +26,7 @@ class PartialTransparentMaskView: UIView{
         self.opaque = false
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -38,7 +38,7 @@ class PartialTransparentMaskView: UIView{
         if let rects = transparentRects {
             for aRect in rects {
                 
-                var holeRectIntersection = CGRectIntersection( aRect, rect )
+                let holeRectIntersection = CGRectIntersection( aRect, rect )
                 
                 UIColor.clearColor().setFill();
                 UIRectFill(holeRectIntersection);
@@ -48,7 +48,7 @@ class PartialTransparentMaskView: UIView{
         if let circles = transparentCircles {
             for aRect in circles {
                 
-                var holeRectIntersection = aRect
+                let holeRectIntersection = aRect
                 
                 let context = UIGraphicsGetCurrentContext();
                 
@@ -65,7 +65,7 @@ class PartialTransparentMaskView: UIView{
     }
     
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        var view = super.hitTest(point, withEvent:event);
+        let view = super.hitTest(point, withEvent:event);
         
         if view == self && self.targetView != nil {
             return self.targetView;

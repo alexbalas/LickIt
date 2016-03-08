@@ -10,7 +10,7 @@ import UIKit
 
 let reuseIdentifier = "Cell"
 
-class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, UICollectionViewDelegate, UICollectionViewDataSource, BookmarkedRecipeCellDelegate{
+class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, BookmarkedRecipeCellDelegate{
 
     var recipes = [Recipe]()
     var savedRecipesIDs = [String]()
@@ -27,11 +27,11 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
 //        }
 
         
-        var query = PFQuery(className: "Recipe").fromLocalDatastore()
+        let query = PFQuery(className: "Recipe").fromLocalDatastore()
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             for object in objects!{
-                var recipe = Recipe(object: object as! PFObject)
-                println(recipe.name)
+                let recipe = Recipe(object: object as! PFObject)
+                print(recipe.name)
                 self.recipes.append(recipe)
             }
             self.collectionView?.reloadData()
@@ -104,7 +104,7 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
 
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as! BookmarkedRecipesCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BookmarkedRecipeCollectionCell", forIndexPath: indexPath) as! BookmarkedRecipesCell
         cell.delegate = self
         
    
@@ -123,8 +123,8 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
         viewController.recipe = recipes[indexPath.item]
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -132,13 +132,16 @@ class BookmarkedRecipesCollectionViewController: BaseCollectionViewController, U
     }
 
     func bookmarkedRecipeCellDidLongTap(cell: BookmarkedRecipesCell) {
-        var image = cell.image.image
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle?())
-        var controller = storyboard.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
+        let image = cell.image.image
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle?())
+        let controller = storyboard.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
         controller.img = image
         
         self.presentViewController(controller, animated: true) { () -> Void in
         }
+    }
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
     }
     
     // MARK: UICollectionViewDelegate

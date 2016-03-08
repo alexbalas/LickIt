@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "Icon Barba+ caiula-1.png",
       "scale" : "1x"
     },
     {
@@ -10,8 +11,7 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "chef-512.png"
+      "scale" : "3x"
     }
   ],
   "info" : {

@@ -6,6 +6,7 @@ pod 'RESideMenu', '~> 4.0'
 pod 'Parse', '~> 1.7.2'
 pod 'ParseUI'
 pod 'ParseFacebookUtilsV4'
+
 end
 
 target 'LickItTests' do

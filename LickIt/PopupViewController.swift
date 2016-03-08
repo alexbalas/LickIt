@@ -24,7 +24,10 @@ class PopupViewController: UIViewController{
         // Dispose of any resources that can be recreated.
     }
     
-
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
+    //
     /*
     // MARK: - Navigation
 

@@ -54,14 +54,14 @@ class WebViewTableController: UITableViewController, WKNavigationDelegate{
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row < 14{
-            var cell = tableView.dequeueReusableCellWithIdentifier("ImgCell", forIndexPath: indexPath) as! TableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ImgCell", forIndexPath: indexPath) as! TableViewCell
             cell.imagine.image = UIImage(named: "bifaVerde")
             
             
             return cell
         }
         else{
-            var cell = tableView.dequeueReusableCellWithIdentifier("WebViewCell", forIndexPath: indexPath) as! WebViewTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("WebViewCell", forIndexPath: indexPath) as! WebViewTableViewCell
             cell.addSubview(self.webView!)
             
             return cell
@@ -74,7 +74,7 @@ class WebViewTableController: UITableViewController, WKNavigationDelegate{
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let url = NSURL (string: "http://allrecipes.com/recipe/222607/smothered-chicken-breasts/?internalSource=popular&referringContentType=home%20page")
         self.webView = WKWebView()//frame: self.frame)
-        var req = NSURLRequest(URL:url!)
+        let req = NSURLRequest(URL:url!)
         self.webView!.loadRequest(req)
 //        self.webView!.evaluateJavaScript("document.height") { (result, error) in
 //            if error == nil {
@@ -88,7 +88,10 @@ class WebViewTableController: UITableViewController, WKNavigationDelegate{
         self.tableView.reloadInputViews()
     }
 
-
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
+    //
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

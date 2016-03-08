@@ -26,7 +26,7 @@ class Recipe: NSObject, NSCoding {
     var ingredientsRelation : PFRelation?
     var parseObject : PFObject? {
         didSet {
-            println("changed")
+            print("changed")
         }
 }
     
@@ -36,7 +36,7 @@ class Recipe: NSObject, NSCoding {
     override init(){
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         self.ID = (aDecoder.decodeObjectForKey("ID") as? String)!
         self.name = aDecoder.decodeObjectForKey("name") as? String
         self.numberOfLicks = Int(aDecoder.decodeIntForKey("numberOfLicks"))
@@ -63,7 +63,7 @@ class Recipe: NSObject, NSCoding {
 extension Recipe{
     func toPFObject() -> PFObject{
         
-        var object = PFObject(className: "Recipe")
+        let object = PFObject(className: "Recipe")
         if let aidi = self.ID as String?{
             object["ID"] = aidi
         }
@@ -82,7 +82,7 @@ extension Recipe{
         /*       if let categories = self.categories{
         object["categories"] = categories
         } */
-        if let image = self.image{
+        if let _ = self.image{
         //   object["image"] = image
         }
         if let description = self.recipeDescription{
@@ -149,7 +149,7 @@ extension Recipe{
 
 extension Recipe{
     func toManagedObject() -> RecipeModel{
-        var recipeModel = NSEntityDescription.insertNewObjectForEntityForName("RecipeModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as! RecipeModel
+        let recipeModel = NSEntityDescription.insertNewObjectForEntityForName("RecipeModel", inManagedObjectContext: CoreDataManager.sharedInstance.managedObjectContext) as! RecipeModel
         if let name = self.name{
             recipeModel.name = name
         }
@@ -166,7 +166,7 @@ extension Recipe{
             imagine.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var img = UIImage(data:imageData!)
+                    let img = UIImage(data:imageData!)
                     recipeModel.image = img!
                 }
             }
@@ -196,8 +196,8 @@ extension Recipe{
         }
         if let imagine = recipeModel.image as UIImage?{
             //var pfImagine = PFFile(data: imagine) as PFFile?
-            var data = UIImageJPEGRepresentation(imagine, 0.0)
-            var pfImagine = PFFile(data: data)
+            let data = UIImageJPEGRepresentation(imagine, 0.0)
+            let pfImagine = PFFile(data: data!)
             self.image = pfImagine
         }
         if let licks = recipeModel.nrOfLicks as? Int{

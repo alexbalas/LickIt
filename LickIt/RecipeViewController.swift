@@ -16,15 +16,14 @@ protocol RecipeControllerDelegate {
     func revineInTutorial()
 }
 
-class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate,UIPopoverPresentationControllerDelegate, OneIngredientRecipeCellDelegate, PFLogInViewControllerDelegate, ADBannerViewDelegate, WebViewDelegate, UIScrollViewDelegate {
+class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate,UIPopoverPresentationControllerDelegate, OneIngredientRecipeCellDelegate, PFLogInViewControllerDelegate, ADBannerViewDelegate, WebViewDelegate {
     
     var bannerView: ADBannerView!
     
     var recipe: Recipe!
-    var lickedOrNot: Bool!
+    var lickedOrNot = false
     var savedOrNot = false
     var backButtonText: String?
-    var didInteractWithLickButton = false
     var delegate: RecipeControllerDelegate?
     var isInTutorial = false
     var isSavedRecipe = false
@@ -36,6 +35,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     var screenShotOfRecipe = UIImage()
     var timerForScreenShot = NSTimer()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,13 +43,13 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         self.canDisplayBannerAds = true
         
         self.title = self.recipe.name
-        var recipeManager = RecipeManager()
+        let recipeManager = RecipeManager()
         recipeManager.getIngredientsForRecipe(self.recipe, completionBlock: { [weak self] (ingredients) -> Void in
             self?.recipe.ingredients = ingredients
             
             self?.tableView.reloadData()
             })
-        var img = UIImage(named: "back")
+        _ = UIImage(named: "back")
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "settedBackButtonPressed:")
         
@@ -75,8 +75,12 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
 //        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bannerView]|", options: [], metrics: nil, views: viewsDictionary))
     }
     
+    func didInteractWithLickButton() {
+        self.lickedOrNot = true
+    }
+    
     func createMaskForCell(nrCell: Int, message: String){
-        var indexPath = NSIndexPath(forRow: nrCell, inSection: 0)
+        let indexPath = NSIndexPath(forRow: nrCell, inSection: 0)
         var cell = UITableViewCell()
         switch nrCell {
         case 1:
@@ -99,17 +103,18 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
    //     var height = self.tableView(self.tableView, heightForRowAtIndexPath: indexPath)
    //     var circleRekt = CGRect(x: cell.frame.origin.x, y: 174, width: cell.frame.width, height: cell.frame.height)
         creazaGauraCuImagine(cell, circleRekt: cell.frame)
-        showPopup(message, sourceViewRekt: cell.frame, width: 100, height: 60)
+        let viu = UIView(frame: CGRect(x: cell.frame.origin.x, y: cell.frame.origin.y, width: 100, height: 60))
+        showPopup(message, cell: viu)//sourceViewRekt: cell.frame, width: 100, height: 60)
     }
     
     func creazaGauraCuImagine(viu: UIView, circleRekt: CGRect){
         
-        var currentWindow = UIApplication.sharedApplication().keyWindow
+        let currentWindow = UIApplication.sharedApplication().keyWindow
         
-        var mapView = viu
+        let mapView = viu
         mapView.clipsToBounds = false
         
-        let frame = mapView.frame
+       // let frame = mapView.frame
         
         // Add the mask view
         
@@ -121,7 +126,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         let maskColor = UIColor(white: 0.2, alpha: 0.65)        //UIColor(red: 0.9, green: 0.5, blue: 0.9, alpha: 0.5)
         let parentView = currentWindow//mapView.superview
         let pFrame = parentView!.frame
-        var maskView = PartialTransparentMaskView(frame: CGRectMake(0, 0, pFrame.width, pFrame.height), backgroundColor: maskColor, transparentRects: nil, transparentCircles:circleArray, targetView: mapView)
+        let maskView = PartialTransparentMaskView(frame: CGRectMake(0, 0, pFrame.width, pFrame.height), backgroundColor: maskColor, transparentRects: nil, transparentCircles:circleArray, targetView: mapView)
         //pana aici s-a creat ecranul negru cu gauri
         //de aici pui imaginea peste ecranul negru
         
@@ -130,31 +135,60 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         
     }
 
-    
-    func showPopup(name: String, sourceViewRekt: CGRect, width: CGFloat, height: CGFloat){
+
         
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+    
+    
+    func showPopup(name: String, cell: UIView){
+        
+        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
         var _ = menuViewController.view
         menuViewController.modalPresentationStyle = .Popover
-        menuViewController.preferredContentSize = CGSizeMake(width, height)
+        menuViewController.preferredContentSize = CGSizeMake(100, 60)
         menuViewController.name?.text = name
+        
         
         let popoverMenuViewController = menuViewController.popoverPresentationController
         popoverMenuViewController?.permittedArrowDirections = .Any
         popoverMenuViewController?.delegate = self
-        let sourceView = UIView(frame: sourceViewRekt)
-        self.view.addSubview(sourceView)
-        popoverMenuViewController?.sourceView = sourceView
-        popoverMenuViewController?.sourceRect = CGRectMake(0, 0, width, height)
+        popoverMenuViewController?.sourceView = cell
+        popoverMenuViewController?.sourceRect = CGRectMake(0, 0, 100, 60)
         
         
         
-        println(menuViewController.name?.text)
+        print(menuViewController.name?.text)
+        
         presentViewController(
             menuViewController,
             animated: true,
             completion: nil)
     }
+
+//    func showPopup(name: String, sourceViewRekt: CGRect, width: CGFloat, height: CGFloat){
+//        
+//        
+//        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+//        var _ = menuViewController.view
+//        menuViewController.modalPresentationStyle = .Popover
+//        menuViewController.preferredContentSize = CGSizeMake(width, height)
+//        menuViewController.name?.text = name
+//        
+//        let popoverMenuViewController = menuViewController.popoverPresentationController
+//        popoverMenuViewController?.permittedArrowDirections = .Any
+//        popoverMenuViewController?.delegate = self
+//        let sourceView = UIView(frame: sourceViewRekt)
+//        self.view.addSubview(sourceView)
+//        popoverMenuViewController?.sourceView = sourceView
+//        popoverMenuViewController?.sourceRect = CGRectMake(0, 0, width, height)
+//        
+//        
+//        
+//        print(menuViewController.name?.text)
+//        presentViewController(
+//            menuViewController,
+//            animated: true,
+//            completion: nil)
+//    }
 
     
     func hidePopup()
@@ -174,7 +208,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     func settedBackButtonPressed(buton: UIBarButtonItem){
         self.navigationController?.popViewControllerAnimated(true)
     
-        if self.delegate != nil{
+        if self.delegate != nil && self.lickedOrNot{
             self.delegate?.refresh(self.indexPath!)
             self.delegate?.revineInTutorial()
         }
@@ -196,11 +230,13 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 1:
-            var cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as! InfoRecipeCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("InfoRecipeCell", forIndexPath: indexPath) as! InfoRecipeCell
             cell.delegate = self
-            cell.time.text = "\(recipe.time!)"+" min"
-            if(recipe.numberOfLicks != nil){
-                cell.licks.text = "\(recipe.numberOfLicks!)"
+   //         cell.time.text = "\(recipe.time!)"+" min"
+            if(self.recipe.numberOfLicks! > -1){
+                print(cell.licks)
+            
+                cell.licks.text = "\(self.recipe.numberOfLicks!)"
             }
             else{
                 cell.licks.text = "?"
@@ -208,7 +244,8 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             if(self.savedOrNot == true){
                 cell.saveButton.titleLabel?.text = "you have it"
             }
-            
+            print("waaaaaaaa")
+            print(cell.frame.height)
             cell.setParseRecipe(recipe)
             self.rects.append(cell.frame)
 
@@ -216,7 +253,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             return cell
             
         case 2:
-            var cell = tableView.dequeueReusableCellWithIdentifier("IngredientsRecipeCell", forIndexPath: indexPath) as! IngredientsRecipeCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("IngredientsRecipeCell", forIndexPath: indexPath) as! IngredientsRecipeCell
             if let ingredients = recipe.ingredients{
                 
                 cell.ingredients = ingredients
@@ -229,12 +266,12 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             return cell
         case 3:
 //
-            var cell = tableView.dequeueReusableCellWithIdentifier("WebView", forIndexPath: indexPath) as! WebViewTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("WebView", forIndexPath: indexPath) as! WebViewTableViewCell
             if hasInternetConnection(){
                 cell.site = self.recipe.recipeDescription!
             }
             else{
-      //          cell.site = self.recipe.htmlString!
+                cell.site = self.recipe.htmlString!
             }
             if self.isSavedRecipe == true{
                 cell.isSavedRecipe = true
@@ -244,12 +281,12 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             return cell
             
         default:
-            var cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as! ImageRecipeCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ImageRecipeCell", forIndexPath: indexPath) as! ImageRecipeCell
             
-//            recipe.image?.getDataInBackgroundWithBlock({ (data, error) -> Void in
-//                cell.imagine.image = UIImage(data:data!)
-//            })
-            cell.imagine.image = UIImage(named: "lick.gif")
+            recipe.image?.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                cell.imagine.image = UIImage(data:data!)
+            })
+       //     cell.imagine.image = UIImage(named: "lick.gif")
             self.tableView.rowHeight = 110.0
             //      cell.imagine.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
             //      cell.imagine.sizeToFit()
@@ -260,7 +297,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     }
     
     func hasInternetConnection() -> Bool {
-        var checker = Reachability.isConnectedToNetwork()
+        let checker = Reachability.isConnectedToNetwork()
         if checker == false{
             return false
         }
@@ -326,20 +363,20 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     
     
     func infoRecipeCellSaveButtonPressed() {
-        var cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
+        let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
         cell.saveRecipe(self.recipe)
     }
     
     func showSavingErrorAlert(cell: WebViewTableViewCell){
-        var alert = UIAlertController(title: "Error", message: "Something went wrong. Please try again", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Cancel, handler:{ (ACTION :UIAlertAction!)in
-            println("User click Close button")
+        let alert = UIAlertController(title: "Error", message: "Something went wrong. Please try again", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Cancel, handler:{ (ACTION :UIAlertAction)in
+            print("User click Close button")
            // alert.removeFromParentViewController()
             alert.dismissViewControllerAnimated(true, completion: nil)
             
         }))
-        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler:{ (ACTION :UIAlertAction!)in
-            println("User click Ok button")
+        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler:{ (ACTION :UIAlertAction)in
+            print("User click Ok button")
             alert.dismissViewControllerAnimated(true, completion: nil)
             cell.saveRecipe(self.recipe)
         }))
@@ -358,7 +395,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     }
     
     func updateScreenShotCount(){
-        var cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
+        let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
         if cell.hasFinishedNavigation == true{
             self.timerForScreenShot.invalidate()
             cell.saveRecipe(self.recipe)
@@ -368,10 +405,10 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println(indexPath.row)
+        print(indexPath.row)
         if(indexPath.row==0){
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
+            let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let viewController = storyboard.instantiateViewControllerWithIdentifier("FullScreenImageController") as! FullScreenPicController
             
             viewController.imageFile = self.recipe.image
             viewController.nume = self.recipe.name
@@ -385,7 +422,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
         }
         if(indexPath.row==3){
           //  self.canDisplayBannerAds = false
-            var cell = self.tableView.cellForRowAtIndexPath(indexPath) as! WebViewTableViewCell
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! WebViewTableViewCell
             //arata webview
             cell.showRecipeWebsite()
             //cell.loadWebsite()
@@ -394,9 +431,9 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
             //auto scroll la nivelul dorit
             self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
             //add button
-            var rect = UIScreen.mainScreen().bounds
+            let rect = UIScreen.mainScreen().bounds
            // var ingredientCellOriginY = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0))?.frame.origin.y
-            var button = UIButton(frame: CGRect(x: rect.width-35, y: rect.height-45+200-25, width: 35, height: 45))
+            let button = UIButton(frame: CGRect(x: rect.width-35, y: rect.height-45+200-25, width: 35, height: 45))
             button.addTarget(self, action: "hideRecipeWebView", forControlEvents: UIControlEvents.TouchUpInside)
             button.setBackgroundImage(UIImage(named: "up"), forState: UIControlState.Normal)
             self.upButton = button
@@ -405,16 +442,16 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
                 cell.isSavedRecipe = true
             }
             
-            println(rect.height)
-            println(self.upButton?.frame.origin.y)
-            println(cell.frame.origin.y)
+            print(rect.height)
+            print(self.upButton?.frame.origin.y)
+            print(cell.frame.origin.y)
           //  self.tableView.reloadInputViews()
             
         }
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        if self.tableView.visibleCells().count > 3 {
+        if self.tableView.visibleCells.count > 3 {
             self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
         else{
@@ -425,7 +462,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     
     func hideRecipeWebView(){
         
-        var cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
+        let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! WebViewTableViewCell
         cell.hideRecipeWebsite()
         self.upButton?.removeFromSuperview()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -434,13 +471,22 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     }
     
     func loginControllerShouldAppear() {
-        var loginViewController = LogInViewController()
-        loginViewController.fields = PFLogInFields.Facebook | PFLogInFields.Twitter | PFLogInFields.DismissButton
+        let loginViewController = LogInViewController()
+        loginViewController.fields = [PFLogInFields.Facebook, PFLogInFields.Twitter, PFLogInFields.DismissButton]
         
         self.navigationController?.pushViewController(loginViewController, animated: true)
     }
     
-    
+    func showCongratzMessage(){
+        let alert = UIAlertController(title: "YEEEESSSS", message: "Achievement unlocked!", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Awesome!", style: UIAlertActionStyle.Cancel, handler:{ (ACTION :UIAlertAction)in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
     
     /*
     // MARK: - Navigation
@@ -453,7 +499,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     */
     
     deinit {
-        println("deinitCalled")
+        print("deinitCalled")
     }
     
 }

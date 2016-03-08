@@ -36,7 +36,7 @@ class FullScreenPicController: UIViewController {
             self.imageFile!.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
-                    var imag = UIImage(data:imageData!)
+                    let imag = UIImage(data:imageData!)
                    // self.buton.setBackgroundImage(imag, forState: UIControlState.Normal)
                    // self.buton.setImage(self.img, forState: UIControlState.Normal)
                     self.imagine.image = imag
@@ -48,16 +48,37 @@ class FullScreenPicController: UIViewController {
             self.name.text = self.nume
         }
         if self.isThankYouControllerOrNot != nil{
+            self.navigationController?.navigationBar.hidden = false
             self.name.numberOfLines = 1
         }
         self.view.userInteractionEnabled = true
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "settedBackButtonPressed:")
+        if (self.isThankYouControllerOrNot == true){
+            let menuButton = UIButton(frame: CGRect(x: 3, y: 7, width: 50, height: 50))
+            let buttonImage = UIImage(named: "chef")
+            menuButton.setImage(buttonImage, forState: UIControlState.Normal)
+            
+            menuButton.addTarget(self, action: "menuButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+            let backButtonView = UIView(frame: menuButton.frame)
+            backButtonView.bounds = CGRectOffset(backButtonView.bounds, 13, 11)
+            backButtonView.addSubview(menuButton)
+            let menuButtonItem = UIBarButtonItem(customView: backButtonView)
+            
+            
+            self.navigationItem.leftBarButtonItem = menuButtonItem
+        }
+        else{
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "settedBackButtonPressed:")
+        }
 
         
      //  self.buton.addTarget(self, action: "butonPressed", forControlEvents: UIControlEvents.TouchUpInside)
         
         // Do any additional setup after loading the view.
+    }
+    
+    func menuButtonPressed(){
+        self.sideMenuViewController.presentLeftMenuViewController()
     }
     
     func settedBackButtonPressed(buton: UIBarButtonItem){
@@ -85,6 +106,9 @@ class FullScreenPicController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
 //    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 //        println("touches began")
 //    }

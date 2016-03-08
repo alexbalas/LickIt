@@ -15,6 +15,7 @@ class IngredientSearchResultController: UICollectionViewController {
     let reuseIdentifier = "IngrSearchResultCell"
     var foundRecipes = [Recipe]()
     var ingredients : [Ingredient]!
+    var blockedIngredients : [Ingredient]!
     //var recipes = [Recipe]
     
     override func viewDidLoad() {
@@ -22,10 +23,10 @@ class IngredientSearchResultController: UICollectionViewController {
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "backButtonPressed:")
         self.title = "Results"
-        println(self.ingredients)
+        print(self.ingredients)
         self.collectionView?.backgroundColor = UIColor(patternImage: (UIImage(named: "clouds2"))!)
-        var recipeManager = RecipeManager()
-        recipeManager.getRecipesForIngredients(self.ingredients, completionBlock: { (recipes) -> Void in
+        let recipeManager = RecipeManager()
+        recipeManager.getRecipesForIngredients(self.ingredients, blockedIngredients: self.blockedIngredients, completionBlock: { (recipes) -> Void in
             self.foundRecipes = recipes
             self.collectionView?.reloadData()
         })
@@ -41,6 +42,7 @@ class IngredientSearchResultController: UICollectionViewController {
     
     func backButtonPressed(sender: UIBarButtonItem){
         self.navigationController?.popViewControllerAnimated(true)
+        
 }
 
     override func didReceiveMemoryWarning() {
@@ -76,24 +78,24 @@ class IngredientSearchResultController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> IngredientSearchResultCell {
        // var cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as IngredientSearchResultCell
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("IngrSearchResultCell", forIndexPath: indexPath) as! IngredientSearchResultCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("IngrSearchResultCell", forIndexPath: indexPath) as! IngredientSearchResultCell
         
         foundRecipes[indexPath.item].image?.getDataInBackgroundWithBlock {
             (imageData: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
                 //aici se intampla sfanta transormare din imagine in thumbnail
-                var imagine = UIImage(data: imageData!)
-                var destinationSize = cell.image.frame.size
+                let imagine = UIImage(data: imageData!)
+                let destinationSize = cell.image.frame.size
                 UIGraphicsBeginImageContext(destinationSize)
                 imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 cell.image.image = nouaImagine
 
             }
         }
         
-        var recipe = foundRecipes[indexPath.item]
+        let recipe = foundRecipes[indexPath.item]
         
         
         
@@ -109,14 +111,17 @@ class IngredientSearchResultController: UICollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
         viewController.recipe = foundRecipes[indexPath.item]
         self.navigationController?.pushViewController(viewController, animated: true)
 
     }
 
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
     // MARK: UICollectionViewDelegate
 
     /*

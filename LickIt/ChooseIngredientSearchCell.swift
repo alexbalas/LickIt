@@ -25,8 +25,8 @@ class ChooseIngredientSearchCell: UICollectionViewCell, UIPopoverPresentationCon
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        var longTapRecognizer = UILongPressGestureRecognizer(target: self, action: "didLongTap:")
-        var sdds = UILongPressGestureRecognizer()
+        let longTapRecognizer = UILongPressGestureRecognizer(target: self, action: "didLongTap:")
+        _ = UILongPressGestureRecognizer()
         longTapRecognizer.minimumPressDuration = 0.5
         
         self.addGestureRecognizer(longTapRecognizer)
@@ -74,17 +74,17 @@ class ChooseIngredientSearchCell: UICollectionViewCell, UIPopoverPresentationCon
     func didLongTap(gestureRecognizer: UILongPressGestureRecognizer){
         if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
             //Do Whatever You want on End of Gesture
-            println("LONG TAP RECOGNIZED")
+            print("LONG TAP RECOGNIZED")
        //     self.dismissViewControllerAnimated(false, completion: { () -> Void in
                 self.delegate.hidePopup()
        //     })
         }
         else if (gestureRecognizer.state == UIGestureRecognizerState.Began){
             //Do Whatever You want on Began of Gesture
-            println("BEGeeeeeN")
+            print("BEGeeeeeN")
             
             delegate!.showPopup(self.name, cell: self)
-            println(self.name)
+            print(self.name)
         
         }
         

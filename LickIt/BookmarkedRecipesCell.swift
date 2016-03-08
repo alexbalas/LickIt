@@ -24,11 +24,11 @@ class BookmarkedRecipesCell: UICollectionViewCell{
     var numeReteta : UILabel!
     
     override func awakeFromNib() {
-        var up = UISwipeGestureRecognizer(target: self, action: "showName")
+        let up = UISwipeGestureRecognizer(target: self, action: "showName")
         up.direction = UISwipeGestureRecognizerDirection.Up
         self.addGestureRecognizer(up)
         
-        var down = UISwipeGestureRecognizer(target: self, action: "hideName")
+        let down = UISwipeGestureRecognizer(target: self, action: "hideName")
         down.direction = UISwipeGestureRecognizerDirection.Down
         self.addGestureRecognizer(down)
         
@@ -45,7 +45,7 @@ class BookmarkedRecipesCell: UICollectionViewCell{
         self.addSubview(numeReteta)
         
         
-        var longTap = UILongPressGestureRecognizer(target: self, action: "showImage")
+        let longTap = UILongPressGestureRecognizer(target: self, action: "showImage")
         self.addGestureRecognizer(longTap)
     }
     

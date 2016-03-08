@@ -26,8 +26,8 @@ class LogInViewController: PFLogInViewController {
        //     self.dismissViewControllerAnimated(true, completion: { () -> Void in})
  //           self.navigationController?.popViewControllerAnimated(true)
         //}
-        println("l=o deschis")
-        var allTaps = UIEvent()
+        print("l=o deschis")
+        _ = UIEvent()
     //    logInView.facebookButton.
            
         //    self.dismissViewControllerAnimated(true, completion: { () -> Void in})
@@ -68,7 +68,7 @@ class LogInViewController: PFLogInViewController {
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        println("5")
+        print("5")
        // self.navigationController?.popViewControllerAnimated(true)
 
     }
@@ -85,6 +85,8 @@ class LogInViewController: PFLogInViewController {
 
     deinit{
         self
+            debugPrint("Name_of_view_controlled deinitialized...")
+        
     }
 
     

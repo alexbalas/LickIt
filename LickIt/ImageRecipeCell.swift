@@ -25,7 +25,7 @@ class ImageRecipeCell: UITableViewCell {
     }
 
     deinit {
-        println("ImageRecipeCell deinit()")
+        print("ImageRecipeCell deinit()")
     }
     
 }

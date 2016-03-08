@@ -17,7 +17,7 @@ class SearchTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     var delegat : SearchTableViewDelegate?
     var retete = [Recipe]()
     
-    override func numberOfSections() -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
@@ -59,26 +59,26 @@ class SearchTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
 //    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell(frame: CGRect(x: 0, y: CGFloat(indexPath.row) * (self.frame.height/6), width: self.frame.width, height: self.frame.height/6))
-                var imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.height, height: cell.frame.height))
-                println("recipiz din cellforrow")
-                println(self.retete)
+        let cell = UITableViewCell(frame: CGRect(x: 0, y: CGFloat(indexPath.row) * (self.frame.height/6), width: self.frame.width, height: self.frame.height/6))
+                let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.height, height: cell.frame.height))
+                print("recipiz din cellforrow")
+                print(self.retete)
                 retete[indexPath.row].image?.getDataInBackgroundWithBlock {
                     (imageData: NSData?, error: NSError?) -> Void in
                     if !(error != nil) {
                         //aici se intampla sfanta transormare din imagine in thumbnail
-                        var imagine = UIImage(data: imageData!)
-                        var destinationSize = CGSize(width: imgView.frame.width, height: imgView.frame.height)
+                        let imagine = UIImage(data: imageData!)
+                        let destinationSize = CGSize(width: imgView.frame.width, height: imgView.frame.height)
                         UIGraphicsBeginImageContext(destinationSize)
                         imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-                        var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                        let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
                         UIGraphicsEndImageContext()
                         imgView.image = nouaImagine
                     }
         
                 }
         
-                var label = UILabel(frame: CGRect(x: imgView.frame.width+10, y: 15, width: self.frame.width - imgView.frame.width - 20, height: cell.frame.height - 30))
+                let label = UILabel(frame: CGRect(x: imgView.frame.width+10, y: 15, width: self.frame.width - imgView.frame.width - 20, height: cell.frame.height - 30))
                 label.numberOfLines = 2
                 label.adjustsFontSizeToFitWidth = true
                 label.font = UIFont(name: "Zapfino", size: 16)

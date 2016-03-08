@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import iAd
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -20,13 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//        
         self.mainViewController = storyboard.instantiateViewControllerWithIdentifier("NavigationController") as? UINavigationController
         self.leftViewController = storyboard.instantiateViewControllerWithIdentifier("SideMenuViewController") as! SideMenuViewController
         self.sideMenu = RESideMenu(contentViewController: mainViewController, leftMenuViewController: leftViewController, rightMenuViewController: nil)
-        self.window!.rootViewController = sideMenu
         
+        self.window!.rootViewController = sideMenu
+//        
         
         //parse settings
         
@@ -41,9 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFTwitterUtils.initializeWithConsumerKey("wdtgoD0ZuXk6HjGntWB3MsmMl", consumerSecret: "YlMd3Ua47psUKObrvdhCBj7wyzuPakMGbNczQKgBjyAAHqp2Og")
         
         
-        var img = UIImage(named: "search")
-        println("initial size is")
-        println(img?.size)
+
         return true
     }
 
@@ -74,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 

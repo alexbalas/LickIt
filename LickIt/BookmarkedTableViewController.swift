@@ -17,10 +17,10 @@ class BookmarkedTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var query = PFQuery(className: "Recipe").fromLocalDatastore()
+        let query = PFQuery(className: "Recipe").fromLocalDatastore()
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             for object in objects!{
-                var recipe = Recipe(object: object as! PFObject)
+                let recipe = Recipe(object: object as! PFObject)
                 self.recipes.append(recipe)
             }
             self.tableView.reloadData()
@@ -82,11 +82,11 @@ class BookmarkedTableViewController: BaseTableViewController {
             (imageData: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
                 //aici se intampla sfanta transormare din imagine in thumbnail
-                var imagine = UIImage(data: imageData!)
-                var destinationSize = cell.imagine.frame.size
+                let imagine = UIImage(data: imageData!)
+                let destinationSize = cell.imagine.frame.size
                 UIGraphicsBeginImageContext(destinationSize)
                 imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 cell.imagine.image = nouaImagine
 
@@ -102,15 +102,17 @@ class BookmarkedTableViewController: BaseTableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
         
         viewController.recipe = recipes[indexPath.item]
         viewController.isSavedRecipe = true
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

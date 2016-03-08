@@ -16,7 +16,7 @@ class RecipeCategory: NSObject {
 
 extension RecipeCategory{
     func toPFObject() -> PFObject{
-        var object = PFObject(className: "RecipeCategory")
+        let object = PFObject(className: "RecipeCategory")
         
         if let name = self.name{
             object["name"] = name

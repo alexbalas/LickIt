@@ -21,12 +21,12 @@ class RecipeModel: NSManagedObject {
     @NSManaged var info: String
     
     func addIngredient(ingredient: IngredientModel){
-        var mutableIngredients = self.mutableSetValueForKey("ingredients")
+        let mutableIngredients = self.mutableSetValueForKey("ingredients")
         mutableIngredients.addObject(ingredient)
     }
     
     func removeIngredient(ingredient: IngredientModel){
-        var mutableIngredients = self.mutableSetValueForKey("ingredients")
+        let mutableIngredients = self.mutableSetValueForKey("ingredients")
         mutableIngredients.removeObject(ingredient)
     }
 

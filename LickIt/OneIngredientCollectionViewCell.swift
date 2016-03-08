@@ -9,7 +9,7 @@
 import UIKit
 
 protocol OneIngredientRecipeCellDelegate {
-    func showPopup(name: String, sourceViewRekt: CGRect, width: CGFloat, height: CGFloat)
+    func showPopup(name: String, cell: UIView)
     func hidePopup()
 }
 
@@ -21,8 +21,7 @@ class OneIngredientCollectionViewCell: UICollectionViewCell{
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        var longTapRecognizer = UILongPressGestureRecognizer(target: self, action: "didLongTap:")
-        var sdds = UILongPressGestureRecognizer()
+        let longTapRecognizer = UILongPressGestureRecognizer(target: self, action: "didLongTap:")
         longTapRecognizer.minimumPressDuration = 0.5
         self.addGestureRecognizer(longTapRecognizer)
     }
@@ -31,16 +30,17 @@ class OneIngredientCollectionViewCell: UICollectionViewCell{
     func didLongTap(gestureRecognizer: UILongPressGestureRecognizer){
         if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
             //Do Whatever You want on End of Gesture
-            println("LONG TAP RECOGNIZED")
+            print("LONG TAP RECOGNIZED")
             //     self.dismissViewControllerAnimated(false, completion: { () -> Void in
             self.delegate.hidePopup()
             //     })
         }
         else if (gestureRecognizer.state == UIGestureRecognizerState.Began){
             //Do Whatever You want on Began of Gesture
-            println("BEGeeeeeN")
+            print("BEGeeeeeN")
             
-            delegate!.showPopup(self.name!, sourceViewRekt: self.frame, width: 100, height: 60)
+            delegate!.showPopup(self.name!, cell: self)//sourceViewRekt: self.frame, width: 100, height: 60)
+            print(self.bounds)
             
             
         }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol IngSearchDelegate{
+    func addOkButton()
+}
+
 class IngredientSearchController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, ChooseIngredientSearchCellDelegate, AKPickerViewDelegate, AKPickerViewDataSource, UISearchBarDelegate {
     
     
@@ -15,9 +19,11 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     
     @IBOutlet weak var chooseCV: ChooseColView!
     
+    var delegate: IngSearchDelegate?
     
     weak var pickerView = AKPickerView()
     var selectedIngr = [Ingredient]()
+    var blockedIngr = [Ingredient]()
     var chooseIngr = [Ingredient]()
     var allIngredients = [Ingredient]()
     var foundRecipes = [Recipe]()
@@ -29,38 +35,74 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     var categ3 = [Ingredient]()
     var categ4 = [Ingredient]()
     var categ5 = [Ingredient]()
+    var categ6 = [Ingredient]()
+    var categ7 = [Ingredient]()
     var searchBar: UISearchBar?
     
     var bifaVerde: UIImage?
     var celuleSelectate = [ChooseIngredientSearchCell]()
+    var bifaRosie: UIImage?
+    var didGetToTheBlockingPhase = false
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    var isIngredientSearch: Bool?
+    var rightButtonNavigationBar = UIButton()
+    var url: String?
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touches
     }
     
     @IBAction func searchButtonPressed(sender: AnyObject) {
-      //  if( self.selectedIngr.count == self.arrivedRecipesCheck){
-            
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            var viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResultController") as! IngredientSearchResultController
+        if self.didGetToTheBlockingPhase{
+            let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let viewController = storyboard.instantiateViewControllerWithIdentifier("IngredientSearchResultController") as! IngredientSearchResultController
                 viewController.ingredients = selectedIngr
+                viewController.blockedIngredients = self.blockedIngr
            // viewController.foundRecipes = self.foundRecipes
+        
+        //modifici nr cautarilor - pt ACHIEVEMENTS
+        if let licks = NSUserDefaults.standardUserDefaults().valueForKey("ingrSearches") as? Int{
+            NSUserDefaults.standardUserDefaults().setValue(licks + 1, forKey: "ingrSearches")
+            print(licks+1)
+            if licks + 1 == 18{
+                self.navigationController?.pushViewController(viewController, animated: true)
+
+                showCongratzMessage()
+            }
+        }
+        else{
+            NSUserDefaults.standardUserDefaults().setValue(1, forKey: "ingrSearches")
+        }
+        
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
+        }
+        else{
+            self.didGetToTheBlockingPhase = true
+            self.title = "Block Ingr."
+        }
+    }
+    
+    func showCongratzMessage(){
+        let alert = UIAlertController(title: "YEEEESSSS", message: "Achievement unlocked!", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Awesome!", style: UIAlertActionStyle.Cancel, handler:{ (ACTION :UIAlertAction)in
+            alert.dismissViewControllerAnimated(true, completion: nil)
             
-            
-            self.navigationController?.pushViewController(viewController, animated: true)
-     //   }
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Add Ingr."
 //        self.resultSearchController = UISearchController(searchResultsController: nil)
 //        resultSearchController!.searchResultsUpdater = self
 //        resultSearchController!.dimsBackgroundDuringPresentation = false
 //        resultSearchController!.searchBar.sizeToFit()
 //        
   //      self.searchBarView = resultSearchController!.searchBar
-        var fraim = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 30)
-        var searchBar = UISearchBar(frame: fraim)
+        let fraim = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 30)
+        let searchBar = UISearchBar(frame: fraim)
         searchBar.delegate = self
         self.searchBar = searchBar
        // self.searchBarView.removeFromSuperview()
@@ -71,7 +113,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
      //   self.searchBarView = UISearchController().searchBar
         
         populateIngrCategArray()
-        var freim = CGRect(x: 0, y: 60+30, width: UIScreen.mainScreen().bounds.width, height: 30)
+        let freim = CGRect(x: 0, y: 60+30, width: UIScreen.mainScreen().bounds.width, height: 30)
         self.pickerView = AKPickerView(frame: freim)
         self.pickerView!.delegate = self
         self.pickerView!.dataSource = self
@@ -79,7 +121,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         self.pickerView?.selectItem(1, animated: false)
         self.view.addSubview(self.pickerView!)
         
-        var recipeManager = RecipeManager()
+        let recipeManager = RecipeManager()
         recipeManager.getAllIngredients { (ingredients) -> Void in
             self.allIngredients = ingredients
             var i = 0
@@ -95,27 +137,41 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
                     self.categ3.append(ingr)
                 case 4:
                     self.categ4.append(ingr)
-                default:
+                case 5:
                     self.categ5.append(ingr)
+                case 6:
+                    self.categ6.append(ingr)
+                default:
+                    self.categ7.append(ingr)
                 }
             }
             self.chooseIngr = self.categ1
             self.chooseCV.reloadData()
             
         }
+        if (self.isIngredientSearch == true){
+            let searchButton = UIButton(frame: CGRect(x: UIScreen.mainScreen().bounds.width-40, y: 0, width: 40, height: 40))
+            let buttonImage = UIImage(named: "spoonandfork")
+            searchButton.setImage(buttonImage, forState: UIControlState.Normal)
         
-        var searchButton = UIButton(frame: CGRect(x: 280, y: 0, width: 40, height: 40))
-        var buttonImage = UIImage(named: "spoonandfork")
-        searchButton.setImage(buttonImage, forState: UIControlState.Normal)
+            searchButton.addTarget(self, action: "searchButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            let menuButtonItem = UIBarButtonItem(customView: searchButton)
+            self.navigationItem.rightBarButtonItem = menuButtonItem
+        }
+        else{
+            let rightMenuButton = UIButton(frame: CGRect(x: UIScreen.mainScreen().bounds.width-50, y: 8, width: 45, height: 45))
+            let image = UIImage(named: "ok")
+            rightMenuButton.setImage(image, forState: UIControlState.Normal)
+            rightMenuButton.addTarget(self, action: "addRecipeButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+            self.rightButtonNavigationBar = rightMenuButton
+            self.navigationController?.navigationBar.addSubview(rightMenuButton)
+            
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: "settedBackButtonPressed")
+        }
         
-        searchButton.addTarget(self, action: "searchButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-        var menuButtonItem = UIBarButtonItem(customView: searchButton)
-        self.navigationItem.rightBarButtonItem = menuButtonItem
-        
-        
-        var right = UISwipeGestureRecognizer(target: self, action: "swipeRight:")
+        let right = UISwipeGestureRecognizer(target: self, action: "swipeRight:")
         right.direction = UISwipeGestureRecognizerDirection.Right
-        var left = UISwipeGestureRecognizer(target: self, action: "swipeLeft:")
+        let left = UISwipeGestureRecognizer(target: self, action: "swipeLeft:")
         left.direction = UISwipeGestureRecognizerDirection.Left
         self.chooseCV.addGestureRecognizer(right)
         self.chooseCV.addGestureRecognizer(left)
@@ -126,9 +182,26 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         // Do any additional setup after loading the view.
     }
     
+    func settedBackButtonPressed(){
+        self.navigationController?.popViewControllerAnimated(true)
+       
+        self.rightButtonNavigationBar.removeFromSuperview()
+        self.delegate!.addOkButton()
+        
+    }
+    
+    func addRecipeButtonPressed(){
+        self.rightButtonNavigationBar.removeFromSuperview()
+        let viewController = storyboard!.instantiateViewControllerWithIdentifier("AddNewRecipeControllerViewController") as! AddNewRecipeControllerViewController
+        viewController.caz = 44
+        viewController.ingredients = self.selectedIngr
+        viewController.url = self.url
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     func swipeRight(sender: UISwipeGestureRecognizer){
         if self.pickerView?.selectedItem > 0{
-            println(self.pickerView?.selectedItem)
+            print(self.pickerView?.selectedItem)
 
             self.pickerView?.selectItem(self.pickerView!.selectedItem-1, animated: true)
         }
@@ -136,7 +209,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     
     func swipeLeft(sender: UISwipeGestureRecognizer){
         if self.pickerView?.selectedItem < 5{
-            println(self.pickerView?.selectedItem)
+            print(self.pickerView?.selectedItem)
             self.pickerView?.selectItem(self.pickerView!.selectedItem+1, animated: true)
         }
     }
@@ -147,7 +220,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         var rezultate = [Ingredient]()
         for ingr in self.allIngredients{
-            if let a = ingr.name?.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch, range: ingr.name!.startIndex..<ingr.name!.endIndex,
+            if let _ = ingr.name?.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch, range: ingr.name!.startIndex..<ingr.name!.endIndex,
                 locale: nil){
                 rezultate.append(ingr)
             }
@@ -158,27 +231,33 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     }
     
     func populateIngrCategArray(){
-        self.ingredientCategories.append("?")
-        self.categoriesColor.append(UIColor.redColor())//(red: 46, green: 204, blue: 113, alpha: 1))
-        self.ingredientCategories.append("obj2")
+        self.ingredientCategories.append("searched")
+        self.categoriesColor.append(UIColor.cyanColor())//(red: 46, green: 204, blue: 113, alpha: 1))
+        self.ingredientCategories.append("vegetables")//1
         self.categoriesColor.append(UIColor.greenColor())//(red: 241, green: 196, blue: 15, alpha: 1))
-        self.ingredientCategories.append("fainoase")
-        self.categoriesColor.append(UIColor.yellowColor())//(red: 230, green: 126, blue: 34, alpha: 1))
-        self.ingredientCategories.append("fructe")
-        self.categoriesColor.append(UIColor.blueColor())//(red: 231, green: 76, blue: 60, alpha: 1))
-        self.ingredientCategories.append("legume")
-        self.categoriesColor.append(UIColor.orangeColor())//(red: 155, green: 89, blue: 182, alpha: 1))
+        self.ingredientCategories.append("fruits")//2
+        self.categoriesColor.append(UIColor.orangeColor())//(red: 230, green: 126, blue: 34, alpha: 1))
+        self.ingredientCategories.append("meat")//3
+        self.categoriesColor.append(UIColor.redColor())
+        self.ingredientCategories.append("cereals & flour")//4
+        self.categoriesColor.append(UIColor.yellowColor())//(red: 231, green: 76, blue: 60, alpha: 1))
+        self.ingredientCategories.append("condiments")//5
+        self.categoriesColor.append(UIColor.magentaColor())//(red: 155, green: 89, blue: 182, alpha: 1))
+        self.ingredientCategories.append("dairy")//6
+        self.categoriesColor.append(UIColor.whiteColor())
+        self.ingredientCategories.append("drinks")//7
+        self.categoriesColor.append(UIColor.grayColor())
     }
     
     func checkForInternetConnection(){
-        var checker = Reachability.isConnectedToNetwork()
+        let checker = Reachability.isConnectedToNetwork()
         if checker == false{
             showInternetConnectionMessage()
         }
     }
     
     func showInternetConnectionMessage(){
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
         var _ = menuViewController.view
         menuViewController.modalPresentationStyle = .Popover
         menuViewController.preferredContentSize = CGSize(width: self.view.bounds.width, height: 60)
@@ -199,7 +278,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         
         
         
-        println(menuViewController.name?.text)
+        print(menuViewController.name?.text)
         
         presentViewController(
             menuViewController,
@@ -223,7 +302,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     
     func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
         self.pickerView?.backgroundColor = self.categoriesColor[item]
-        println(item)
+        print(item)
         
         for cell in self.celuleSelectate{
             cell.viu?.removeFromSuperview()
@@ -240,8 +319,14 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
             self.chooseIngr = self.categ2
         case 3:
             self.chooseIngr = self.categ3
-        default:
+        case 4:
             self.chooseIngr = self.categ4
+        case 5:
+            self.chooseIngr = self.categ5
+        case 6:
+            self.chooseIngr = self.categ6
+        default:
+            self.chooseIngr = self.categ7
         }
         self.chooseCV.reloadData()
     }
@@ -250,41 +335,64 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-            return chooseIngr.count
+            return chooseIngr.count + 1
         
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell = chooseCV.dequeueReusableCellWithReuseIdentifier("IngredientSearchChoose", forIndexPath: indexPath) as! ChooseIngredientSearchCell
-        
+        let cell = chooseCV.dequeueReusableCellWithReuseIdentifier("IngredientSearchChoose", forIndexPath: indexPath) as! ChooseIngredientSearchCell
+
+        if indexPath.item == 0{
+            cell.name = "Tap & Hold item for info"
+            cell.image.image = UIImage(named: "tapandhold")
+//            let label = UILabel(frame: cell.frame)
+//            label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+//            label.numberOfLines = 3
+//            label.text = "Tap" + "&" + "Hold"
+//            label.font = UIFont(name: "Zapfino", size: 10)
+//            cell.addSubview(label)
+            cell.delegate = self
+
+            return cell
+        }
+        else{
+            
          if self.bifaVerde == nil{
-            var imagine = UIImage(named: "bifaVerde")
-            var destinationSize = cell.image.frame.size
+            let imagine = UIImage(named: "bifaVerde")
+            let destinationSize = cell.image.frame.size
             UIGraphicsBeginImageContext(destinationSize)
             imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-            var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+            let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             self.bifaVerde = nouaImagine
+            
+            let img = UIImage(named: "bifaRosie")
+            UIGraphicsBeginImageContext(destinationSize)
+            img?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
+            let nouaImg = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            self.bifaRosie = nouaImg
+            
         }
         
-            cell.name = self.chooseIngr[indexPath.item].name
-            chooseIngr[indexPath.item].image?.getDataInBackgroundWithBlock {
+            cell.name = self.chooseIngr[indexPath.item-1].name
+            chooseIngr[indexPath.item-1].image?.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
                     //aici se intampla sfanta transormare din imagine in thumbnail
-                    var imagine = UIImage(data: imageData!)
-                    var destinationSize = cell.image.frame.size
+                    let imagine = UIImage(data: imageData!)
+                    let destinationSize = cell.image.frame.size
                     UIGraphicsBeginImageContext(destinationSize)
                     imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-                    var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                    let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
                     UIGraphicsEndImageContext()
                     cell.image.image = nouaImagine
                   
                 }
                 
             }
-        if self.allIngredients[chooseIngr[indexPath.item].indexPathInIngredientSearch].isSelected == true{
-            var imgView = UIImageView(frame: cell.image.frame)
+        if self.allIngredients[chooseIngr[indexPath.item-1].indexPathInIngredientSearch].isSelected == true{
+            let imgView = UIImageView(frame: cell.image.frame)
             imgView.image = self.bifaVerde
             imgView.alpha = 1
             cell.image.alpha = 0.5
@@ -294,7 +402,9 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         }
             //add long tap recognizer
             cell.delegate = self
+            print(cell.frame)
             return cell
+        }
     }
     func hidePopup()
     {
@@ -310,7 +420,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     
     func showPopup(name: String, cell: UIView){
         
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
         var _ = menuViewController.view
         menuViewController.modalPresentationStyle = .Popover
         menuViewController.preferredContentSize = CGSizeMake(100, 60)
@@ -325,7 +435,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
         
         
         
-        println(menuViewController.name?.text)
+        print(menuViewController.name?.text)
         
         presentViewController(
             menuViewController,
@@ -334,43 +444,57 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.item>0{
+        //let indx = NSIndexPath(forItem: indexPath.item, inSection: 0)
+        let cell = self.chooseCV.cellForItemAtIndexPath(indexPath) as! ChooseIngredientSearchCell
         
-        var cell = self.chooseCV.cellForItemAtIndexPath(indexPath) as! ChooseIngredientSearchCell
-        
-        
-        if(!(contains(self.selectedIngr, self.chooseIngr[indexPath.item]))){
-                self.selectedIngr.append(chooseIngr[indexPath.item])
+        if !self.didGetToTheBlockingPhase{
+            if(!(self.selectedIngr.contains(self.chooseIngr[indexPath.item-1]))){
+                self.selectedIngr.append(chooseIngr[indexPath.item-1])
+            }
+            else{
+                let index = self.selectedIngr.indexOf(self.chooseIngr[indexPath.item-1])
+                self.selectedIngr.removeAtIndex(index!)
+            }
         }
         else{
-            var index = find(self.selectedIngr, self.chooseIngr[indexPath.item])
-//            if index != nil{
-                self.selectedIngr.removeAtIndex(index!)
-           // }
+            if(!(self.blockedIngr.contains(self.chooseIngr[indexPath.item-1]))){
+                self.blockedIngr.append(chooseIngr[indexPath.item-1])
+            }
+            else{
+                let index = self.blockedIngr.indexOf(self.chooseIngr[indexPath.item-1])
+                self.blockedIngr.removeAtIndex(index!)
+            }
         }
         //cell.tapped()
         //selectCell(cell)
-        if self.allIngredients[self.chooseIngr[indexPath.item].indexPathInIngredientSearch].isSelected == false{
-            var imgView = UIImageView(frame: cell.image.frame)
-            imgView.image = self.bifaVerde
+        if self.allIngredients[self.chooseIngr[indexPath.item-1].indexPathInIngredientSearch].isSelected == false{
+            let imgView = UIImageView(frame: cell.image.frame)
+            if self.didGetToTheBlockingPhase{
+                imgView.image = self.bifaRosie
+            }
+            else{
+                imgView.image = self.bifaVerde
+            }
             imgView.alpha = 1
             cell.image.alpha = 0.5
             cell.viu = imgView
             cell.contentView.addSubview(imgView)
-            self.allIngredients[self.chooseIngr[indexPath.item].indexPathInIngredientSearch].isSelected = true
+            self.allIngredients[self.chooseIngr[indexPath.item-1].indexPathInIngredientSearch].isSelected = true
             self.celuleSelectate.append(cell)
             
         }
         else{
             cell.viu?.removeFromSuperview()
             cell.image.alpha = 1
-            self.allIngredients[self.chooseIngr[indexPath.item].indexPathInIngredientSearch].isSelected = false
-            var index = find(self.celuleSelectate,cell)
+            self.allIngredients[self.chooseIngr[indexPath.item-1].indexPathInIngredientSearch].isSelected = false
+            let index = self.celuleSelectate.indexOf(cell)
             self.celuleSelectate.removeAtIndex(index!)
         }
 
        // self.chooseCV.reloadInputViews()
        // cell.reloadInputViews()
-
+        }
     }
 
     func selectCell(cell: ChooseIngredientSearchCell){
@@ -378,6 +502,9 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
 
     }
     
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
 //    func updateSearchResultsForSearchController(searchController: UISearchController)
 //    {
 //        //aici trebuie facuta cautarea de elemente

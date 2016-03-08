@@ -17,7 +17,7 @@ class Comment: NSObject {
 
 extension Comment{
     func toPFObject() -> PFObject{
-        var object = PFObject(className: "Comment")
+        let object = PFObject(className: "Comment")
         
         if let user = self.user{
             object["user"] = user

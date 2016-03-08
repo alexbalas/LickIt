@@ -8,6 +8,8 @@ let defaultDuration: Double = 0
 /// Retruns the duration of a frame at a specific index using an image source (an `CGImageSource` instance).
 ///
 /// - returns: A frame duration.
+
+
 func CGImageSourceGIFFrameDuration(imageSource: CGImageSource, index: Int) -> NSTimeInterval {
     if !imageSource.isAnimatedGIF { return 0.0 }
     

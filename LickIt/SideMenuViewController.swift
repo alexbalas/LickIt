@@ -12,62 +12,132 @@ class SideMenuViewController: UITableViewController{
     
     var dataSource = [MenuItem]()
     var cellSize = CGRect()
+    var c1 = UIViewController()
+    var c2 = UITableViewController()
+    var c3 = UIViewController()
+    var c4 = UITableViewController()
+    var c5 = UITableViewController()
+    var c6 = UITableViewController()
+    var controllere = [UIViewController]()
+    
+    func dismissAllControllers(){
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        for controller in (appDelegate.mainViewController?.viewControllers)!{
+           // controller.remove
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        var mainMenuItem = MenuItem(image: UIImage(named: "home")!) { () -> (Void) in
+        let mainMenuItem = MenuItem(image: UIImage(named: "home")!) { () -> (Void) in
             
-            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainMenuViewController") as! FirstMenuViewController
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainMenuViewController") as! FirstMenuViewController
+            
+            //de test
+            //self.controllere.append(viewController)
+            //
             self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+           // self.view.window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+            
+            //self.navigationController?.visibleViewController?.dismissViewControllerAnimated(false, completion: nil)
+            
             appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            print("_____________")
+            print(appDelegate.mainViewController?.viewControllers)
         }
         
-        var topWantedMenuItem = MenuItem(image: UIImage(named: "top wanted")!) { () -> (Void) in
+        let topWantedMenuItem = MenuItem(image: UIImage(named: "top wanted")!) { () -> (Void) in
             
-            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("TopWantedViewContoller") as! TopWantedViewController
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("TopWantedViewContoller") as! TopWantedViewController
+            self.controllere.append(viewController)
+
             self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+
+            //appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+            print("_____________")
+            print(appDelegate.mainViewController?.viewControllers)
     //        appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
         }
         
-        var bookmarkedTableViewControllerItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
-            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("BookmarkedTableViewController") as! BookmarkedTableViewController
+        let bookmarkedTableViewControllerItem = MenuItem(image: UIImage(named: "bookmarked")!) { () -> (Void) in
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("BookmarkedTableViewController") as! BookmarkedTableViewController
+            self.controllere.append(viewController)
+
             self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            print("_____________")
+            print(appDelegate.mainViewController?.viewControllers)
+            // appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
-        var ingredientSearchMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
+        let ingredientSearchMenuItem = MenuItem(image: UIImage(named: "cookingWith")!) { () -> (Void) in
             
-            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("IngredientSearchController") as! IngredientSearchController
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("IngredientSearchController") as! IngredientSearchController
+            self.controllere.append(viewController)
+
+            viewController.isIngredientSearch = true
             self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            print("_____________")
+            print(appDelegate.mainViewController?.viewControllers)
+            //appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
-        var newSearchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
+        let newSearchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
             
-            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("SearchNewTableViewController") as! SearchNewTableViewController
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("SearchNewTableViewController") as! SearchNewTableViewController
+            self.controllere.append(viewController)
+
             self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            print("_____________")
+            print(appDelegate.mainViewController?.viewControllers)
+            //appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
         
-        var addRecipeItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
-            var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("AddRecipeViewController") as! AddRecipeViewController
+        let addRecipeItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("AddRecipeViewController") as! AddRecipeViewController
+            self.controllere.append(viewController)
+
             self.sideMenuViewController.hideMenuViewController()
-            var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            //appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
-            appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            print("_____________")
+            print(appDelegate.mainViewController?.viewControllers)
+            //appDelegate.mainViewController?.pushViewController(viewController, animated: true)
         }
-        println("in view did load marimea e")
-        println(self.cellSize)
-        println(UIScreen.mainScreen().bounds)
+        
+        let achievementsItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
+            let viewController = AchievementsTableViewController()
+            self.controllere.append(viewController)
+
+            self.sideMenuViewController.hideMenuViewController()
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            print("_____________")
+            print(appDelegate.mainViewController?.viewControllers)
+            //appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+        }
+        
+        let supportItem = MenuItem(image: UIImage(named: "addrecipe")!) { () -> (Void) in
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("Support") as! SupportViewController
+            self.sideMenuViewController.hideMenuViewController()
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.mainViewController?.setViewControllers([viewController], animated: true)
+            print("_____________")
+            print(appDelegate.mainViewController?.viewControllers)
+            //appDelegate.mainViewController?.pushViewController(viewController, animated: true)
+        }
+        print("SIDEMENU: in view did load marimea e")
+        print(self.cellSize)
+        print(UIScreen.mainScreen().bounds)
 //        var searchMenuItem = MenuItem(image: UIImage(named: "search")!) { () -> (Void) in
 //            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
 //            
@@ -116,6 +186,8 @@ class SideMenuViewController: UITableViewController{
         self.dataSource.append(newSearchMenuItem)
         self.dataSource.append(bookmarkedTableViewControllerItem)
         self.dataSource.append(addRecipeItem)
+        self.dataSource.append(achievementsItem)
+    //    self.dataSource.append(supportItem)
 //        self.dataSource.append(searchMenuItem)
 //        self.dataSource.append(bookmarkedRecipesMenuItem)
 //        self.dataSource.append(addNewRecipeMenuItem)
@@ -148,28 +220,32 @@ class SideMenuViewController: UITableViewController{
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell : SideMenuCell = tableView.dequeueReusableCellWithIdentifier("SideMenuCell", forIndexPath: indexPath) as! SideMenuCell
-        var currentMenuItem = self.dataSource[indexPath.row]
+        let cell : SideMenuCell = tableView.dequeueReusableCellWithIdentifier("SideMenuCell", forIndexPath: indexPath) as! SideMenuCell
+        let currentMenuItem = self.dataSource[indexPath.row]
         cell.imagine.frame = CGRect(x: 0, y: 0, width: 320, height: 81)
         cell.imagine.image = currentMenuItem.image
         
         self.cellSize = cell.frame
-        println("ar trebui sa fie")
-        println(self.cellSize)
+        print("ar trebui sa fie")
+        print(self.cellSize)
 
     return cell
 }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var currentMenuItem = self.dataSource[indexPath.row]
+        let currentMenuItem = self.dataSource[indexPath.row]
         currentMenuItem.selectionBlock()
-        var cell = self.tableView.cellForRowAtIndexPath(indexPath)
-        println("marimea este")
-        println(cell?.frame)
+     //   let cell = self.tableView.cellForRowAtIndexPath(indexPath)
+       // print("marimea este")
+        //print(cell?.frame)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UIScreen.mainScreen().bounds.height/7
+    }
+    
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
     }
     /*
     // Override to support conditional editing of the table view.

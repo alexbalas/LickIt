@@ -37,14 +37,14 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
     }
     
     func checkForInternetConnection(){
-        var checker = Reachability.isConnectedToNetwork()
+        let checker = Reachability.isConnectedToNetwork()
         if checker == false{
             showInternetConnectionMessage()
         }
     }
     
     func showInternetConnectionMessage(){
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
+        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("PopupViewController") as! PopupViewController
         var _ = menuViewController.view
         menuViewController.modalPresentationStyle = .Popover
         menuViewController.preferredContentSize = CGSize(width: self.view.bounds.width, height: 60)
@@ -65,7 +65,7 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
         
         
         
-        println(menuViewController.name?.text)
+        print(menuViewController.name?.text)
         
         presentViewController(
             menuViewController,
@@ -99,19 +99,19 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("SearchNewTableViewCell", forIndexPath: indexPath) as?SearchNewTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("SearchNewTableViewCell", forIndexPath: indexPath) as?SearchNewTableViewCell
         
-        var recipe = self.recipes[indexPath.row]
+        let recipe = self.recipes[indexPath.row]
         
         recipe.image!.getDataInBackgroundWithBlock {
             (imageData: NSData?, error: NSError?) -> Void in
             if !(error != nil) {
                 //aici se intampla sfanta transormare din imagine in thumbnail
-                var imagine = UIImage(data: imageData!)
-                var destinationSize = cell!.imagine.frame.size
+                let imagine = UIImage(data: imageData!)
+                let destinationSize = cell!.imagine.frame.size
                 UIGraphicsBeginImageContext(destinationSize)
                 imagine?.drawInRect(CGRect(x: 0,y: 0,width: destinationSize.width,height: destinationSize.height))
-                var nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
+                let nouaImagine = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 cell?.imagine.image = nouaImagine
 
@@ -131,7 +131,7 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row <= self.recipes.count && self.recipes.count>0){
 
-            var viewController = storyboard!.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
+            let viewController = storyboard!.instantiateViewControllerWithIdentifier("RecipeViewController") as! RecipeViewController
             viewController.recipe = self.recipes[indexPath.row]
             
             self.resultSearchController.searchBar.resignFirstResponder()
@@ -139,7 +139,7 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
             
             self.navigationController?.pushViewController(viewController, animated: true)
         }
-        println(indexPath.row)
+        print(indexPath.row)
     }
     
     
@@ -147,9 +147,9 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
                //aici trebuie facuta cautarea de elemente
-        if(!searchController.searchBar.text.isEmpty){
-            var manager = RecipeManager()
-            manager.getSearchedRecipes(searchController.searchBar.text, completionBlock: { (retete) -> Void in
+        if(!searchController.searchBar.text!.isEmpty){
+            let manager = RecipeManager()
+            manager.getSearchedRecipes(searchController.searchBar.text!, completionBlock: { (retete) -> Void in
                 self.recipes = retete
                 self.tableView.reloadData()
             })
@@ -162,6 +162,11 @@ class SearchNewTableViewController: BaseTableViewController, UISearchResultsUpda
         buton.removeFromSuperview()
         self.isKeyboardOn = false
     }
+    
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
+    //
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

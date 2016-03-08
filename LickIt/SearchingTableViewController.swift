@@ -56,13 +56,13 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if(indexPath.row==0){
-            var cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as! SearchingInputCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("SearchingInputCell", forIndexPath: indexPath) as! SearchingInputCell
             cell.delegate = self
    //         self.tableView.rowHeight = 100
         return cell
         }
         else{
-            var cell = tableView.dequeueReusableCellWithIdentifier("SearchingResultCell", forIndexPath: indexPath) as! SearchingResultCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("SearchingResultCell", forIndexPath: indexPath) as! SearchingResultCell
             foundRecipes[0/*indexPath.row-1*/].image?.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if !(error != nil) {
@@ -71,7 +71,7 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
             }
 //            cell.licks.text = "\(foundRecipes[indexPath.row - 1].numberOfLicks!)"
 //            cell.name.text = foundRecipes[indexPath.row - 1].name
-            println(foundRecipes[indexPath.row-1])
+            print(foundRecipes[indexPath.row-1])
             return cell
         }
         // Configure the cell...
@@ -86,18 +86,22 @@ class SearchingTableViewController: BaseTableViewController, UITextFieldDelegate
         }
     }
     func searchingInputCellGotMagicWord(magicWord: String){
-        println("L-a trimis!!")
-        print(magicWord)
-        var manager = RecipeManager()
+        print("L-a trimis!!")
+        print(magicWord, terminator: "")
+        let manager = RecipeManager()
         manager.getSearchedRecipes(magicWord, completionBlock: { (recipesss) -> Void in
             self.foundRecipes = recipesss
             self.tableView.reloadData()
         })
-        println(foundRecipes)
+        print(foundRecipes)
     
     
     }
 
+    
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

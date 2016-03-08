@@ -23,8 +23,8 @@ class CoreDataManager {
         let model = NSManagedObjectModel(contentsOfURL: modelUrl!)
         self.persistanceStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
         
-        var url = NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil)
-        self.persistanceStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url?.URLByAppendingPathComponent("SavedRecipes.sqlite"), options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true], error: nil)
+        let url = try? NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        try? self.persistanceStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url?.URLByAppendingPathComponent("SavedRecipes.sqlite"), options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true])
         
         self.managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         self.managedObjectContext.persistentStoreCoordinator = self.persistanceStoreCoordinator

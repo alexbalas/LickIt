@@ -37,7 +37,7 @@ class AddRecipeViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 3
+        return 4
     }
 
     
@@ -45,7 +45,7 @@ class AddRecipeViewController: BaseTableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("AddRecipeCell", forIndexPath: indexPath) as! AddRecipeButtonCell
         
         cell.descriere.text = textForCell(indexPath.row)
-        // Configure the cell...
+        
 
         return cell
     }
@@ -54,20 +54,27 @@ class AddRecipeViewController: BaseTableViewController {
         switch caz{
         case 1: return "give a missing recipe name"
         case 2: return "give a missing ingredient name"
-        default: return "insert link/webstie to recipe"
+        case 3: return "feedback"
+        default: return "create recipe"
         }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var viewController = storyboard!.instantiateViewControllerWithIdentifier("AddNewRecipeControllerViewController") as! AddNewRecipeControllerViewController
-        
-    //    viewController.titlu.text = textForCell(indexPath.row)
-        viewController.caz = indexPath.row
-        
-        self.navigationController?.pushViewController(viewController, animated: true)
+        if indexPath.row > 0{
+            let viewController = storyboard!.instantiateViewControllerWithIdentifier("AddNewRecipeControllerViewController") as! AddNewRecipeControllerViewController
+            viewController.caz = indexPath.row
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+        else{
+            let viewController = InformationViewController()
+            self.navigationController?.pushViewController(viewController, animated: true)
 
+        }
     }
 
+    deinit {
+        debugPrint("Name_of_view_controlled deinitialized...")
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

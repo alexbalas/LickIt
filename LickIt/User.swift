@@ -26,7 +26,7 @@ class User: NSObject {
 
 extension User{
     func toPFObject() -> PFObject{
-        var object = PFObject(className: "User")
+        let object = PFObject(className: "User")
         if let name = self.name{
             object["name"] = name
         }

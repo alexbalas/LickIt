@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "LickIt": {
+      "applicationId": "LwxamL5Rx5AOtWuSDhwuVeYPLW7XXwKKBBhvx75g"
+    },
+    "_default": {
+      "link": "LickIt"
+    }
+  }
+}
