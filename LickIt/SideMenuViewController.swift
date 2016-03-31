@@ -23,7 +23,7 @@ class SideMenuViewController: UITableViewController{
     func dismissAllControllers(){
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         for controller in (appDelegate.mainViewController?.viewControllers)!{
-           // controller.remove
+            controller.dismissViewControllerAnimated(false, completion: nil)
         }
     }
     
@@ -245,7 +245,8 @@ class SideMenuViewController: UITableViewController{
     }
     
     deinit {
-        debugPrint("Name_of_view_controlled deinitialized...")
+        self
+        print("deinitCalled")
     }
     /*
     // Override to support conditional editing of the table view.

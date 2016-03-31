@@ -248,7 +248,8 @@ class AddNewRecipeControllerViewController: UIViewController, UIImagePickerContr
     }
     
     deinit {
-        debugPrint("Name_of_view_controlled deinitialized...")
+        self
+        print("deinitCalled")
     }
     /*
     // MARK: - Navigation

@@ -89,9 +89,9 @@ class WebViewTableController: UITableViewController, WKNavigationDelegate{
     }
 
     deinit {
-        debugPrint("Name_of_view_controlled deinitialized...")
-    }
-    //
+        self
+        print("deinitCalled")
+    }    //
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

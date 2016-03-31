@@ -9,25 +9,25 @@
 import UIKit
 import WebKit
 import iAd
+import ParseUI
 
-
-protocol RecipeControllerDelegate {
+protocol RecipeControllerDelegate: class {
     func refresh(indexPath: NSIndexPath)
     func revineInTutorial()
 }
 
 class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICollectionViewDelegate,UIPopoverPresentationControllerDelegate, OneIngredientRecipeCellDelegate, PFLogInViewControllerDelegate, ADBannerViewDelegate, WebViewDelegate {
     
-    var bannerView: ADBannerView!
+    weak var bannerView: ADBannerView!
     
-    var recipe: Recipe!
+    weak var recipe: Recipe!
     var lickedOrNot = false
     var savedOrNot = false
     var backButtonText: String?
     var delegate: RecipeControllerDelegate?
     var isInTutorial = false
     var isSavedRecipe = false
-    var indexPath: NSIndexPath?
+    weak var indexPath: NSIndexPath?
     weak var currentMaskView = UIView()
     var rects = [CGRect]()
     weak var upButton = UIButton()
@@ -499,6 +499,7 @@ class RecipeViewController: UITableViewController, InfoRecipeCellDelegate, UICol
     */
     
     deinit {
+        self
         print("deinitCalled")
     }
     

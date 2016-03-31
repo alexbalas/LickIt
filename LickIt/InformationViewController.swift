@@ -75,7 +75,8 @@ class InformationViewController: UIViewController {
     }
     
     deinit {
-        debugPrint("Name_of_view_controlled deinitialized...")
+        self
+        print("deinitCalled")
     }
     //
     /*

@@ -83,10 +83,9 @@ class LogInViewController: PFLogInViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    deinit{
+    deinit {
         self
-            debugPrint("Name_of_view_controlled deinitialized...")
-        
+        print("deinitCalled")
     }
 
     

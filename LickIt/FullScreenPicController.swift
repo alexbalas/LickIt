@@ -107,7 +107,8 @@ class FullScreenPicController: UIViewController {
     }
     
     deinit {
-        debugPrint("Name_of_view_controlled deinitialized...")
+        self
+        print("deinitCalled")
     }
 //    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 //        println("touches began")

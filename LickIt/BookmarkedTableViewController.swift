@@ -111,7 +111,8 @@ class BookmarkedTableViewController: BaseTableViewController {
     }
     
     deinit {
-        debugPrint("Name_of_view_controlled deinitialized...")
+        self
+        print("deinitCalled")
     }
     /*
     // Override to support conditional editing of the table view.

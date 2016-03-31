@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol IngSearchDelegate{
+protocol IngSearchDelegate: class{
     func addOkButton()
 }
 
@@ -19,7 +19,7 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     
     @IBOutlet weak var chooseCV: ChooseColView!
     
-    var delegate: IngSearchDelegate?
+    weak var delegate: IngSearchDelegate?
     
     weak var pickerView = AKPickerView()
     var selectedIngr = [Ingredient]()
@@ -95,6 +95,13 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Add Ingr."
+        
+        //test
+        print("aaaaaaa")
+        print(self.navigationController?.viewControllers)
+        
+        //end test
+        
 //        self.resultSearchController = UISearchController(searchResultsController: nil)
 //        resultSearchController!.searchResultsUpdater = self
 //        resultSearchController!.dimsBackgroundDuringPresentation = false
@@ -503,7 +510,9 @@ class IngredientSearchController: BaseViewController, UICollectionViewDataSource
     }
     
     deinit {
-        debugPrint("Name_of_view_controlled deinitialized...")
+        self
+        print("deinit called")
+        print("dsasdas")
     }
 //    func updateSearchResultsForSearchController(searchController: UISearchController)
 //    {

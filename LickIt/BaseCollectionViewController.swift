@@ -81,7 +81,8 @@ class BaseCollectionViewController: UICollectionViewController {
     }
 
     deinit {
-        debugPrint("Name_of_view_controlled deinitialized...")
+        self
+        print("deinitCalled")
     }
     // MARK: UICollectionViewDelegate
 
