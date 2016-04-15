@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 import iAd
-import ParseUI
+
 
 protocol RecipeControllerDelegate: class {
     func refresh(indexPath: NSIndexPath)
